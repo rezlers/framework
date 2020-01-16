@@ -34,7 +34,7 @@ Router
 App
     DI-Container. It will perform the tasks of service storing and will also resolve dependencies
 Controller
-    The main task is to provide some functionality for the application, which will then be stored and executed from the "box" App
+    The main task is to provide some functionality for the application, some of which will then be stored and executed from the "box" App
     The main methods:
         middleware - to bind an intermediary
         view - for working with templates
