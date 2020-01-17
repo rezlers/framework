@@ -8,10 +8,10 @@ require __DIR__ . "/../Kernel/Router/Router.php";
 $Router = new Router();
 
 require __DIR__ . "/../Kernel/App/App.php";
-$App = new App();
+$App = new App($Router);
 
 require __DIR__."/../Kernel/Request/Request.php";
-$Request = new Request($_REQUEST['path'], $_SERVER['REQUEST_METHOD']);
+$Request = new Request('/'.$_REQUEST['path'], $_SERVER['REQUEST_METHOD']);
 
 require __DIR__."/../Routes/Routes.php";
 

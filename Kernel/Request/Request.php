@@ -12,6 +12,11 @@ class Request
     public function __construct($url, $http_method)
     {
         $this->http_method = $http_method;
-        $this->url = $url;
+
+        if (is_null($url)) {
+            $this->url = '/';
+        } else {
+            $this->url = $url;
+        }
     }
 }
