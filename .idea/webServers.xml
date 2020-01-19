@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="cf46dc85-0740-44db-82a8-873abaef4c4e" name="MyConnection" url="http://127.0.0.1">
+        <fileTransfer host="127.0.0.1" port="2222" privateKey="$PROJECT_DIR$/../.vagrant/machines/default/virtualbox/private_key" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="2222" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
