@@ -1,9 +1,7 @@
 <?php
 
-phpinfo();
+require '../Bootstrap/autoload.php';
 
-//require '../Bootstrap/autoload.php';
-//
-//$App->handle($Request);
+$App->handle($Request);
 
 

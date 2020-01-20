@@ -7,6 +7,8 @@ use Kernel\Request;
 require __DIR__ . "/../Kernel/Router/Router.php";
 $Router = new Router();
 
+require __DIR__ . "/../Kernel/Router/Route.php";
+
 require __DIR__ . "/../Kernel/App/App.php";
 $App = new App($Router);
 
