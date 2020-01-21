@@ -65,6 +65,7 @@ class Route
             foreach ($app_url_parts as $key => $value) {
                 if (preg_match($this->reg_exp, $value)) {
                     $params[trim($value, '{}')] = $request_url_parts[$key];
+
                 }
             }
         }

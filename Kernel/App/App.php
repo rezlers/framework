@@ -18,7 +18,6 @@ class App
 
     public function handle(Request $request)
     {
-
         $route = $this->Router->is_exists($request);
 
         if ($route) {
