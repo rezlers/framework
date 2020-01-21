@@ -7,29 +7,29 @@ namespace Kernel;
 class Route
 {
     public $url;
-    public $http_method;
+    public $httpMethod;
     public $callable;
     public $params;
-    public $path_length;
-    public $request_params;
+    public $pathLength;
+    public $requestParams;
 
     private $reg_exp = '/{.*}/';
 
-    public function __construct($http_method, $url, $callable)
+    public function __construct($httpMethod, $url, $callable)
     {
-        $this->set_url($url);
+        $this->setUrl($url);
 
-        $this->http_method = $http_method;  ## Constructing http method
+        $this->httpMethod = $httpMethod;  ## Constructing http method
 
         $this->callable = $callable;  ## Constructing callable object
 
-        $this->set_url_params();  ## If there are no url params then empty array is returned
+        $this->setUrlParams();  ## If there are no url params then empty array is returned
 
-        $this->set_path_length();
+        $this->setPathLength();
 
     }
 
-    private function set_url($url)
+    private function setUrl($url)
     {
         if (is_null($url)) {
             $this->url = '/';
@@ -39,11 +39,11 @@ class Route
     }
 
     ## Possibly, this function is not need
-    private function set_url_params()
+    private function setUrlParams()
     {
-        $url_parts = explode('/', $this->url);
+        $urlParts = explode('/', $this->url);
         $params = array();
-        foreach ($url_parts as $value) {
+        foreach ($urlParts as $value) {
             if (preg_match($this->reg_exp, $value)) {
                 $params[] = trim($value, '{}');
             }
@@ -51,29 +51,29 @@ class Route
         $this->params = $params;
     }
 
-    private function set_path_length()
+    private function setPathLength()
     {
-        $this->path_length = explode('/', trim($this->url, '/'));
+        $this->pathLength = explode('/', trim($this->url, '/'));
     }
 
-    public function get_url_params($request_url)
+    public function getUrlParams($requestUrl)
     {
         $params = array();
-        if ($this->is_equal($request_url)) {
-            $app_url_parts = explode('/', trim($this->url, '/'));
-            $request_url_parts = explode('/', trim($request_url, '/'));
-            foreach ($app_url_parts as $key => $value) {
+        if ($this->isEqual($requestUrl)) {
+            $appUrlParts = explode('/', trim($this->url, '/'));
+            $requestUrlParts = explode('/', trim($requestUrl, '/'));
+            foreach ($appUrlParts as $key => $value) {
                 if (preg_match($this->reg_exp, $value)) {
-                    $params[trim($value, '{}')] = $request_url_parts[$key];
+                    $params[trim($value, '{}')] = $requestUrlParts[$key];
 
                 }
             }
         }
-        $params = array_merge($params, $this->request_params); ## Merge url params and request params
+        $params = array_merge($params, $this->requestParams); ## Merge url params and request params
         return $params;
     }
 
-    public function get_callable()
+    public function getCallable()
     {
         if (gettype($this->callable) != 'string') {
             return $this->callable;
@@ -82,16 +82,16 @@ class Route
         return new $this->callable();
     }
 
-    public function is_equal($request_url)
+    public function isEqual($requestUrl)
     {
         if (count($this->params) != 0) {
-            $app_url_parts = explode('/', trim($this->url, '/'));
-            $request_url_parts = explode('/', trim($request_url, '/'));
+            $appUrlParts = explode('/', trim($this->url, '/'));
+            $requestUrlParts = explode('/', trim($requestUrl, '/'));
 
-            if (count($app_url_parts) == count($request_url_parts)) {
-                foreach ($app_url_parts as $key => $value) {
+            if (count($appUrlParts) == count($requestUrlParts)) {
+                foreach ($appUrlParts as $key => $value) {
                     if (!preg_match($this->reg_exp, $value)) {
-                        if ($value == $request_url_parts[$key]) {
+                        if ($value == $requestUrlParts[$key]) {
                             continue;
                         } else {
                             return false;
@@ -103,7 +103,7 @@ class Route
                 return false;
             }
         } else {
-            if ($this->url == $request_url) {
+            if ($this->url == $requestUrl) {
                 return true;
             } else {
                 return false;

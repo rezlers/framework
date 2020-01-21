@@ -18,12 +18,12 @@ class App
 
     public function handle(Request $request)
     {
-        $route = $this->Router->is_exists($request);
+        $route = $this->Router->isExists($request);
 
         if ($route) {
-            $route->request_params = $request->params;
+            $route->requestParams = $request->params;
             $callable = $route->callable;
-            $callable($route->get_url_params($request->url));
+            $callable($route->getUrlParams($request->url));
         }
     }
 

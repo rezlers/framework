@@ -1,0 +1,3 @@
+<?php
+
+$serviceInstances = ['namespaces'];
