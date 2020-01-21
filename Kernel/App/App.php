@@ -5,6 +5,7 @@ namespace Kernel;
 
 use Kernel\Router as Router;
 use Kernel\Request as Request;
+use Kernel\Route as Route;
 
 class App
 {
@@ -17,10 +18,14 @@ class App
 
     public function handle(Request $request)
     {
-        #Temporary code. Then it will be in middleware entity. Now it in Router
-        if ($this->Router->is_exists($request)) {
-            $string_to_check = $request->http_method.':'.$request->url;
-            $this->Router->routes[$string_to_check]();
+
+        $route = $this->Router->is_exists($request);
+
+        if ($route) {
+            $route->request_params = $request->params;
+            $callable = $route->callable;
+            $callable($route->get_url_params($request->url));
         }
     }
+
 }

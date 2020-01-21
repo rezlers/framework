@@ -11,6 +11,7 @@ class Route
     public $callable;
     public $params;
     public $path_length;
+    public $request_params;
 
     private $reg_exp = '/{.*}/';
 
@@ -37,6 +38,7 @@ class Route
         }
     }
 
+    ## Possibly, this function is not need
     private function set_url_params()
     {
         $url_parts = explode('/', $this->url);
@@ -54,9 +56,20 @@ class Route
         $this->path_length = explode('/', trim($this->url, '/'));
     }
 
-    public function get_url_params()
+    public function get_url_params($request_url)
     {
-        return $this->params;
+        $params = array();
+        if ($this->is_equal($request_url)) {
+            $app_url_parts = explode('/', trim($this->url, '/'));
+            $request_url_parts = explode('/', trim($request_url, '/'));
+            foreach ($app_url_parts as $key => $value) {
+                if (preg_match($this->reg_exp, $value)) {
+                    $params[trim($value, '{}')] = $request_url_parts[$key];
+                }
+            }
+        }
+        $params = array_merge($params, $this->request_params); ## Merge url params and request params
+        return $params;
     }
 
     public function get_callable()

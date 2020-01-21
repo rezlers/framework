@@ -12,25 +12,24 @@ class Router
 
     public function is_exists(Request $request)
     {
-        # first priority is to look throw not-parametres url's
+        $candidates = array();
         foreach ($this->routes as $key => $value) {
-            if (count($value->params) == 0) {
-                if ($value->is_equal($request->url)) {
-                    if ($value->http_method) {
-                        return true;
-                    }
+            if ($value->is_equal($request->url)) {
+                if ($value->http_method == $request->http_method) {
+                    $candidates[] = $value;
                 }
             }
         }
-        # second priority is to look throw parametres url's
-        foreach ($this->routes as $key => $value) {
-            if (count($value->params) != 0) {
-                if ($value->is_equal($request->url)) {
-                    if ($value->http_method) {
-                        return true;
-                    }
+        if (count($candidates) != 0) {
+            $num_of_params = count($candidates[0]->params);
+            $min_key = 0;
+            foreach ($candidates as $key => $value) {
+                if (count($value->params) < $num_of_params) {
+                    $num_of_params = count($value->params);
+                    $min_key = $key;
                 }
             }
+            return $candidates[$min_key];
         }
         return false;
     }
