@@ -25,7 +25,7 @@ class App
         if ($route) {
             $route->requestParams = $this->request->params;
             $callable = $route->callable;
-            $callable($route->getUrlParams($this->request->url));
+            $callable($this->request->setParams($route));
         }
     }
 

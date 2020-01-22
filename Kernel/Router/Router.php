@@ -21,11 +21,11 @@ class Router
             }
         }
         if (count($candidates) != 0) {
-            $numOfParams = count($candidates[0]->params);
+            $numOfParams = $candidates[0]->paramsNum;
             $minKey = 0;
             foreach ($candidates as $key => $value) {
-                if (count($value->params) < $numOfParams) {
-                    $numOfParams = count($value->params);
+                if ($value->paramsNum < $numOfParams) {
+                    $numOfParams = $value->paramsNum;
                     $minKey = $key;
                 }
             }

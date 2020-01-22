@@ -6,14 +6,15 @@ namespace Kernel;
 
 class Route
 {
-    public $url;
-    public $httpMethod;
+    public $url;  ## Maybe in request UPD It can't, because it's senseless
+    public $httpMethod;  ## Maybe in request UPD It can't, because this is 'static' http-method that allows user to reserve this url for current http-method
     public $callable;
-    public $params;
-    public $pathLength;
-    public $requestParams;
+    public $paramsNum;  ## Maybe in request UPD It can't, because it's senseless
+    public $pathLength;  ## Maybe in request UPD It can't, because it's senseless
 
-    private $reg_exp = '/{.*}/';
+    public $requestParams;  ## Maybe configure params in request object? Yes, because it's about current (depends on every _REQUEST) request
+
+    public $reg_exp = '/{.*}/';
 
     public function __construct($httpMethod, $url, $callable)
     {
@@ -23,7 +24,7 @@ class Route
 
         $this->callable = $callable;  ## Constructing callable object
 
-        $this->setUrlParams();  ## If there are no url params then empty array is returned
+        $this->setParamsNum();  ## If there are no params then 0 will be returned
 
         $this->setPathLength();
 
@@ -39,7 +40,7 @@ class Route
     }
 
     ## Possibly, this function is not need
-    private function setUrlParams()
+    private function setParamsNum()
     {
         $urlParts = explode('/', $this->url);
         $params = array();
@@ -48,29 +49,12 @@ class Route
                 $params[] = trim($value, '{}');
             }
         }
-        $this->params = $params;
+        $this->paramsNum = count($params);
     }
 
     private function setPathLength()
     {
         $this->pathLength = explode('/', trim($this->url, '/'));
-    }
-
-    public function getUrlParams($requestUrl)
-    {
-        $params = array();
-        if ($this->isEqual($requestUrl)) {
-            $appUrlParts = explode('/', trim($this->url, '/'));
-            $requestUrlParts = explode('/', trim($requestUrl, '/'));
-            foreach ($appUrlParts as $key => $value) {
-                if (preg_match($this->reg_exp, $value)) {
-                    $params[trim($value, '{}')] = $requestUrlParts[$key];
-
-                }
-            }
-        }
-        $params = array_merge($params, $this->requestParams); ## Merge url params and request params
-        return $params;
     }
 
     public function getCallable()
@@ -84,7 +68,7 @@ class Route
 
     public function isEqual($requestUrl)
     {
-        if (count($this->params) != 0) {
+        if ($this->paramsNum != 0) {
             $appUrlParts = explode('/', trim($this->url, '/'));
             $requestUrlParts = explode('/', trim($requestUrl, '/'));
 
