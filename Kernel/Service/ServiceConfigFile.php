@@ -1,4 +1,4 @@
 <?php
 
-$serviceInstances = ['namespaces'];
+$serviceInstances = ['SomeContainerNamespace'];
 

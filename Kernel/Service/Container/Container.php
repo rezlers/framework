@@ -6,19 +6,16 @@ use Kernel\ServiceContainer as ServiceContainer;
 
 class SomeContainer extends ServiceContainer
 {
-    protected function someService ()
+    public function __construct($somedepends)
     {
-        return new someObject();
+        ## Some code
     }
 
-    protected function anotherService ()
-    {
-        return anotherObject();
-    }
+    ## Some services
 
-    protected function register ()
+    protected function register () ## That registers this class like singleton or not
     {
-        $this->bind($this->someService(), 'someService');
-        $this->singleton($this->anotherService(), 'anotherService');
+        $this->bind($this->someService(), 'someService'); ## or
+        $this->singleton($this->someService(), 'anotherService');
     }
 }
