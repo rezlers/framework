@@ -1,6 +1,6 @@
 <?php
 
-require '../Bootstrap/autoload.php';
+require '../Bootstrap/bootstrap.php';
 
-$app->handle($request);
+$app->handle();
 

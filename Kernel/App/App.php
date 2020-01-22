@@ -9,21 +9,23 @@ use Kernel\Route as Route;
 
 class App
 {
-    private $Router;
+    private $router;
+    private $request;
 
-    public function __construct(Router $router)
+    public function __construct(Router $router, Request $request)
     {
-        $this->Router = $router;
+        $this->router = $router;
+        $this->request = $request;
     }
 
-    public function handle(Request $request)
+    public function handle()
     {
-        $route = $this->Router->isExists($request);
+        $route = $this->router->isExists($this->request);
 
         if ($route) {
-            $route->requestParams = $request->params;
+            $route->requestParams = $this->request->params;
             $callable = $route->callable;
-            $callable($route->getUrlParams($request->url));
+            $callable($route->getUrlParams($this->request->url));
         }
     }
 
