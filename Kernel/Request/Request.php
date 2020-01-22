@@ -7,19 +7,19 @@ namespace Kernel;
 class Request
 {
     public $url;
-    public $http_method;
+    public $httpMethod;
     public $params;
 
-    public function __construct($request, $http_method)
+    public function __construct($request, $httpMethod)
     {
-        $this->http_method = $http_method;
+        $this->httpMethod = $httpMethod;
 
-        $this->set_params($request);
+        $this->setParams($request);
 
-        $this->set_path($request);
+        $this->setPath($request);
     }
 
-    private function set_params ($request)
+    private function setParams ($request)
     {
         $this->params = array();
         foreach ($request as $key => $value) {
@@ -29,7 +29,7 @@ class Request
         }
     }
 
-    private function set_path ($request) {
+    private function setPath ($request) {
         if (is_null($request['path'])) {
             $this->url = '/';
         } else {

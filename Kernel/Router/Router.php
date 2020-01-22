@@ -10,32 +10,32 @@ class Router
 {
     public $routes = array();
 
-    public function is_exists(Request $request)
+    public function isExists(Request $request)
     {
         $candidates = array();
         foreach ($this->routes as $key => $value) {
-            if ($value->is_equal($request->url)) {
-                if ($value->http_method == $request->http_method) {
+            if ($value->isEqual($request->url)) {
+                if ($value->httpMethod == $request->httpMethod) {
                     $candidates[] = $value;
                 }
             }
         }
         if (count($candidates) != 0) {
-            $num_of_params = count($candidates[0]->params);
-            $min_key = 0;
+            $numOfParams = count($candidates[0]->params);
+            $minKey = 0;
             foreach ($candidates as $key => $value) {
-                if (count($value->params) < $num_of_params) {
-                    $num_of_params = count($value->params);
-                    $min_key = $key;
+                if (count($value->params) < $numOfParams) {
+                    $numOfParams = count($value->params);
+                    $minKey = $key;
                 }
             }
-            return $candidates[$min_key];
+            return $candidates[$minKey];
         }
         return false;
     }
 
-    public function get($app_url, $callable)
+    public function get($appUrl, $callable)
     {
-        $this->routes[] = new Route('GET', $app_url, $callable);
+        $this->routes[] = new Route('GET', $appUrl, $callable);
     }
 }

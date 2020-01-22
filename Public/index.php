@@ -2,5 +2,5 @@
 
 require '../Bootstrap/autoload.php';
 
-$App->handle($Request);
+$app->handle($request);
 
