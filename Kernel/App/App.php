@@ -23,9 +23,9 @@ class App
         $route = $this->router->isExists($this->request);
 
         if ($route) {
-            $route->requestParams = $this->request->params;
+//            $route->requestParams = $this->request->params;
             $callable = $route->callable;
-            $callable($this->request->setParams($route));
+            $callable($this->request->setParams($route));  ## a hundred to one that i will pass request object like a function argument
         }
     }
 

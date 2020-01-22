@@ -12,7 +12,7 @@ class Route
     public $paramsNum;  ## Maybe in request UPD It can't, because it's senseless
     public $pathLength;  ## Maybe in request UPD It can't, because it's senseless
 
-    public $requestParams;  ## Maybe configure params in request object? Yes, because it's about current (depends on every _REQUEST) request
+//    public $requestParams;  ## Maybe configure params in request object? Yes, because it's about current (depends on every _REQUEST) request
 
     public $reg_exp = '/{.*}/';
 
