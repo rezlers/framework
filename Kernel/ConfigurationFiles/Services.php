@@ -3,7 +3,7 @@
 $services = [
     'DB' => [
         'namespace' => 'Kernel\Containers\DataBase',
-        'Args' => [],
+        'args' => [],
         'type' => 'any'
     ]
 ];

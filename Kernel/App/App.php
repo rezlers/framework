@@ -5,7 +5,7 @@ namespace Kernel;
 
 use Kernel\Router as Router;
 use Kernel\Request as Request;
-use Kernel\Route as Route;
+use Kernel\ServiceContainer as ServiceContainer;
 
 class App
 {
