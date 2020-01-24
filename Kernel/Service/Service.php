@@ -9,6 +9,7 @@ class Service
     private $namespace;
     private $type;
     private $nickname;
+    private $instance;
 
     public function __construct($namespace, $nickname, $type)
     {
@@ -20,9 +21,10 @@ class Service
     public function getInstance()
     {
         if ($this->type == 'singleton') {
-            if (ServiceContainer::$services[$this->nickname])
-                return ServiceContainer::$services[$this->nickname];
-            return new $this->namespace();
+            if ($this->instance)
+                return $this->instance;
+            $this->instance = new $this->namespace();
+            return $this->instance;
         }
         return new $this->namespace();
     }

@@ -32,5 +32,8 @@ var_dump($object);
 
 require '../Bootstrap/bootstrap.php';
 
-$app->handle();
+$container = new \Kernel\ServiceContainer();
+$container->getService('DB')->connection()->statement('CREATE TABLE test_table (id SERIAL PRIMARY KEY)');
+
+//$app->handle();
 
