@@ -1,11 +1,16 @@
 <?php
 
 
-namespace Kernel\Containers;
+namespace Kernel\Services;
+
+use PDO;
 
 class DataBase
 {
     protected static $connectionConfigArray;
+    /**
+     * @var PDO
+     */
     protected $currentConnection;
 
     public function __construct($connectionConfigArray = null)
@@ -30,7 +35,7 @@ class DataBase
 
         $connectionString = $driver . ':host=' . $host . ';dbname=' . $database;
 
-        $this->currentConnection = new \PDO($connectionString, $username, $password);
+        $this->currentConnection = new PDO($connectionString, $username, $password);
         return $this;
     }
 

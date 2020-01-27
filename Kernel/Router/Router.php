@@ -34,8 +34,15 @@ class Router
         return false;
     }
 
+    /**
+     * @param $appUrl
+     * @param $callable
+     * @return \Kernel\Route
+     */
     public function get($appUrl, $callable)
     {
-        $this->routes[] = new Route('GET', $appUrl, $callable);
+        $newInstance = new Route('GET', $appUrl, $callable);
+        $this->routes[] = $newInstance;
+        return $newInstance;
     }
 }

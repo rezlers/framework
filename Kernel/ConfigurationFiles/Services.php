@@ -5,6 +5,11 @@ $services = [
         'namespace' => 'Kernel\Containers\DataBase',
         'args' => [],
         'type' => 'any'
+    ],
+    'logger' => [
+        'namespace' => '',
+        'args' => '',
+        'type' => 'any'
     ]
 ];
 

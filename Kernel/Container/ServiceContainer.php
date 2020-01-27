@@ -7,6 +7,9 @@ use Kernel\Service as Service;
 
 class ServiceContainer
 {
+    /**
+     * @var Service[]
+     */
     protected static $services;  ## Why do we need static protected instead of protected? (symphony)
 
     public function __construct($configArray = null)

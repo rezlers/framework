@@ -2,7 +2,6 @@
 
 
 namespace Kernel;
-use Kernel\ServiceContainer as ServiceContainer;
 
 class Service
 {
@@ -18,6 +17,9 @@ class Service
         $this->type = $type;
     }
 
+    /**
+     * @return mixed
+     */
     public function getInstance()
     {
         if ($this->type == 'singleton') {

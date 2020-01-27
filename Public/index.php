@@ -35,5 +35,4 @@ require '../Bootstrap/bootstrap.php';
 $container = new \Kernel\ServiceContainer();
 $container->getService('DB')->connection()->statement('CREATE TABLE test_table (id SERIAL PRIMARY KEY)');
 
-//$app->handle();
-
+$app->handle();
