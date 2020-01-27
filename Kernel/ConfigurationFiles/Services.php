@@ -2,12 +2,12 @@
 
 $services = [
     'DB' => [
-        'namespace' => 'Kernel\Containers\DataBase',
+        'namespace' => 'Kernel\Services\DataBase',
         'args' => [],
         'type' => 'any'
     ],
-    'logger' => [
-        'namespace' => '',
+    'Logger' => [
+        'namespace' => 'Kernel\Services\Logger',
         'args' => '',
         'type' => 'any'
     ]

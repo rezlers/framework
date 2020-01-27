@@ -32,7 +32,16 @@ var_dump($object);
 
 require '../Bootstrap/bootstrap.php';
 
+
 $container = new \Kernel\ServiceContainer();
 $container->getService('DB')->connection()->statement('CREATE TABLE test_table (id SERIAL PRIMARY KEY)');
+$logger = $container->getService('Logger');
+$logger->info('info message');
+$logger->notice('notice message');
+$logger->critical('critical message');
+$logger->alert('alert message');
 
-$app->handle();
+ ## Container services examples
+
+//$app->handle();
+
