@@ -21,9 +21,13 @@ class ServiceContainer
     {
         if (self::$services[$serviceNickname])
             return self::$services[$serviceNickname]->getInstance();
-        return false;
+        return null;
     }
 
+    /**
+     * @param $serviceNickname
+     * @return bool
+     */
     public function hasService($serviceNickname)  # Is this service exists? bool
     {
         if (self::$services[$serviceNickname]) {

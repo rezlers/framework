@@ -6,6 +6,7 @@ use Kernel\Request;
 use Kernel\ServiceContainer;
 use Kernel\Services\DataBase;
 use Kernel\Services\Logger;
+use Kernel\Middleware;
 
 require __DIR__ . "/../Kernel/Router/Route.php";
 
@@ -25,6 +26,11 @@ require __DIR__ . '/../Kernel/Container/Service.php';
 ## There will be autoload func
 require __DIR__ . '/../Kernel/Container/Services/DataBase.php';
 require __DIR__ . '/../Kernel/Container/Services/Logger.php';
+## Middleware
+require __DIR__ . "/../Kernel/ConfigurationFiles/Middleware.php"; ## $globalMiddleware array, $routeMiddleware array
+require __DIR__ . "/../Kernel/Middleware/Middleware.php";
+$middleware = new Middleware();  ## Middleware object will store in container
+
 $container = new ServiceContainer($services);
 $DB = new DataBase($connection);
 $logger = new Logger($logger);
