@@ -1,17 +1,16 @@
 <?php
 
 
-namespace App\Middleware;
-
+namespace Kernel\Middleware;
 
 use Kernel\Request;
 use Closure;
 
-class UserMiddleware
+class SystemMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        echo 'UserMiddleware';
+        echo 'SystemMiddleware';
         return $next($request);
     }
 }

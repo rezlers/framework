@@ -23,11 +23,17 @@ class Middleware
     public function handle($request)
     {
         // Main middleware method that will manage request lifecycle in middleware entity
+
     }
 
     private function next($request)
     {
         // Method-manager that responsible for right execution order of middleware sequence
+    }
+
+    private function getInstance()
+    {
+
     }
 
     private function configureMiddleware($globalMiddleware, $routeMiddleware)
