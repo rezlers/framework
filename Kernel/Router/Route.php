@@ -28,31 +28,9 @@ class Route
 
     }
 
-    private function setUrl($url)
+    public function middleware()
     {
-        if (is_null($url)) {
-            $this->url = '/';
-        } else {
-            $this->url = $url;
-        }
-    }
 
-    ## Possibly, this function is not need
-    private function setParamsNum()
-    {
-        $urlParts = explode('/', $this->url);
-        $params = array();
-        foreach ($urlParts as $value) {
-            if (preg_match($this->reg_exp, $value)) {
-                $params[] = trim($value, '{}');
-            }
-        }
-        $this->paramsNum = count($params);
-    }
-
-    private function setPathLength()
-    {
-        $this->pathLength = explode('/', trim($this->url, '/'));
     }
 
     public function getCallable()
@@ -91,5 +69,32 @@ class Route
                 return false;
             }
         }
+    }
+
+    private function setUrl($url)
+    {
+        if (is_null($url)) {
+            $this->url = '/';
+        } else {
+            $this->url = $url;
+        }
+    }
+
+    ## Possibly, this function is not need
+    private function setParamsNum()
+    {
+        $urlParts = explode('/', $this->url);
+        $params = array();
+        foreach ($urlParts as $value) {
+            if (preg_match($this->reg_exp, $value)) {
+                $params[] = trim($value, '{}');
+            }
+        }
+        $this->paramsNum = count($params);
+    }
+
+    private function setPathLength()
+    {
+        $this->pathLength = explode('/', trim($this->url, '/'));
     }
 }

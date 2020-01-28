@@ -7,25 +7,63 @@ use Kernel\Route as Route;
 
 class Request
 {
-    public $url;
-    public $httpMethod;
-    public $params;
+    private $urlParams;
+    private $reqParams;
+    private $route;
 
     public function __construct($request, $httpMethod)
     {
-        $this->httpMethod = $httpMethod;
-
-        $this->params = $request;
-
-        $this->setPath($request);
+        $this->configureRequest($request, $httpMethod);
     }
 
-    public function setParams (Route $route)
+    /**
+     * @return mixed
+     */
+    public function getParams()
+    {
+        return array_merge($this->reqParams, $this->urlParams);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReqParams()
+    {
+        return $this->reqParams;
+    }
+
+    public function getPath()
+    {
+        return $this->reqParams['path'];
+    }
+
+    public function getHttpMethod()
+    {
+        return $this->reqParams['http_method'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrlParams()
+    {
+        return $this->urlParams;
+    }
+
+    /**
+     * @return Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    public function setRoute (Route $route)
     {
         $params = array();
-        if ($route->isEqual($this->url)) {
+        if ($route->isEqual($this->reqParams['path'])) {
             $appUrlParts = explode('/', trim($route->url, '/'));
-            $requestUrlParts = explode('/', trim($this->url, '/'));
+            $requestUrlParts = explode('/', trim($this->reqParams['path'], '/'));
             foreach ($appUrlParts as $key => $value) {
                 if (preg_match($route->reg_exp, $value)) {
                     $params[trim($value, '{}')] = $requestUrlParts[$key];
@@ -33,16 +71,23 @@ class Request
                 }
             }
         }
-        $params = array_merge($params, $this->params); ## Merge app url params and request params
-        return $params;
+        $this->urlParams = $params;
+        $this->route = $route;
     }
 
-    private function setPath ($request) {
-        if (is_null($request['path'])) {
-            $this->url = '/';
+    private function setPath () {
+        if (is_null($this->reqParams['path'])) {
+            $this->reqParams['path'] = '/';
         } else {
-            $this->url = '/' . $request['path'];
+            $this->reqParams['path'] = '/' . $this->reqParams['path'];
         }
+    }
+
+    private function configureRequest($request, $httpMethod)
+    {
+        $this->reqParams = $request;
+        $this->reqParams['http_method'] = $httpMethod;
+        $this->setPath();
     }
 
 }

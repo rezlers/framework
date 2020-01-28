@@ -8,14 +8,14 @@ use \Kernel\Route as Route;
 
 class Router
 {
-    public $routes = array();
+    protected static $routes = array();
 
-    public function isExists(Request $request)
+    public function getRoute(Request $request)
     {
         $candidates = array();
-        foreach ($this->routes as $key => $value) {
-            if ($value->isEqual($request->url)) {
-                if ($value->httpMethod == $request->httpMethod) {
+        foreach (self::$routes as $key => $value) {
+            if ($value->isEqual($request->getPath())) {
+                if ($value->httpMethod == $request->getHttpMethod()) {
                     $candidates[] = $value;
                 }
             }
@@ -31,7 +31,7 @@ class Router
             }
             return $candidates[$minKey];
         }
-        return false;
+        return null;
     }
 
     /**
@@ -42,7 +42,7 @@ class Router
     public function get($appUrl, $callable)
     {
         $newInstance = new Route('GET', $appUrl, $callable);
-        $this->routes[] = $newInstance;
+        self::$routes[] = $newInstance;
         return $newInstance;
     }
 }

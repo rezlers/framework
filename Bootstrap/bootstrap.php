@@ -30,7 +30,7 @@ $DB = new DataBase($connection);
 $logger = new Logger($logger);
 
 require __DIR__ . "/../Kernel/App/App.php";
-$app = new app($router, $request);
+$app = new app($request);
 
 
 

@@ -1,10 +1,14 @@
 <?php
+use Kernel\Request as Request;
 # For custom web routes
-# Request params and url params belong to one array $params
-$router->get('/user1/c', function (array $params) {echo $params['a'];});
-$router->get('/user2/b', function (array $params) {echo 'Hello world';});
-$router->get('/user3/a', function (array $params) {echo 'Hello world';});
-$router->get('/user1/{id}/film/{number}', function (array $params) {echo $params['id'], $params['number'];});
-$router->get('/user1/21/film/{number}', function (array $params) {echo $params['number'], $params['a'];});
+$router->get('/user1/{id}/film/{number}', function (Request $request) {
+    echo 'a';
+    var_dump($request->getReqParams());
+    var_dump($request->getParams());
+    var_dump($request->getUrlParams());
+    var_dump($request->getPath());
+    var_dump($request->getHttpMethod());
+});
+$router->get('/user1/21/film/{number}', function (Request $request) {echo 'b';});
 
 

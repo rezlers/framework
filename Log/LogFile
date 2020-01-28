@@ -1,0 +1,4 @@
+2020-01-28 07:32:43: info: info message
+2020-01-28 07:32:43: notice: notice message
+2020-01-28 07:32:43: critical: critical message
+2020-01-28 07:32:43: alert: alert message

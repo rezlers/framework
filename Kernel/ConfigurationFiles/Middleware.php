@@ -1,0 +1,4 @@
+<?php
+
+$globalMiddleware = [];
+$routeMiddleware = [];

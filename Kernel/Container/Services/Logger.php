@@ -67,22 +67,14 @@ class Logger
                 try {
                     $pathToLogFile = '/var/www/framework/Log/';
                     $logFile = fopen($pathToLogFile . $key, 'a');
-                    if (!$logFile) {
-                        throw new Exception('Log file opening error');
-                    }
                     $dateTime = date('Y-m-d H:i:s');
                     $logMessage = $dateTime . ': ' . $level . ': ' . $message . PHP_EOL;
-                    if (!fwrite($logFile, $logMessage)) {
-                        throw new Exception('Log file writing error');
-                    }
-                    if (!fclose($logFile)) {
-                        throw new Exception('Log file closing error');
-                    }
+                    fwrite($logFile, $logMessage);
+                    fclose($logFile);
                 }
                 catch (Exception $exception) {
-
-
-                    $this->error($exception);
+                    $frameworkLogMessage = 'framework: ' . $exception->getMessage();
+                    $this->error($frameworkLogMessage);
                 }
             }
         }

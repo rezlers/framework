@@ -9,23 +9,45 @@ use Kernel\ServiceContainer as ServiceContainer;
 
 class App
 {
+    /**
+     * @var \Kernel\Router
+     */
     private $router;
+    /**
+     * @var \Kernel\Request
+     */
     private $request;
+    /**
+     * @var ServiceContainer
+     */
+    private $container;
 
-    public function __construct(Router $router, Request $request)
+    public function __construct(Request $request)
     {
-        $this->router = $router;
         $this->request = $request;
+        $this->configureContainer();
+        $this->configureRouter();
     }
 
     public function handle()
     {
-        $route = $this->router->isExists($this->request);
+        $route = $this->router->getRoute($this->request);  ## Change method to not mixed return or change method to getRoute. Done
 
-        if ($route) {
+        if (! is_null($route)) {
+            $this->request->setRoute($route);  ## Put all such logic to setRoute method. Done
             $callable = $route->callable;
-            $callable($this->request->setParams($route));  ## a hundred to one that i will pass request object like a function argument
+            $callable($this->request);
         }
+    }
+
+    private function configureContainer()
+    {
+        $this->container = new ServiceContainer();
+    }
+
+    private function configureRouter()
+    {
+        $this->router = $this->container->getService('Router');
     }
 
 }
