@@ -3,43 +3,89 @@
 
 namespace Kernel;
 
+use Kernel\Request as Request;
+use Kernel\Response as Response;
+use Kernel\MiddlewareInterface as MiddlewareInterface;
+use Closure;
 
 class Middleware
 {
     /**
-     * @var array
+     * @var MiddlewareInterface[]
      */
     protected static $globalMiddleware;
     /**
-     * @var array
+     * @var MiddlewareInterface[]
      */
     protected static $routeMiddleware;
+    /**
+     * @var MiddlewareInterface[]
+     */
+    protected static $middlewareToExecute;
 
     public function __construct($globalMiddleware = null, $routeMiddleware = null)
     {
         $this->configureMiddleware($globalMiddleware, $routeMiddleware);
     }
 
-    public function handle($request)
+    public function handle(Request $request, Response $response)
     {
-        // Main middleware method that will manage request lifecycle in middleware entity
-
+        $this->configureArrayToExecute($request);
+        return $this->executeMiddleware($request, $response);
     }
 
-    private function next($request)
+    private function executeMiddleware(Request $request, Response $response)
     {
-        // Method-manager that responsible for right execution order of middleware sequence
+        $functionToExecute = $this->arrayReduce(function (Closure $nextClosure, MiddlewareInterface $middleware) ## It will return function that returns execution of user-handle method
+        {
+            return function (Request $request, Response $response) use ($nextClosure, $middleware) {
+                return $middleware->handle($request, $response, $nextClosure);
+            };
+        },
+            function ($destination) {
+                return function (Request $request, Response $response) use ($destination) {
+                    return $destination($request, $response);
+                };
+            }
+        );
+        return $functionToExecute($request, $response);
     }
 
-    private function getInstance()
+    private function arrayReduce(Closure $nextWrapper, Closure $destinationWrapper)
     {
+        if (!empty(self::$middlewareToExecute))
+            $currentMiddleware = array_pop(self::$middlewareToExecute);
+        $closureToBuild = $nextWrapper($destinationWrapper, $currentMiddleware);
 
+        while (!empty(self::$middlewareToExecute)) {
+            $currentMiddleware = array_pop(self::$middlewareToExecute);
+            $closureToBuild = $nextWrapper($closureToBuild, $currentMiddleware);
+        }
+
+        return $closureToBuild;
     }
 
-    private function configureMiddleware($globalMiddleware, $routeMiddleware)
+    /**
+     * @param \Kernel\Request $request
+     * @return MiddlewareInterface[]
+     */
+    private function configureArrayToExecute(Request $request)
     {
-        self::$routeMiddleware = $routeMiddleware;
-        self::$globalMiddleware = $globalMiddleware;
+        foreach (self::$globalMiddleware as $value) {
+            self::$middlewareToExecute[] = new $value();
+        }
+        if (self::$routeMiddleware[$request->getRoute()->getMiddleware()]) {
+            self::$middlewareToExecute[] = new self::$routeMiddleware[$request->getRoute()->getMiddleware()]();
+        }
+        return self::$middlewareToExecute;
+    }
+
+    private function configureMiddleware(&$globalMiddleware, &$routeMiddleware)
+    {
+        if (!is_null($globalMiddleware) and !is_null($routeMiddleware)) {
+            self::$routeMiddleware = $routeMiddleware;
+            self::$globalMiddleware = $globalMiddleware;
+        }
     }
 
 }

@@ -14,6 +14,8 @@ class Route
 
     public $reg_exp = '/{.*}/';
 
+    private $middleware;
+
     public function __construct($httpMethod, $url, $callable)
     {
         $this->setUrl($url);
@@ -28,9 +30,17 @@ class Route
 
     }
 
-    public function middleware()
+    public function middleware($nickname)
     {
+        $this->middleware = $nickname;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getMiddleware()
+    {
+        return $this->middleware;
     }
 
     public function getCallable()

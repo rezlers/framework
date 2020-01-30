@@ -9,6 +9,6 @@ $router->get('/user1/{id}/film/{number}', function (Request $request) {
     var_dump($request->getPath());
     var_dump($request->getHttpMethod());
 });
-$router->get('/user1/21/film/{number}', function (Request $request) {echo 'b';});
+$router->get('/user1/21/film/{number}', function (Request $request) {echo 'b';})->middleware('userMW');
 
 

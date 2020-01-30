@@ -6,6 +6,11 @@ $services = [
         'args' => [],
         'type' => 'singleton'
     ],
+    'Middleware' => [
+        'namespace' => 'Kernel\Middleware',
+        'args' => [],
+        'type' => 'singleton'
+    ],
     'DB' => [
         'namespace' => 'Kernel\Services\DataBase',
         'args' => [],
@@ -13,7 +18,7 @@ $services = [
     ],
     'Logger' => [
         'namespace' => 'Kernel\Services\Logger',
-        'args' => '',
+        'args' => [],
         'type' => 'any'
     ]
 ];

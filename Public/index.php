@@ -44,3 +44,24 @@ $logger->alert('alert message');
 
 $app->handle();
 
+/*
+class A
+{
+    protected static $testArray;
+
+    public function passValue(&$array)
+    {
+        self::$testArray = $array;
+    }
+}
+
+$testArray = ['1', '2'];
+
+$testObject = new A();
+
+$testObject->passValue($testArray);
+
+$otherTestObject = new A();
+
+die;
+*/ ## pass array by reference
