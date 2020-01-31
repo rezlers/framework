@@ -1,7 +1,8 @@
 <?php
 use Kernel\Request as Request;
+use Kernel\Response as Response;
 # For custom web routes
-$router->get('/user1/{id}/film/{number}', function (Request $request) {
+$router->get('/user1/{id}/film/{number}', function (Request $request, Response $response) {
     echo 'a';
     var_dump($request->getReqParams());
     var_dump($request->getParams());
@@ -9,6 +10,8 @@ $router->get('/user1/{id}/film/{number}', function (Request $request) {
     var_dump($request->getPath());
     var_dump($request->getHttpMethod());
 });
-$router->get('/user1/21/film/{number}', function (Request $request) {echo 'b';})->middleware('userMW');
+$router->get('/user1/21/film/{number}', function (Request $request, Response $response) {echo 'b';})->middleware('userMW');
+
+$router->get('/user1/22/film/{number}', 'MyController')->middleware('userMW');
 
 

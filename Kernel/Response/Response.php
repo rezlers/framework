@@ -6,8 +6,8 @@ namespace Kernel;
 
 class Response
 {
-    public function __invoke()
+    public function send()
     {
-        echo 'response body';
+        echo 'response has sent';
     }
 }

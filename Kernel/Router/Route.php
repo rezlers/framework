@@ -45,11 +45,7 @@ class Route
 
     public function getCallable()
     {
-        if (gettype($this->callable) != 'string') {
-            return $this->callable;
-        }
-        # It'll have more complex structure, but now it's unnecessary
-        return new $this->callable();
+        return $this->callable;
     }
 
     public function isEqual($requestUrl)

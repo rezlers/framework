@@ -5,6 +5,7 @@ namespace Kernel;
 
 use Kernel\Response;
 use Kernel\Request;
+use Kernel\ControllerInterface;
 
 class Controller
 {
@@ -18,14 +19,38 @@ class Controller
         $this->configureController($configurationArray);
     }
 
-    public function handle(Response $response, Request $request)
+    public function handle(Request $request, Response $response)
     {
-        // Function that will handle request/response in controller entity
+        $callable = $this->createCallable($request, $response);
+        $this->executeCallable($callable, $request, $response);
+        if ($this->executeCallable($callable, $request, $response) == false)
+            $response->send(); ## error handling
+        $response->send();
     }
 
-    private function configureController($configurationArray)
+    private function configureController(&$configurationArray)
     {
+        if (! is_null($configurationArray))
+            self::$controllers = $configurationArray;
+    }
 
+    private function executeCallable($callable, Request $request, Response $response)
+    {
+        if ($callable instanceof \Closure)
+            return $callable($request, $response);
+        if ($callable instanceof ControllerInterface)
+            return $callable->handle($request, $response);
+
+        return false;
+    }
+
+    private function createCallable(Request $request, Response $response)
+    {
+        $callable = $request->getRoute()->getCallable();
+        if ($callable instanceof \Closure)
+            return $callable;
+
+        return new self::$controllers[$callable]();
     }
 
 }

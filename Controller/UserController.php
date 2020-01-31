@@ -9,8 +9,9 @@ use Kernel\Response;
 
 class UserController implements ControllerInterface
 {
-    public function handle(Request $request, Response $response)
+    public function handle(Request $request, Response $response) : Response
     {
-        // TODO: Implement handle() method.
+        echo 'controller has passed';
+        return $response;
     }
 }

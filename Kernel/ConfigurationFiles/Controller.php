@@ -1,2 +1,4 @@
 <?php
-$controllers = [];
+$controllers = [
+    'MyController' => 'App\Controller\UserController'
+];

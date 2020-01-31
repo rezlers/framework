@@ -34,7 +34,7 @@ class Middleware
 
         if (!empty(self::$middlewareToExecute)) {
             if ($this->executeMiddleware($request, $response) instanceof Response) {
-                $this->send($response);
+                $response->send();
                 die();
             }
         }
@@ -93,9 +93,5 @@ class Middleware
         }
     }
 
-    private function send(Response $response)
-    {
-        return $response();
-    }
 
 }
