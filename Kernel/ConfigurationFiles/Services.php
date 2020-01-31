@@ -7,6 +7,11 @@ $services = [
         'type' => 'singleton'
     ],
     'Middleware' => [
+        'namespace' => 'Kernel\Controller',
+        'args' => [],
+        'type' => 'singleton'
+    ],
+    'Controller' => [
         'namespace' => 'Kernel\Middleware',
         'args' => [],
         'type' => 'singleton'

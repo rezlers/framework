@@ -31,27 +31,31 @@ class Middleware
     public function handle(Request $request, Response $response)
     {
         $this->configureArrayToExecute($request);
-        return $this->executeMiddleware($request, $response);
+
+        if (!empty(self::$middlewareToExecute)) {
+            if ($this->executeMiddleware($request, $response) instanceof Response) {
+                $this->send($response);
+                die();
+            }
+        }
     }
 
     private function executeMiddleware(Request $request, Response $response)
     {
-        $functionToExecute = $this->arrayReduce(function (Closure $nextClosure, MiddlewareInterface $middleware) ## It will return function that returns execution of user-handle method
+        $functionToExecute = $this->configureFunctionToExecute(function (Closure $nextClosure, MiddlewareInterface $middleware) ## It will return function that returns execution of user-handle method
         {
             return function (Request $request, Response $response) use ($nextClosure, $middleware) {
                 return $middleware->handle($request, $response, $nextClosure);
             };
         },
-            function ($destination) {
-                return function (Request $request, Response $response) use ($destination) {
-                    return $destination($request, $response);
-                };
+            function (Request $request, Response $response) {
+                return true;
             }
         );
         return $functionToExecute($request, $response);
     }
 
-    private function arrayReduce(Closure $nextWrapper, Closure $destinationWrapper)
+    private function configureFunctionToExecute(Closure $nextWrapper, Closure $destinationWrapper)
     {
         if (!empty(self::$middlewareToExecute))
             $currentMiddleware = array_pop(self::$middlewareToExecute);
@@ -71,6 +75,7 @@ class Middleware
      */
     private function configureArrayToExecute(Request $request)
     {
+        self::$middlewareToExecute = array();
         foreach (self::$globalMiddleware as $value) {
             self::$middlewareToExecute[] = new $value();
         }
@@ -86,6 +91,11 @@ class Middleware
             self::$routeMiddleware = $routeMiddleware;
             self::$globalMiddleware = $globalMiddleware;
         }
+    }
+
+    private function send(Response $response)
+    {
+        return $response();
     }
 
 }

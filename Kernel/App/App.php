@@ -48,6 +48,9 @@ class App
         if (! is_null($route)) {
             $this->request->setRoute($route);  ## Put all such logic to setRoute method. Done
             $this->middleware->handle($this->request, $this->response);
+            // Callbacks can be interpreted as controllers too
+            // $this->controller->handle($this->request, $this->response);
+            // callable object will be executed from controller method handle
             $callable = $route->callable;
             $callable($this->request);
         }
