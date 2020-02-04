@@ -79,6 +79,9 @@ $controller = new Controller($controllers);
 //MyAutoloader::requireDirectory(__DIR__ . '/../Controller');
 require __DIR__ . "/../Controller/UserController.php";
 
+## Auto require
+require __DIR__ . '/../Model/User.php';
+
 $container = new ServiceContainer($services);
 $DB = new DataBase($connection);
 $logger = new Logger($logger);
