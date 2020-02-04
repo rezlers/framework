@@ -23,7 +23,7 @@ class Controller
     {
         $callable = $this->createCallable($request, $response);
         if ($this->executeCallable($callable, $request, $response) == false)
-            $response->error(500); ## error handling. Determinate framework error
+            $response->sendError(500); ## error handling. Determinate framework error
         $response->send();
     }
 

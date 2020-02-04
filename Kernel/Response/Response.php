@@ -42,7 +42,7 @@ class Response
         header($header);
     }
 
-    public function error(int $errorCode) ## When view templates will be completed then there will be custom errors handling
+    public function sendError(int $errorCode) ## When view templates will be completed then there will be custom errors handling
     {
         http_response_code($errorCode);
     }
