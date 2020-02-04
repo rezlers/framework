@@ -51,6 +51,8 @@ $container = new ServiceContainer($services);
 $DB = new DataBase($connection);
 $logger = new Logger($logger);
 
+require __DIR__ . '/../Kernel/Helpers/Helpers.php';
+
 require __DIR__ . "/../Kernel/App/App.php";
 $app = new app($request, $response);
 

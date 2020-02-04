@@ -64,18 +64,12 @@ class Logger
     {
         foreach (self::$loggerConfiguration as $key => $value) {
             if (in_array($level, $value['levels']) or $value['levels'][0] == 'all') {
-                try {
-                    $pathToLogFile = '/var/www/framework/Log/';
-                    $logFile = fopen($pathToLogFile . $key, 'a');
-                    $dateTime = date('Y-m-d H:i:s');
-                    $logMessage = $dateTime . ': ' . $level . ': ' . $message . PHP_EOL;
-                    fwrite($logFile, $logMessage);
-                    fclose($logFile);
-                }
-                catch (Exception $exception) {
-                    $frameworkLogMessage = 'framework: ' . $exception->getMessage();
-                    $this->error($frameworkLogMessage);
-                }
+                $pathToLogFile = self::$loggerConfiguration['pathToLogFile'];
+                $logFile = fopen($pathToLogFile . $key, 'a');
+                $dateTime = date('Y-m-d H:i:s');
+                $logMessage = $dateTime . ': ' . $level . ': ' . $message . PHP_EOL;
+                fwrite($logFile, $logMessage);
+                fclose($logFile);
             }
         }
     }

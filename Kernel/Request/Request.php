@@ -24,6 +24,17 @@ class Request
         return array_merge($this->reqParams, $this->urlParams);
     }
 
+    public function getParam($param)
+    {
+        $params = $this->getParams();
+        return $params[$param];
+    }
+
+    public function addParam($key, $param)
+    {
+        $this->reqParams[$key] = $param;
+    }
+
     /**
      * @return mixed
      */

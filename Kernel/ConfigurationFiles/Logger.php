@@ -3,5 +3,6 @@
 
 $logger = ['LogFile' => [
     'levels' => ['all']
-    ]
+    ],
+    'pathToLogFile' => '/var/www/framework/Log/'
 ];

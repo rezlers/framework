@@ -9,8 +9,12 @@ $router->get('/user1/{id}/film/{number}', function (Request $request, Response $
     var_dump($request->getUrlParams());
     var_dump($request->getPath());
     var_dump($request->getHttpMethod());
+    return $response;
 });
-$router->get('/user1/21/film/{number}', function (Request $request, Response $response) {echo 'b';})->middleware('userMW');
+$router->get('/user1/21/film/{number}', function (Request $request, Response $response) {
+    $response->write('Closure has passed');
+    return $response;
+})->middleware('userMW');
 
 $router->get('/user1/22/film/{number}', 'MyController')->middleware('userMW');
 

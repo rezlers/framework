@@ -22,9 +22,8 @@ class Controller
     public function handle(Request $request, Response $response)
     {
         $callable = $this->createCallable($request, $response);
-        $this->executeCallable($callable, $request, $response);
         if ($this->executeCallable($callable, $request, $response) == false)
-            $response->send(); ## error handling
+            $response->error(500); ## error handling. Determinate framework error
         $response->send();
     }
 
