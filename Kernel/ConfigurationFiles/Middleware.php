@@ -1,7 +1,7 @@
 <?php
 
 $globalMiddleware = [
-    'sysMW' => 'Kernel\Middleware\SystemMiddleware'
+    'sysMW' => 'App\Middleware\SystemMiddleware'
 ];
 
 $routeMiddleware = [

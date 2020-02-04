@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Kernel\Middleware;
+namespace App\Middleware;
 
 use Kernel\Request;
 use Kernel\Response;

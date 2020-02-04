@@ -3,6 +3,8 @@
 
 namespace Kernel\Services;
 
+use Kernel\ServiceContainer;
+use Kernel\Services\Logger;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -16,6 +18,11 @@ class Mailer
      */
     private static $mailer;
 
+    /**
+     * @var \Kernel\Services\Logger
+     */
+    private $logger;
+
     public function __construct($mail = null, $configuration = null)
     {
         $this->configureMailer($mail, $configuration);
@@ -23,6 +30,7 @@ class Mailer
 
     public function mail($email, $subject, $msg, $from = 'from@example.com', $replyTo = 'replyto@example.com', $name = 'First Last')
     {
+        ob_start();
         self::$mailer->setFrom($from, $name);
 
         self::$mailer->addReplyTo($replyTo, $name);
@@ -36,10 +44,11 @@ class Mailer
 //        self::$mailer->AltBody = 'This is a plain-text message body';
 
         if (!self::$mailer->send()) {
-            echo "Mailer Error: " . self::$mailer->ErrorInfo;
+            $this->logger->error("Mailer Error: " . self::$mailer->ErrorInfo);
         } else {
-            echo "Message sent!";
+            $this->logger->info("Message sent!");
         }
+        ob_end_clean();
     }
 
     private function configureMailer($mail, $configuration)
@@ -69,6 +78,9 @@ class Mailer
 
             self::$mailer->Password = self::$configuration['Password'];
         }
+
+        $container = new ServiceContainer();
+        $this->logger = $container->getService('Logger');
     }
 
 }
