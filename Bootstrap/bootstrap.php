@@ -9,6 +9,13 @@ use Kernel\Services\DataBase;
 use Kernel\Services\Logger;
 use Kernel\Middleware;
 use Kernel\Controller;
+use Kernel\Services\Mailer;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require __DIR__ . '/../vendor/autoload.php';
+$phpMailer = new PHPMailer();
 
 require __DIR__ . "/../Kernel/Router/Route.php";
 
@@ -27,11 +34,13 @@ require __DIR__ . '/../Kernel/ConfigurationFiles/Services.php';  ## $services ar
 require __DIR__ . '/../Kernel/ConfigurationFiles/DataBaseConnection.php';  ## $connection array
 require __DIR__ . '/../Kernel/ConfigurationFiles/Logger.php';  ## $logger array
 require __DIR__ . "/../Kernel/ConfigurationFiles/Controller.php"; ## $controllers array
+require __DIR__ . "/../Kernel/ConfigurationFiles/Mailer.php"; ## $configuration array
 require __DIR__ . '/../Kernel/Container/ServiceContainer.php';
 require __DIR__ . '/../Kernel/Container/Service.php';
 ## There will be autoload func
 require __DIR__ . '/../Kernel/Container/Services/DataBase.php';
 require __DIR__ . '/../Kernel/Container/Services/Logger.php';
+require __DIR__ . '/../Kernel/Container/Services/Mailer.php';
 ## Middleware
 require __DIR__ . "/../Kernel/ConfigurationFiles/Middleware.php"; ## $globalMiddleware array, $routeMiddleware array
 require __DIR__ . "/../Kernel/Middleware/Middleware.php";
@@ -50,6 +59,7 @@ require __DIR__ . "/../Controller/UserController.php";
 $container = new ServiceContainer($services);
 $DB = new DataBase($connection);
 $logger = new Logger($logger);
+$mailer = new Mailer($phpMailer, $configuration);
 
 require __DIR__ . '/../Kernel/Helpers/Helpers.php';
 
@@ -63,3 +73,5 @@ unset($container);
 unset($logger);
 unset($middleware);
 unset($controller);
+unset($mailer);
+unset($phpMailer);

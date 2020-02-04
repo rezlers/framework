@@ -25,6 +25,11 @@ $services = [
         'namespace' => 'Kernel\Services\Logger',
         'args' => [],
         'type' => 'any'
+    ],
+    'Mailer' => [
+        'namespace' => 'Kernel\Services\Mailer',
+        'args' => [],
+        'type' => 'singleton'
     ]
 ];
 

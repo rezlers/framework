@@ -41,6 +41,14 @@ $logger->notice('notice message');
 $logger->critical('critical message');
 $logger->alert('alert message');
 */ ## Container services examples
+/*
+$container = new \Kernel\ServiceContainer();
+$mailer = $container->getService('Mailer');
+$email = 'rezlers123@gmail.com';
+$subject = 'Test Message';
+$msg = "<div>Hello! Here is your link</div>";
+$mailer->mail($email, $subject, $msg);
+*/ ## Mailer example
 
 $app->handle();
 
