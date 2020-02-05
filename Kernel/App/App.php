@@ -62,6 +62,8 @@ class App
             // Callbacks are interpreted as controllers too
             $result = $this->controller->handle($this->request);
             $this->responseHandler->handle($result);
+        } else {
+            $this->responseHandler->handle($this->container->getService('Response')->setStatusCode(404));
         }
     }
 
@@ -87,6 +89,6 @@ class App
 
     private function configureResponseHandler()
     {
-        $this->responseHandler = new ResponseHandler();
+        $this->responseHandler = $this->container->getService('ResponseHandler');
     }
 }

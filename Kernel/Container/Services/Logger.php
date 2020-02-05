@@ -22,6 +22,4 @@ interface Logger
 
     public function critical($message);
 
-    public function frameworkLog($message);
-
 }

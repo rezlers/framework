@@ -36,10 +36,12 @@ class Response
 
     /**
      * @param mixed $statusCode
+     * @return Response
      */
-    public function setStatusCode($statusCode): void
+    public function setStatusCode($statusCode)
     {
         $this->statusCode = $statusCode;
+        return $this;
     }
 
     public function getHeaders()
@@ -62,6 +64,26 @@ class Response
     public function write($str)
     {
         $this->body = $this->body . $str;
+        return $this;
+    }
+
+    /**
+     * @param string $str
+     * @return Response
+     */
+    public function setBody($str)
+    {
+        $this->body = $str;
+        return $this;
+    }
+    /**
+     * @param string $header
+     * @return Response
+     */
+    public function setHeader($header)
+    {
+        $this->headers = array();
+        $this->headers[] = $header;
         return $this;
     }
 
