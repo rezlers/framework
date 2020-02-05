@@ -13,6 +13,10 @@ class Controller
      * @var array
      */
     protected static $controllers;
+    /**
+     * @var ServiceContainer
+     */
+    private $container;
 
     public function __construct($configurationArray)
     {
@@ -22,13 +26,19 @@ class Controller
     public function handle(Request $request)
     {
         $callable = $this->createCallable($request);
-        return $this->executeCallable($callable, $request);
+        $result = $this->executeCallable($callable, $request);
+
+        if ($result instanceof Response)
+            return $result;
+        return $this->container->getService('Response')->write($result);
     }
 
     private function configureController(&$configurationArray)
     {
-        if (! self::$controllers)
+        if (! self::$controllers) {
             self::$controllers = $configurationArray;
+            $this->container = new ServiceContainer();
+        }
     }
 
     private function executeCallable($callable, Request $request)

@@ -47,20 +47,11 @@ class Response
         return $this->headers;
     }
 
-    public function setHeader($header)
-    {
-        $this->headers = array();
-        $this->headers[] = $header;
-    }
 
     public function addHeader($header)
     {
         $this->headers[] = $header;
-    }
-
-    public function clearHeaders()
-    {
-        $this->headers = array();
+        return $this;
     }
 
     public function getBody()
@@ -68,14 +59,10 @@ class Response
         return $this->body;
     }
 
-    public function setBody($str)
-    {
-        $this->body = $str;
-    }
-
     public function write($str)
     {
         $this->body = $this->body . $str;
+        return $this;
     }
 
     private function configureResponse()
