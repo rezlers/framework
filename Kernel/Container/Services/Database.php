@@ -4,7 +4,7 @@
 namespace Kernel\Services;
 
 
-interface DataBase
+interface Database
 {
     public function __construct($configuration); ## for configuration
 

@@ -5,7 +5,7 @@ use Kernel\App;
 use Kernel\Request;
 use Kernel\Response;
 use Kernel\ServiceContainer;
-use Kernel\Services\Implementations\MyDataBase;
+use Kernel\Services\Implementations\MyDatabase;
 use Kernel\Services\Implementations\MyLogger;
 use Kernel\Middleware;
 use Kernel\Controller;
@@ -40,10 +40,10 @@ require __DIR__ . '/../Kernel/Container/ServiceContainer.php';
 require __DIR__ . '/../Kernel/Container/Service.php';
 ## There will be autoload func
 
-require __DIR__ . '/../Kernel/Container/Services/DataBase.php';
+require __DIR__ . '/../Kernel/Container/Services/Database.php';
 require __DIR__ . '/../Kernel/Container/Services/Logger.php';
 require __DIR__ . '/../Kernel/Container/Services/Mailer.php';
-require __DIR__ . '/../Kernel/Container/Services/Implementations/MyDataBase.php';
+require __DIR__ . '/../Kernel/Container/Services/Implementations/MyDatabase.php';
 require __DIR__ . '/../Kernel/Container/Services/Implementations/MyLogger.php';
 require __DIR__ . '/../Kernel/Container/Services/Implementations/PhpMailerWrapper.php';
 

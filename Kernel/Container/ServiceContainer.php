@@ -17,20 +17,20 @@ class ServiceContainer
         $this->configureServices($configArray);
     }
 
-    public function getService($serviceNickname)  # If service exists, then return it, else false
+    public function getService($serviceKey)  # If service exists, then return it, else false
     {
-        if (self::$services[$serviceNickname])
-            return self::$services[$serviceNickname]->getInstance();
+        if (self::$services[$serviceKey])
+            return self::$services[$serviceKey]->getInstance();
         return null;
     }
 
     /**
-     * @param $serviceNickname
+     * @param $serviceKey
      * @return bool
      */
-    public function hasService($serviceNickname)  # Is this service exists? bool
+    public function hasService($serviceKey)  # Is this service exists? bool
     {
-        if (self::$services[$serviceNickname]) {
+        if (self::$services[$serviceKey]) {
             return true;
         }
         return false;

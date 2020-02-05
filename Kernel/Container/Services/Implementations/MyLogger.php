@@ -63,16 +63,14 @@ class MyLogger implements Logger
 
     private function writeLogMessage($level, $message)
     {
-        foreach (self::$configuration as $key => $value) {
-            if (in_array($level, $value['levels']) or $value['levels'][0] == 'all') {
-                $pathToLogFile = self::$configuration['pathToLogFile'];
-                $logFile = fopen($pathToLogFile . $key, 'a');
-                $dateTime = date('Y-m-d H:i:s');
-                $logMessage = $dateTime . ': ' . $level . ': ' . $message . PHP_EOL;
-                fwrite($logFile, $logMessage);
-                fclose($logFile);
-            }
-        }
+        $pathToLogFile = self::$configuration['pathToLogFile'];
+        $logFile = fopen($pathToLogFile . self::$configuration['name'], 'a');
+        chmod($pathToLogFile . self::$configuration['name'], 0777);
+        $dateTime = date('Y-m-d H:i:s');
+        $logMessage = $dateTime . ': ' . $level . ': ' . $message . PHP_EOL;
+        fwrite($logFile, $logMessage);
+        fclose($logFile);
     }
+
 
 }

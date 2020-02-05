@@ -53,7 +53,7 @@ $mailer->mail($email, $subject, $msg);
 $container = new \Kernel\ServiceContainer();
 $mailer = $container->getService('Mailer');
 $logger = $container->getService('Logger');
-$database = $container->getService('DataBase');
+$database = $container->getService('Database');
 $controller = $container->getService('Controller');
 $middleware = $container->getService('Middleware');
 $router = $container->getService('Router');

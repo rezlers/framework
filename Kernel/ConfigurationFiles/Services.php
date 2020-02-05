@@ -29,8 +29,8 @@ return $services = [
         'args' => [],
         'type' => 'any'
     ],
-    'DataBase' => [
-        'namespace' => 'Kernel\Services\Implementations\MyDataBase',
+    'Database' => [
+        'namespace' => 'Kernel\Services\Implementations\MyDatabase',
         'args' => [],
         'type' => 'any',
         'configuration' => 'DataBaseConnection'
