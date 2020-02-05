@@ -57,7 +57,7 @@ $database = $container->getService('DataBase');
 $controller = $container->getService('Controller');
 $middleware = $container->getService('Middleware');
 $router = $container->getService('Router');
-*/ ##for service testing
+*/ ## For service testing
 
 $app->handle();
 
