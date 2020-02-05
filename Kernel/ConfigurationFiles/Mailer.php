@@ -1,5 +1,5 @@
 <?php
-$configuration = [
+return $configuration = [
     'IsSMTP' => true,
     'SMTPDebug' => 2,
     'DebugOutput' => 'html',

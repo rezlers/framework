@@ -28,10 +28,7 @@ class App
      * @var \Kernel\Request
      */
     private $request;
-    /**
-     * @var Response
-     */
-    private $response;
+
     /**
      * @var ServiceContainer
      */
@@ -39,7 +36,6 @@ class App
 
     public function __construct(Request $request, Response $response)
     {
-        $this->response = $response;
         $this->request = $request;
         $this->configureContainer();
         $this->configureRouter();
@@ -54,10 +50,10 @@ class App
         if (! is_null($route)) {
             $this->request->setRoute($route);
 
-            $this->middleware->handle($this->request, $this->response);
+            $this->middleware->handle($this->request);
 
             // Callbacks are interpreted as controllers too
-            $this->controller->handle($this->request, $this->response);
+            $this->controller->handle($this->request);
         }
     }
 

@@ -10,9 +10,9 @@ use Closure;
 
 class UserMiddleware implements MiddlewareInterface
 {
-    public function handle(Request $request, Response $response, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         echo 'UserMiddleware';
-        return $next($request, $response);
+        return $next($request);
     }
 }

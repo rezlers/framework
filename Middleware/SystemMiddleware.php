@@ -7,12 +7,17 @@ use Kernel\Request;
 use Kernel\Response;
 use Kernel\MiddlewareInterface;
 use Closure;
+use Kernel\ServiceContainer;
 
 class SystemMiddleware implements MiddlewareInterface
 {
-    public function handle(Request $request, Response $response, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         echo 'SystemMiddleware';
-        return $next($request, $response);
+        $container = new ServiceContainer();
+        $response = $container->getService('Response');
+        if (! $response)
+            return $response;
+        return $next($request);
     }
 }

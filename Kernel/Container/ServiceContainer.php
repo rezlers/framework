@@ -40,7 +40,7 @@ class ServiceContainer
     {
         if (!is_null($configArray)) {
             foreach ($configArray as $key => $value) {
-                self::$services[$key] = new Service($value['namespace'], $key, $value['type']);
+                self::$services[$key] = new Service($value['namespace'], $key, $value['type'], $value['configuration']);
             }
         }
     }

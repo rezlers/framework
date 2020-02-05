@@ -1,4 +1,4 @@
 <?php
-$controllers = [
+return $controllers = [
     'MyController' => 'App\Controller\UserController'
 ];

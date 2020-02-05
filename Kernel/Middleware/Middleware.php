@@ -23,36 +23,37 @@ class Middleware
      */
     protected static $middlewareToExecute;
 
-    public function __construct($globalMiddleware = null, $routeMiddleware = null)
+    public function __construct($configuration)
     {
-        $this->configureMiddleware($globalMiddleware, $routeMiddleware);
+        $this->configureMiddleware($configuration);
     }
 
-    public function handle(Request $request, Response $response)
+    public function handle(Request $request)
     {
         $this->configureArrayToExecute($request);
 
         if (!empty(self::$middlewareToExecute)) {
-            if ($this->executeMiddleware($request, $response) instanceof Response) {
-                $response->send();
+            $result = $this->executeMiddleware($request);
+            if ($result instanceof Response) {
+                $result->send();
                 die();
             }
         }
     }
 
-    private function executeMiddleware(Request $request, Response $response)
+    private function executeMiddleware(Request $request)
     {
         $functionToExecute = $this->configureFunctionToExecute(function (Closure $nextClosure, MiddlewareInterface $middleware) ## It will return function that returns execution of user-handle method
         {
-            return function (Request $request, Response $response) use ($nextClosure, $middleware) {
-                return $middleware->handle($request, $response, $nextClosure);
+            return function (Request $request) use ($nextClosure, $middleware) {
+                return $middleware->handle($request, $nextClosure);
             };
         },
-            function (Request $request, Response $response) {
+            function (Request $request) {
                 return true;
             }
         );
-        return $functionToExecute($request, $response);
+        return $functionToExecute($request);
     }
 
     private function configureFunctionToExecute(Closure $nextWrapper, Closure $destinationWrapper)
@@ -85,11 +86,11 @@ class Middleware
         return self::$middlewareToExecute;
     }
 
-    private function configureMiddleware(&$globalMiddleware, &$routeMiddleware)
+    private function configureMiddleware($configuration)
     {
-        if (!is_null($globalMiddleware) and !is_null($routeMiddleware)) {
-            self::$routeMiddleware = $routeMiddleware;
-            self::$globalMiddleware = $globalMiddleware;
+        if (!self::$routeMiddleware and !self::$routeMiddleware) {
+            self::$routeMiddleware = $configuration['routeMiddleware'];
+            self::$globalMiddleware = $configuration['globalMiddleware'];
         }
     }
 

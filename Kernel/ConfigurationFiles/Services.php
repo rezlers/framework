@@ -1,6 +1,7 @@
 <?php
+// Service keys are actually interfaces names
 
-$services = [
+return $services = [
     'Router' => [
         'namespace' => 'Kernel\Router',
         'args' => [],
@@ -9,27 +10,37 @@ $services = [
     'Middleware' => [
         'namespace' => 'Kernel\Middleware',
         'args' => [],
-        'type' => 'singleton'
+        'type' => 'singleton',
+        'configuration' => 'Middleware'
     ],
     'Controller' => [
         'namespace' => 'Kernel\Controller',
         'args' => [],
-        'type' => 'singleton'
+        'type' => 'singleton',
+        'configuration' => 'Controller'
     ],
-    'DB' => [
-        'namespace' => 'Kernel\Services\DataBase',
+    'Response' => [
+        'namespace' => 'Kernel\Response',
         'args' => [],
         'type' => 'any'
+    ],
+    'DataBase' => [
+        'namespace' => 'Kernel\Services\Implementations\MyDataBase',
+        'args' => [],
+        'type' => 'any',
+        'configuration' => 'DataBaseConnection'
     ],
     'Logger' => [
-        'namespace' => 'Kernel\Services\Logger',
+        'namespace' => 'Kernel\Services\Implementations\MyLogger',
         'args' => [],
-        'type' => 'any'
+        'type' => 'any',
+        'configuration' => 'Logger'
     ],
     'Mailer' => [
-        'namespace' => 'Kernel\Services\Mailer',
+        'namespace' => 'Kernel\Services\Implementations\PhpMailerWrapper',
         'args' => [],
-        'type' => 'singleton'
+        'type' => 'singleton',
+        'configuration' => 'Mailer'
     ]
 ];
 

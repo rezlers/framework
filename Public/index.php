@@ -35,7 +35,7 @@ require '../Bootstrap/bootstrap.php';
 /*
 $container = new \Kernel\ServiceContainer();
 $container->getService('DB')->connection()->statement('CREATE TABLE test_table (id SERIAL PRIMARY KEY)');
-$logger = $container->getService('Logger');
+$logger = $container->getService('MyLogger');
 $logger->info('info message');
 $logger->notice('notice message');
 $logger->critical('critical message');
@@ -43,12 +43,21 @@ $logger->alert('alert message');
 */ ## Container services examples
 /*
 $container = new \Kernel\ServiceContainer();
-$mailer = $container->getService('Mailer');
+$mailer = $container->getService('PhpMailerWrapper');
 $email = 'rezlers123@gmail.com';
 $subject = 'Test Message';
 $msg = "<div>Hello! Here is your link</div>";
 $mailer->mail($email, $subject, $msg);
-*/ ## Mailer example
+*/ ## PhpMailerWrapper from container example
+/*
+$container = new \Kernel\ServiceContainer();
+$mailer = $container->getService('Mailer');
+$logger = $container->getService('Logger');
+$database = $container->getService('DataBase');
+$controller = $container->getService('Controller');
+$middleware = $container->getService('Middleware');
+$router = $container->getService('Router');
+*/ ##for service testing
 
 $app->handle();
 

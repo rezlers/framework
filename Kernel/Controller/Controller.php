@@ -14,36 +14,37 @@ class Controller
      */
     protected static $controllers;
 
-    public function __construct($configurationArray = null)
+    public function __construct($configurationArray)
     {
         $this->configureController($configurationArray);
     }
 
-    public function handle(Request $request, Response $response)
+    public function handle(Request $request)
     {
-        $callable = $this->createCallable($request, $response);
-        if ($this->executeCallable($callable, $request, $response) == false)
+        $callable = $this->createCallable($request);
+        $response = $this->executeCallable($callable, $request);
+        if ($response == false)
             $response->sendError(500); ## error handling. Determinate framework error
         $response->send();
     }
 
     private function configureController(&$configurationArray)
     {
-        if (! is_null($configurationArray))
+        if (! self::$controllers)
             self::$controllers = $configurationArray;
     }
 
-    private function executeCallable($callable, Request $request, Response $response)
+    private function executeCallable($callable, Request $request)
     {
         if ($callable instanceof \Closure)
-            return $callable($request, $response);
+            return $callable($request);
         if ($callable instanceof ControllerInterface)
-            return $callable->handle($request, $response);
+            return $callable->handle($request);
 
         return false;
     }
 
-    private function createCallable(Request $request, Response $response)
+    private function createCallable(Request $request)
     {
         $callable = $request->getRoute()->getCallable();
         if ($callable instanceof \Closure)
