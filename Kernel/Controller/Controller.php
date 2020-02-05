@@ -22,10 +22,7 @@ class Controller
     public function handle(Request $request)
     {
         $callable = $this->createCallable($request);
-        $response = $this->executeCallable($callable, $request);
-        if ($response == false)
-            $response->sendError(500); ## error handling. Determinate framework error
-        $response->send();
+        return $this->executeCallable($callable, $request);
     }
 
     private function configureController(&$configurationArray)

@@ -24,6 +24,11 @@ return $services = [
         'args' => [],
         'type' => 'any'
     ],
+    'ResponseHandler' => [
+        'namespace' => 'Kernel\ResponseHandler',
+        'args' => [],
+        'type' => 'any'
+    ],
     'DataBase' => [
         'namespace' => 'Kernel\Services\Implementations\MyDataBase',
         'args' => [],

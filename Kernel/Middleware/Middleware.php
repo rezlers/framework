@@ -33,12 +33,10 @@ class Middleware
         $this->configureArrayToExecute($request);
 
         if (!empty(self::$middlewareToExecute)) {
-            $result = $this->executeMiddleware($request);
-            if ($result instanceof Response) {
-                $result->send();
-                die();
-            }
+            return $this->executeMiddleware($request);
         }
+        $container = new ServiceContainer();
+        return $container->getService('Response');
     }
 
     private function executeMiddleware(Request $request)
@@ -50,7 +48,7 @@ class Middleware
             };
         },
             function (Request $request) {
-                return true;
+                return null;
             }
         );
         return $functionToExecute($request);

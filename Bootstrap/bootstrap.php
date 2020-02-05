@@ -28,7 +28,7 @@ require __DIR__ . "/../Kernel/Request/Request.php";
 $request = new Request($_REQUEST, $_SERVER['REQUEST_METHOD']);
 
 require __DIR__ . "/../Kernel/Response/Response.php";
-$response = new Response();
+require __DIR__ . '/../Kernel/Response/ResponseHandler.php';
 
 require __DIR__ . '/../Kernel/ConfigurationFiles/Services.php';  ## $services array
 require __DIR__ . '/../Kernel/ConfigurationFiles/DataBaseConnection.php';  ## $connection array
@@ -68,7 +68,7 @@ $container = new ServiceContainer($services);
 require __DIR__ . '/../Kernel/Helpers/Helpers.php';
 
 require __DIR__ . "/../Kernel/App/App.php";
-$app = new app($request, $response);
+$app = new app($request);
 
 
 

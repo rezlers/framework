@@ -26,27 +26,6 @@ class Response
         $this->configureResponse();
     }
 
-    public function send()
-    {
-        http_response_code($this->statusCode);
-        foreach ($this->headers as $value) {
-            header($value);
-        }
-        echo $this->body;
-
-        die();
-    }
-
-    public function sendHeader($header)
-    {
-        header($header);
-    }
-
-    public function sendError(int $errorCode) ## When view templates will be completed then there will be custom errors handling
-    {
-        http_response_code($errorCode);
-    }
-
     /**
      * @return mixed
      */
