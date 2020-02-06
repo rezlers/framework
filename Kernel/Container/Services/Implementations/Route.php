@@ -1,12 +1,13 @@
 <?php
 
 
-namespace Kernel\Router;
+namespace Kernel\Container\Services\Implementations;
 
 use Kernel\CallableHandler\ControllerInterface;
+use Kernel\Container\Services\RouteInterface;
 use Kernel\Request\Request;
 
-class Route
+class Route implements RouteInterface
 {
     public $url;  ## Maybe in request UPD It can't, because it's senseless
     public $httpMethod;  ## Maybe in request UPD It can't, because this is 'static' http-method that allows user to reserve this url for current http-method
@@ -32,7 +33,7 @@ class Route
 
     }
 
-    public function middleware($key)
+    public function middleware($key) : void
     {
         $this->middleware = $key;
     }
@@ -45,12 +46,12 @@ class Route
         return $this->middleware;
     }
 
-    public function createCallable()
+    public function createCallable() : callable
     {
         if ($this->callable instanceof \Closure)
             return $this->callable;
         if (gettype($this->callable) == 'string') {
-            $controllers = require $_SERVER['DOCUMENT_ROOT'] . '../Kernel/ConfigurationFiles/Controllers.php';
+            $controllers = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Controllers.php';
             $instanceNamespace = 'App\Controller\\' . $controllers[$this->callable];
             $instance = new $instanceNamespace();
             $callable = array($instance, 'handle');
@@ -86,6 +87,22 @@ class Route
                 return false;
             }
         }
+    }
+
+    public function getParams(string $url): array
+    {
+        $params = array();
+        if ($this->isEqual($url)) {
+            $appUrlParts = explode('/', trim($this->url, '/'));
+            $requestUrlParts = explode('/', trim($url, '/'));
+            foreach ($appUrlParts as $key => $value) {
+                if (preg_match($this->reg_exp, $value)) {
+                    $params[trim($value, '{}')] = $requestUrlParts[$key];
+
+                }
+            }
+        }
+        return $params;
     }
 
     private function setUrl($url)

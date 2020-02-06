@@ -8,6 +8,18 @@ return $services = [
         'type' => 'any',
         'interface' => 'ResponseInterface'
     ],
+    'Router' => [
+        'classname' => 'Router',
+        'args' => [],
+        'type' => 'singleton',
+        'interface' => 'RouterInterface'
+    ],
+    'Route' => [
+        'classname' => 'Route',
+        'args' => [],
+        'type' => 'any',
+        'interface' => 'RouteInterface'
+    ],
     'DatabaseInterface' => [
         'classname' => 'MyDatabase',
         'args' => [],

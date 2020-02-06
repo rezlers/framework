@@ -3,7 +3,8 @@
 
 namespace Kernel\Request;
 
-use Kernel\Router\Route as Route;
+use Kernel\Container\Services\Implementations\Route as Route;
+use Kernel\Container\Services\RouteInterface;
 
 class Request
 {
@@ -11,7 +12,7 @@ class Request
 
     private $reqParams;
     /**
-     * @var Route
+     * @var RouteInterface
      */
     private $route;
 
@@ -68,27 +69,16 @@ class Request
     }
 
     /**
-     * @return Route
+     * @return RouteInterface
      */
     public function getRoute()
     {
         return $this->route;
     }
 
-    public function setRoute (Route $route)
+    public function setRoute (RouteInterface $route)
     {
-        $params = array();
-        if ($route->isEqual($this->reqParams['path'])) {
-            $appUrlParts = explode('/', trim($route->url, '/'));
-            $requestUrlParts = explode('/', trim($this->reqParams['path'], '/'));
-            foreach ($appUrlParts as $key => $value) {
-                if (preg_match($route->reg_exp, $value)) {
-                    $params[trim($value, '{}')] = $requestUrlParts[$key];
-
-                }
-            }
-        }
-        $this->urlParams = $params;
+        $this->setUrlParams($route);
         $this->route = $route;
         $this->callable = $route->createCallable();
     }
@@ -106,6 +96,14 @@ class Request
             $this->reqParams['path'] = '/';
         } else {
             $this->reqParams['path'] = '/' . $this->reqParams['path'];
+        }
+    }
+
+    private function setUrlParams(RouteInterface $route)
+    {
+        $this->urlParams = $route->getParams($this->reqParams['path']);
+        if (! $this->urlParams) {
+            $this->urlParams = array();
         }
     }
 

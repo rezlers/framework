@@ -1,16 +1,18 @@
 <?php
 
 
-namespace Kernel\Router;
+namespace Kernel\Container\Services\Implementations;
 
+use Kernel\Container\Services\RouteInterface;
 use \Kernel\Request\Request as Request;
-use \Kernel\Router\Route as Route;
+use Kernel\Container\Services\Implementations\Route as Route;
+use Kernel\Container\Services\RouterInterface;
 
-class Router
+class Router implements RouterInterface
 {
     protected static $routes = array();
 
-    public function getRoute(Request $request)
+    public function getRoute(Request $request) : RouteInterface
     {
         $candidates = array();
         foreach (self::$routes as $key => $value) {
@@ -37,9 +39,9 @@ class Router
     /**
      * @param $appUrl
      * @param $callable
-     * @return Route
+     * @return RouteInterface
      */
-    public function get($appUrl, $callable)
+    public function get($appUrl, $callable) : RouteInterface
     {
         $newInstance = new Route('GET', $appUrl, $callable);
         self::$routes[] = $newInstance;

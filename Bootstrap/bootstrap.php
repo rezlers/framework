@@ -1,6 +1,6 @@
 <?php
 
-use Kernel\Router\Router;
+use Kernel\Container\Services\Implementations\Router;
 use Kernel\App\App;
 use Kernel\Request\Request;
 use Kernel\Container\Services\ResponseInterface;
@@ -17,10 +17,10 @@ use PHPMailer\PHPMailer\Exception;
 spl_autoload_register(function ($classname) {
     $parts = explode('\\', $classname);
     if ($parts[0] == 'Kernel') {
-        $pathToFile = $_SERVER['DOCUMENT_ROOT'] . '../' . implode('/', $parts) . '.php';
+        $pathToFile = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../' . implode('/', $parts) . '.php';
         require $pathToFile;
     } else {
-        $pathToFile = $_SERVER['DOCUMENT_ROOT'] . '../' . implode('/', array_slice($parts, 1)) . '.php';
+        $pathToFile = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../' . implode('/', array_slice($parts, 1)) . '.php';
         require $pathToFile;
     }
 });

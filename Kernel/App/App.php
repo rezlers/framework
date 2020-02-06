@@ -3,7 +3,7 @@
 
 namespace Kernel\App;
 
-use Kernel\Router\Router as Router;
+use Kernel\Container\Services\Implementations\Router as Router;
 use Kernel\MiddlewareHandler\MiddlewareHandler as MiddlewareHandler;
 use Kernel\CallableHandler\CallableHandler;
 use Kernel\Request\Request as Request;
@@ -59,7 +59,7 @@ class App
             if ($result instanceof Response)
                 $this->responseHandler->handle($result);
 
-            $result = $this->callableHandler->handle($this->request);
+            $result = $this->callableHandler->handle($result); // Приходит callable а ожидает request
             $this->responseHandler->handle($result);
         } else {
             $this->responseHandler->handle($this->container->getService('ResponseInterface')->setStatusCode(404));
@@ -78,7 +78,7 @@ class App
 
     private function configureMiddleware()
     {
-        $pathToFile = $_SERVER['DOCUMENT_ROOT'] . '../Kernel/ConfigurationFiles/Middleware.php';
+        $pathToFile = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Middleware.php';
         $configuration = require $pathToFile;
         $this->middlewareHandler = new MiddlewareHandler($configuration);
     }

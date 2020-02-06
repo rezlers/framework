@@ -14,9 +14,10 @@ class SystemMiddleware implements MiddlewareInterface
     {
         echo 'SystemMiddleware';
         $container = new ServiceContainer();
-        $response = $container->getService('ResponseInterface');
+        $response = $container->getService('Response');
         if (! $response)
-            return $response;
+            return $response; // Может еще null вместо response прийти
+        echo 'SystemMiddleware again';
         return $next($request);
     }
 }

@@ -48,7 +48,7 @@ class MiddlewareHandler
             };
         },
             function (Request $request) {
-                return null;
+                return $request->getCallable();
             }
         );
         return $functionToExecute($request);
