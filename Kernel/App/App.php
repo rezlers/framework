@@ -41,11 +41,11 @@ class App
     public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->configureResponseHandler();
         $this->configureContainer();
         $this->configureRouter();
         $this->configureMiddleware();
         $this->configureController();
+        $this->configureResponseHandler();
     }
 
     public function handle()

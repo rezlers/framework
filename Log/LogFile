@@ -2,3 +2,5 @@
 2020-01-28 07:32:43: notice: notice message
 2020-01-28 07:32:43: critical: critical message
 2020-01-28 07:32:43: alert: alert message
+2020-02-06 08:31:26: info: User middleware has passed
+2020-02-06 08:31:36: info: User middleware has passed
