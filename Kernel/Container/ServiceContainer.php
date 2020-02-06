@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Kernel;
+namespace Kernel\Container;
 
-use Kernel\Service as Service;
+use Kernel\Container\Service as Service;
 
 class ServiceContainer
 {

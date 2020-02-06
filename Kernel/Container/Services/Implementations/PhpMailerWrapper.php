@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Kernel\Services\Implementations;
+namespace Kernel\Container\Services\Implementations;
 
-use Kernel\ServiceContainer;
-use Kernel\Services\Implementations\MyLogger;
-use Kernel\Services\Mailer;
+use Kernel\Container\ServiceContainer;
+use Kernel\Container\Services\Implementations\MyLogger;
+use Kernel\Container\Services\Mailer;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -20,7 +20,7 @@ class PhpMailerWrapper implements Mailer
     private static $mailer;
 
     /**
-     * @var \Kernel\Services\Implementations\MyLogger
+     * @var \Kernel\Container\Services\Implementations\MyLogger
      */
     private $logger;
 

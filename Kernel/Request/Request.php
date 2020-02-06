@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Kernel;
+namespace Kernel\Request;
 
-use Kernel\Route as Route;
+use Kernel\Router\Route as Route;
 
 class Request
 {

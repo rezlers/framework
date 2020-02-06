@@ -3,11 +3,11 @@
 
 namespace App\controller;
 
-use Kernel\ControllerInterface;
-use Kernel\Request;
-use Kernel\Response;
+use Kernel\Controller\ControllerInterface;
+use Kernel\Request\Request;
+use Kernel\Response\Response;
 use Kernel\Helpers;
-use Kernel\ServiceContainer;
+use Kernel\Container\ServiceContainer;
 
 class UserController implements ControllerInterface
 {

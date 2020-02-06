@@ -1,32 +1,32 @@
 <?php
 
 
-namespace Kernel;
+namespace Kernel\App;
 
-use Kernel\Router as Router;
-use Kernel\Middleware as Middleware;
-use Kernel\Controller as Controller;
-use Kernel\Request as Request;
-use Kernel\Response as Response;
-use Kernel\ServiceContainer as ServiceContainer;
-use Kernel\ResponseHandler;
+use Kernel\Router\Router as Router;
+use Kernel\MiddlewareHandler\MiddlewareHandler as MiddlewareHandler;
+use Kernel\Controller\Controller as Controller;
+use Kernel\Request\Request as Request;
+use Kernel\Response\Response as Response;
+use Kernel\Container\ServiceContainer as ServiceContainer;
+use Kernel\Response\ResponseHandler;
 
 class App
 {
     /**
-     * @var \Kernel\Router
+     * @var Router
      */
     private $router;
     /**
-     * @var Middleware
+     * @var MiddlewareHandler
      */
-    private $middleware;
+    private $middlewareHandler;
     /**
      * @var Controller
      */
     private $controller;
     /**
-     * @var \Kernel\Request
+     * @var Request
      */
     private $request;
     /**
@@ -74,12 +74,14 @@ class App
 
     private function configureRouter()
     {
-        $this->router = $this->container->getService('Router');
+        $this->router = new Router();
     }
 
     private function configureMiddleware()
     {
-        $this->middleware = $this->container->getService('Middleware');
+        $pathToFile = $_SERVER['DOCUMENT_ROOT'] . '../Kernel/ConfigurationFiles/Middleware.php';
+        $configuration = require $pathToFile;
+        $this->middlewareHandler = new MiddlewareHandler($configuration);
     }
 
     private function configureController()

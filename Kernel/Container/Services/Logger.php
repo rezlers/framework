@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Kernel\Services;
+namespace Kernel\Container\Services;
 
 
 interface Logger

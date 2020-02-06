@@ -3,13 +3,12 @@
 
 namespace App\Middleware;
 
-use Kernel\Request;
-use Kernel\Response;
-use Kernel\MiddlewareInterface;
+use Kernel\Request\Request;
+use Kernel\Response\Response;
 use Closure;
-use Kernel\ServiceContainer;
+use Kernel\Container\ServiceContainer;
 
-class UserMiddleware implements MiddlewareInterface
+class UserMiddleware
 {
     public function handle(Request $request, Closure $next)
     {

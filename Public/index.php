@@ -55,7 +55,7 @@ $mailer = $container->getService('Mailer');
 $logger = $container->getService('Logger');
 $database = $container->getService('Database');
 $controller = $container->getService('Controller');
-$middleware = $container->getService('Middleware');
+$middleware = $container->getService('MiddlewareHandler');
 $router = $container->getService('Router');
 */ ## For service testing
 

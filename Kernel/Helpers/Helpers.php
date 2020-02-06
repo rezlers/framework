@@ -2,7 +2,7 @@
 
 namespace Kernel\Helpers;
 
-use Kernel\Request;
+use Kernel\Request\Request;
 
 function render($template, Request $request)
 {

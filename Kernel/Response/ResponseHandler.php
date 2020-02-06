@@ -1,8 +1,8 @@
 <?php
 
 
-namespace Kernel;
-use Kernel\Response;
+namespace Kernel\Response;
+use Kernel\Response\Response;
 
 class ResponseHandler
 {

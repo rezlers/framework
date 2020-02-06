@@ -2,47 +2,25 @@
 // Service keys are actually interfaces names
 
 return $services = [
-    'Router' => [
-        'namespace' => 'Kernel\Router',
-        'args' => [],
-        'type' => 'singleton'
-    ],
-    'Middleware' => [
-        'namespace' => 'Kernel\Middleware',
-        'args' => [],
-        'type' => 'singleton',
-        'configuration' => 'Middleware'
-    ],
-    'Controller' => [
-        'namespace' => 'Kernel\Controller',
-        'args' => [],
-        'type' => 'singleton',
-        'configuration' => 'Controller'
-    ],
     'Response' => [
-        'namespace' => 'Kernel\Response',
-        'args' => [],
-        'type' => 'any'
-    ],
-    'ResponseHandler' => [
-        'namespace' => 'Kernel\ResponseHandler',
+        'namespace' => 'Kernel\Response\Response',
         'args' => [],
         'type' => 'any'
     ],
     'Database' => [
-        'namespace' => 'Kernel\Services\Implementations\MyDatabase',
+        'namespace' => 'Kernel\Container\Services\Implementations\MyDatabase',
         'args' => [],
         'type' => 'any',
         'configuration' => 'DataBaseConnection'
     ],
     'Logger' => [
-        'namespace' => 'Kernel\Services\Implementations\MyLogger',
+        'namespace' => 'Kernel\Container\Services\Implementations\MyLogger',
         'args' => [],
         'type' => 'any',
         'configuration' => 'Logger'
     ],
     'Mailer' => [
-        'namespace' => 'Kernel\Services\Implementations\PhpMailerWrapper',
+        'namespace' => 'Kernel\Container\Services\Implementations\PhpMailerWrapper',
         'args' => [],
         'type' => 'singleton',
         'configuration' => 'Mailer'

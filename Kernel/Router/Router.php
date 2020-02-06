@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Kernel;
+namespace Kernel\Router;
 
-use \Kernel\Request as Request;
-use \Kernel\Route as Route;
+use \Kernel\Request\Request as Request;
+use \Kernel\Router\Route as Route;
 
 class Router
 {
@@ -37,7 +37,7 @@ class Router
     /**
      * @param $appUrl
      * @param $callable
-     * @return \Kernel\Route
+     * @return Route
      */
     public function get($appUrl, $callable)
     {

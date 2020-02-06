@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Kernel\Services\Implementations;
+namespace Kernel\Container\Services\Implementations;
 
 use Exception;
-use Kernel\Services\Logger;
+use Kernel\Container\Services\Logger;
 
 class MyLogger implements Logger
 {

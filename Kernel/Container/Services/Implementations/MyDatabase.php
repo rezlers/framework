@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Kernel\Services\Implementations;
+namespace Kernel\Container\Services\Implementations;
 
-use Kernel\Services\Database;
+use Kernel\Container\Services\Database;
 use PDO;
 
 class MyDatabase implements Database

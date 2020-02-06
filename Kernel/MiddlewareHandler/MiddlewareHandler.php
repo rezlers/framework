@@ -1,14 +1,15 @@
 <?php
 
 
-namespace Kernel;
+namespace Kernel\MiddlewareHandler;
 
-use Kernel\Request as Request;
-use Kernel\Response as Response;
-use Kernel\MiddlewareInterface as MiddlewareInterface;
+use Kernel\Container\ServiceContainer;
+use Kernel\Request\Request as Request;
+use Kernel\Response\Response as Response;
+use Kernel\MiddlewareHandler\MiddlewareInterface as MiddlewareInterface;
 use Closure;
 
-class Middleware
+class MiddlewareHandler
 {
     /**
      * @var MiddlewareInterface[]
@@ -41,7 +42,7 @@ class Middleware
 
     private function executeMiddleware(Request $request)
     {
-        $functionToExecute = $this->configureFunctionToExecute(function (Closure $nextClosure, MiddlewareInterface $middleware) ## It will return function that returns execution of user-handle method
+        $functionToExecute = $this->configureFunctionToExecute(function (Closure $nextClosure, $middleware) ## It will return function that returns execution of user-handle method
         {
             return function (Request $request) use ($nextClosure, $middleware) {
                 return $middleware->handle($request, $nextClosure);
@@ -69,7 +70,7 @@ class Middleware
     }
 
     /**
-     * @param \Kernel\Request $request
+     * @param Request $request
      * @return MiddlewareInterface[]
      */
     private function configureArrayToExecute(Request $request)

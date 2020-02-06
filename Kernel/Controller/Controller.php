@@ -1,11 +1,12 @@
 <?php
 
 
-namespace Kernel;
+namespace Kernel\Controller;
 
-use Kernel\Response;
-use Kernel\Request;
-use Kernel\ControllerInterface;
+use Kernel\Container\ServiceContainer;
+use Kernel\Response\Response;
+use Kernel\Request\Request;
+use Kernel\Controller\ControllerInterface;
 
 class Controller
 {
