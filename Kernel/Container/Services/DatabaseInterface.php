@@ -4,7 +4,7 @@
 namespace Kernel\Container\Services;
 
 
-interface Database
+interface DatabaseInterface
 {
     public function __construct($configuration); ## for configuration
 

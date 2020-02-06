@@ -4,7 +4,7 @@
 namespace Kernel\Container\Services;
 
 
-interface Logger
+interface LoggerInterface
 {
     public function __construct($configuration);  ## for configuration
 

@@ -1,4 +1,42 @@
 <?php
+
+require '../Bootstrap/bootstrap.php';
+
+$app->handle();
+
+/*
+function test($var)
+{
+    echo $var;
+}
+$callable1 = 'test';
+call_user_func_array($callable1, array(1));
+
+$callable2 = function ($var) {
+    echo $var;
+};
+call_user_func_array($callable2, array(2));
+
+class A
+{
+    public function method($var)
+    {
+        echo $var;
+    }
+}
+$callable3 = array(new A(), 'method');
+call_user_func_array($callable3, array(3));
+/* ## callable example
+/*class A
+{
+    public function handle()
+    {
+
+    }
+}
+
+$var = new A();
+$method = $var->handle;*/ ## That is an answer why do we need array that we can invoke
 /*
 class A
 {
@@ -29,38 +67,6 @@ $args = ['2', '1'];
 $object = $test->newInstanceArgs($args);
 var_dump($object);
 */ ## Reflection API, Ohuenno
-
-require '../Bootstrap/bootstrap.php';
-
-/*
-$container = new \Kernel\ServiceContainer();
-$container->getService('DB')->connection()->statement('CREATE TABLE test_table (id SERIAL PRIMARY KEY)');
-$logger = $container->getService('MyLogger');
-$logger->info('info message');
-$logger->notice('notice message');
-$logger->critical('critical message');
-$logger->alert('alert message');
-*/ ## Container services examples
-/*
-$container = new \Kernel\ServiceContainer();
-$mailer = $container->getService('PhpMailerWrapper');
-$email = 'rezlers123@gmail.com';
-$subject = 'Test Message';
-$msg = "<div>Hello! Here is your link</div>";
-$mailer->mail($email, $subject, $msg);
-*/ ## PhpMailerWrapper from container example
-/*
-$container = new \Kernel\ServiceContainer();
-$mailer = $container->getService('Mailer');
-$logger = $container->getService('Logger');
-$database = $container->getService('Database');
-$controller = $container->getService('Controller');
-$middleware = $container->getService('MiddlewareHandler');
-$router = $container->getService('Router');
-*/ ## For service testing
-
-$app->handle();
-
 /*
 class A
 {
@@ -82,3 +88,29 @@ $otherTestObject = new A();
 
 die;
 */ ## pass array by reference
+/*
+$container = new \Kernel\ServiceContainer();
+$container->getService('DB')->connection()->statement('CREATE TABLE test_table (id SERIAL PRIMARY KEY)');
+$logger = $container->getService('MyLogger');
+$logger->info('info message');
+$logger->notice('notice message');
+$logger->critical('critical message');
+$logger->alert('alert message');
+*/ ## Container services examples
+/*
+$container = new \Kernel\ServiceContainer();
+$mailer = $container->getService('PhpMailerWrapper');
+$email = 'rezlers123@gmail.com';
+$subject = 'Test Message';
+$msg = "<div>Hello! Here is your link</div>";
+$mailer->mail($email, $subject, $msg);
+*/ ## PhpMailerWrapper from container example
+/*
+$container = new \Kernel\ServiceContainer();
+$mailer = $container->getService('MailerInterface');
+$logger = $container->getService('LoggerInterface');
+$database = $container->getService('DatabaseInterface');
+$controller = $container->getService('CallableHandler');
+$middleware = $container->getService('MiddlewareHandler');
+$router = $container->getService('Router');
+*/ ## For service testing

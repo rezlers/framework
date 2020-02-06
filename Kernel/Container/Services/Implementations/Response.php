@@ -1,10 +1,12 @@
 <?php
 
 
-namespace Kernel\Response;
+namespace Kernel\Container\Services\Implementations;
 
 
-class Response
+use Kernel\Container\Services\ResponseInterface;
+
+class Response implements ResponseInterface
 {
     /**
      * @var int
@@ -27,9 +29,9 @@ class Response
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getStatusCode()
+    public function getStatusCode() : int
     {
         return $this->statusCode;
     }
@@ -38,13 +40,13 @@ class Response
      * @param mixed $statusCode
      * @return Response
      */
-    public function setStatusCode($statusCode)
+    public function setStatusCode(int $statusCode) : ResponseInterface
     {
         $this->statusCode = $statusCode;
         return $this;
     }
 
-    public function getHeaders()
+    public function getHeaders() : array
     {
         return $this->headers;
     }
@@ -56,12 +58,12 @@ class Response
         return $this;
     }
 
-    public function getBody()
+    public function getBody() : string
     {
         return $this->body;
     }
 
-    public function write($str)
+    public function write(string $str) : ResponseInterface
     {
         $this->body = $this->body . $str;
         return $this;

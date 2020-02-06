@@ -3,15 +3,14 @@
 
 namespace App\controller;
 
-use Kernel\Controller\ControllerInterface;
+use Kernel\CallableHandler\ControllerInterface;
 use Kernel\Request\Request;
-use Kernel\Response\Response;
 use Kernel\Helpers;
 use Kernel\Container\ServiceContainer;
 
 class UserController implements ControllerInterface
 {
-    public function handle(Request $request) : Response
+    public function handle(Request $request)
     {
         $container = new ServiceContainer();
         $response = $container->getService('Response');

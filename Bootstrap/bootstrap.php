@@ -3,12 +3,12 @@
 use Kernel\Router\Router;
 use Kernel\App\App;
 use Kernel\Request\Request;
-use Kernel\Response\Response;
+use Kernel\Container\Services\ResponseInterface;
 use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyDatabase;
 use Kernel\Container\Services\Implementations\MyLogger;
-use Kernel\Middleware\MiddlewareHandler;
-use Kernel\Controller\Controller;
+use Kernel\MiddlewareHandler\MiddlewareHandler;
+use Kernel\CallableHandler\CallableHandler;
 use Kernel\Container\Services\Implementations\PhpMailerWrapper;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -34,10 +34,6 @@ require __DIR__ . "/../Routes/Routes.php";
 $request = new Request($_REQUEST, $_SERVER['REQUEST_METHOD']);
 
 require __DIR__ . '/../Kernel/ConfigurationFiles/Services.php';  ## $services array
-require __DIR__ . "/../Kernel/ConfigurationFiles/Controller.php"; ## $controllers array
-
-## MiddlewareHandler
-require __DIR__ . "/../Kernel/ConfigurationFiles/Middleware.php"; ## $globalMiddleware array, $routeMiddleware array
 
 $container = new ServiceContainer($services);
 

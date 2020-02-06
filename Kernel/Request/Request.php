@@ -8,8 +8,14 @@ use Kernel\Router\Route as Route;
 class Request
 {
     private $urlParams;
+
     private $reqParams;
+    /**
+     * @var Route
+     */
     private $route;
+
+    private $callable;
 
     public function __construct($request, $httpMethod)
     {
@@ -84,6 +90,15 @@ class Request
         }
         $this->urlParams = $params;
         $this->route = $route;
+        $this->callable = $route->createCallable();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCallable()
+    {
+        return $this->callable;
     }
 
     private function setPath () {

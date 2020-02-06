@@ -5,7 +5,6 @@ namespace Kernel\MiddlewareHandler;
 
 use Kernel\Container\ServiceContainer;
 use Kernel\Request\Request as Request;
-use Kernel\Response\Response as Response;
 use Kernel\MiddlewareHandler\MiddlewareInterface as MiddlewareInterface;
 use Closure;
 
@@ -37,12 +36,12 @@ class MiddlewareHandler
             return $this->executeMiddleware($request);
         }
         $container = new ServiceContainer();
-        return $container->getService('Response');
+        return $container->getService('ResponseInterface');
     }
 
     private function executeMiddleware(Request $request)
     {
-        $functionToExecute = $this->configureFunctionToExecute(function (Closure $nextClosure, $middleware) ## It will return function that returns execution of user-handle method
+        $functionToExecute = $this->configureFunctionToExecute(function (Closure $nextClosure, MiddlewareInterface $middleware) ## It will return function that returns execution of user-handle method
         {
             return function (Request $request) use ($nextClosure, $middleware) {
                 return $middleware->handle($request, $nextClosure);

@@ -2,11 +2,11 @@
 
 
 namespace Kernel\Response;
-use Kernel\Response\Response;
+use Kernel\Container\Services\ResponseInterface;
 
 class ResponseHandler
 {
-    public function handle(Response $response)
+    public function handle(ResponseInterface $response)
     {
         $this->sendResponseCode($response);
         $this->sendHeaders($response);
@@ -14,24 +14,24 @@ class ResponseHandler
         $this->shutdownHandler($response);
     }
 
-    private function shutdownHandler(Response $response)
+    private function shutdownHandler(ResponseInterface $response)
     {
         die();
     }
 
-    private function sendResponseCode(Response $response)
+    private function sendResponseCode(ResponseInterface $response)
     {
         http_response_code($response->getStatusCode());
     }
 
-    private function sendHeaders(Response $response)
+    private function sendHeaders(ResponseInterface $response)
     {
         foreach ($response->getHeaders() as $value) {
             header($value);
         }
     }
 
-    private function sendBody(Response $response)
+    private function sendBody(ResponseInterface $response)
     {
         echo $response->getBody();
     }

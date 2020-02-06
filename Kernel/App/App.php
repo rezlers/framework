@@ -5,9 +5,9 @@ namespace Kernel\App;
 
 use Kernel\Router\Router as Router;
 use Kernel\MiddlewareHandler\MiddlewareHandler as MiddlewareHandler;
-use Kernel\Controller\Controller as Controller;
+use Kernel\CallableHandler\CallableHandler;
 use Kernel\Request\Request as Request;
-use Kernel\Response\Response as Response;
+use Kernel\Container\Services\Implementations\Response as Response;
 use Kernel\Container\ServiceContainer as ServiceContainer;
 use Kernel\Response\ResponseHandler;
 
@@ -22,9 +22,9 @@ class App
      */
     private $middlewareHandler;
     /**
-     * @var Controller
+     * @var CallableHandler
      */
-    private $controller;
+    private $callableHandler;
     /**
      * @var Request
      */
@@ -50,20 +50,19 @@ class App
 
     public function handle()
     {
-        $route = $this->router->getRoute($this->request);  ## Change method to not mixed return or change method to getRoute. Done
+        $route = $this->router->getRoute($this->request);
 
-        if (! is_null($route)) {
+        if ($route) {
             $this->request->setRoute($route);
 
-            $result = $this->middleware->handle($this->request);
+            $result = $this->middlewareHandler->handle($this->request);
             if ($result instanceof Response)
                 $this->responseHandler->handle($result);
 
-            // Callbacks are interpreted as controllers too
-            $result = $this->controller->handle($this->request);
+            $result = $this->callableHandler->handle($this->request);
             $this->responseHandler->handle($result);
         } else {
-            $this->responseHandler->handle($this->container->getService('Response')->setStatusCode(404));
+            $this->responseHandler->handle($this->container->getService('ResponseInterface')->setStatusCode(404));
         }
     }
 
@@ -86,11 +85,11 @@ class App
 
     private function configureController()
     {
-        $this->controller = $this->container->getService('Controller');
+        $this->callableHandler = new CallableHandler();
     }
 
     private function configureResponseHandler()
     {
-        $this->responseHandler = $this->container->getService('ResponseHandler');
+        $this->responseHandler = new ResponseHandler();
     }
 }

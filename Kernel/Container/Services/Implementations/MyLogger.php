@@ -4,9 +4,9 @@
 namespace Kernel\Container\Services\Implementations;
 
 use Exception;
-use Kernel\Container\Services\Logger;
+use Kernel\Container\Services\LoggerInterface;
 
-class MyLogger implements Logger
+class MyLogger implements LoggerInterface
 {
     protected static $configuration;
 

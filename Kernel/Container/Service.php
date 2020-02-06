@@ -11,10 +11,10 @@ class Service
     private $configuration;
     private $instance;
 
-    public function __construct($namespace, $nickname, $type, $configuration)
+    public function __construct($classname, $key, $type, $configuration)
     {
-        $this->namespace = $namespace;
-        $this->nickname = $nickname;
+        $this->namespace = 'Kernel\Container\Services\Implementations\\' . $classname;
+        $this->nickname = $key;
         $this->type = $type;
         $this->configuration = $configuration;
     }

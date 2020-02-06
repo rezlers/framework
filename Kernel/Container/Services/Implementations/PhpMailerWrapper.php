@@ -5,12 +5,12 @@ namespace Kernel\Container\Services\Implementations;
 
 use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyLogger;
-use Kernel\Container\Services\Mailer;
+use Kernel\Container\Services\MailerInterface;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-class PhpMailerWrapper implements Mailer
+class PhpMailerWrapper implements MailerInterface
 {
     protected static $configuration;
 

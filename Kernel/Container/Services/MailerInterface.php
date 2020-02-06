@@ -4,7 +4,7 @@
 namespace Kernel\Container\Services;
 
 
-interface Mailer
+interface MailerInterface
 {
     public function __construct($configuration);  ## for configuration
 

@@ -3,27 +3,31 @@
 
 return $services = [
     'Response' => [
-        'namespace' => 'Kernel\Response\Response',
-        'args' => [],
-        'type' => 'any'
-    ],
-    'Database' => [
-        'namespace' => 'Kernel\Container\Services\Implementations\MyDatabase',
+        'classname' => 'Response',
         'args' => [],
         'type' => 'any',
-        'configuration' => 'DataBaseConnection'
+        'interface' => 'ResponseInterface'
     ],
-    'Logger' => [
-        'namespace' => 'Kernel\Container\Services\Implementations\MyLogger',
+    'DatabaseInterface' => [
+        'classname' => 'MyDatabase',
         'args' => [],
         'type' => 'any',
-        'configuration' => 'Logger'
+        'configuration' => 'DataBaseConnection',
+        'interface' => 'DatabaseInterface'
     ],
-    'Mailer' => [
-        'namespace' => 'Kernel\Container\Services\Implementations\PhpMailerWrapper',
+    'LoggerInterface' => [
+        'classname' => 'MyLogger',
+        'args' => [],
+        'type' => 'any',
+        'configuration' => 'LoggerInterface',
+        'interface' => 'LoggerInterface'
+    ],
+    'MailerInterface' => [
+        'classname' => 'PhpMailerWrapper',
         'args' => [],
         'type' => 'singleton',
-        'configuration' => 'Mailer'
+        'configuration' => 'MailerInterface',
+        'interface' => 'ResponseInterface'
     ]
 ];
 

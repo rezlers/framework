@@ -3,10 +3,10 @@
 
 namespace Kernel\Container\Services\Implementations;
 
-use Kernel\Container\Services\Database;
+use Kernel\Container\Services\DatabaseInterface;
 use PDO;
 
-class MyDatabase implements Database
+class MyDatabase implements DatabaseInterface
 {
     protected static $configuration;
     /**

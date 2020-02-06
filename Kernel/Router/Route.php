@@ -3,6 +3,8 @@
 
 namespace Kernel\Router;
 
+use Kernel\CallableHandler\ControllerInterface;
+use Kernel\Request\Request;
 
 class Route
 {
@@ -30,9 +32,9 @@ class Route
 
     }
 
-    public function middleware($nickname)
+    public function middleware($key)
     {
-        $this->middleware = $nickname;
+        $this->middleware = $key;
     }
 
     /**
@@ -43,9 +45,18 @@ class Route
         return $this->middleware;
     }
 
-    public function getCallable()
+    public function createCallable()
     {
-        return $this->callable;
+        if ($this->callable instanceof \Closure)
+            return $this->callable;
+        if (gettype($this->callable) == 'string') {
+            $controllers = require $_SERVER['DOCUMENT_ROOT'] . '../Kernel/ConfigurationFiles/Controllers.php';
+            $instanceNamespace = 'App\Controller\\' . $controllers[$this->callable];
+            $instance = new $instanceNamespace();
+            $callable = array($instance, 'handle');
+            return $callable;
+        }
+        return null;
     }
 
     public function isEqual($requestUrl)
