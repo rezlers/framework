@@ -20,6 +20,18 @@ return $services = [
         'type' => 'any',
         'interface' => 'RouteInterface'
     ],
+    'ResponseHandler' => [
+        'classname' => 'Route',
+        'args' => [],
+        'type' => 'any',
+        'interface' => 'ResponseHandlerInterface'
+    ],
+    'CallableHandler' => [
+        'classname' => 'Route',
+        'args' => [],
+        'type' => 'any',
+        'interface' => 'CallableHandlerInterface'
+    ],
     'DatabaseInterface' => [
         'classname' => 'MyDatabase',
         'args' => [],

@@ -34,9 +34,9 @@ class Route implements RouteInterface
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function isValid()
+    public function isValid() : bool
     {
         if(!is_null($this->url) and !is_null($this->httpMethod) and !is_null($this->callable))
             return true;

@@ -68,9 +68,9 @@ class App
                 $result = $this->callableHandler->handle($result);  // Controller entity. Response must be returned. Will be a service
                 $this->responseHandler->handle($result);  // Sending and getting shutdown
             }
-            $this->responseHandler->handle($this->container->getService('ResponseInterface')->setStatusCode(500));  // If middleware entity returned neither Response or Request
+            $this->responseHandler->handle($this->container->getService('Response')->setStatusCode(500));  // If middleware entity returned neither Response or Request
         } else {
-            $this->responseHandler->handle($this->container->getService('ResponseInterface')->setStatusCode(404));  // If there are no suitable route
+            $this->responseHandler->handle($this->container->getService('Response')->setStatusCode(404));  // If there are no suitable route
         }
     }
 
