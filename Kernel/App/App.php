@@ -58,9 +58,11 @@ class App
             $result = $this->middlewareHandler->handle($this->request);
             if ($result instanceof Response)
                 $this->responseHandler->handle($result);
-
-            $result = $this->callableHandler->handle($result); // Приходит callable а ожидает request
-            $this->responseHandler->handle($result);
+            elseif ($result instanceof Request) {
+                $result = $this->callableHandler->handle($result);
+                $this->responseHandler->handle($result);
+            }
+            $this->responseHandler->handle($this->container->getService('ResponseInterface')->setStatusCode(500));
         } else {
             $this->responseHandler->handle($this->container->getService('ResponseInterface')->setStatusCode(404));
         }

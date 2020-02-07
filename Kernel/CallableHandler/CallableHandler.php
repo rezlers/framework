@@ -26,7 +26,7 @@ class CallableHandler
 
         if ($result instanceof ResponseInterface)
             return $result;
-        return $this->container->getService('ResponseInterface')->write($result);
+        return $this->container->getService('ResponseInterface')->write("${result}");
     }
 
 
