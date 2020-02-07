@@ -18,10 +18,10 @@ spl_autoload_register(function ($classname) {
     $parts = explode('\\', $classname);
     if ($parts[0] == 'Kernel') {
         $pathToFile = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../' . implode('/', $parts) . '.php';
-        require $pathToFile;
+        require_once $pathToFile;
     } else {
         $pathToFile = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../' . implode('/', array_slice($parts, 1)) . '.php';
-        require $pathToFile;
+        require_once $pathToFile;
     }
 });
 

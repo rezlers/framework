@@ -5,15 +5,15 @@ namespace Kernel\Container\Services\Implementations;
 
 use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\RouteInterface;
-use \Kernel\Request\Request as Request;
 use Kernel\Container\Services\Implementations\Route as Route;
 use Kernel\Container\Services\RouterInterface;
+use Kernel\Request\RequestInterface;
 
 class Router implements RouterInterface
 {
     protected static $routes = array();
 
-    public function getRoute(Request $request) : RouteInterface
+    public function getRoute(RequestInterface $request) : RouteInterface
     {
         $candidates = array();
         foreach (self::$routes as $key => $value) {

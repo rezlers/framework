@@ -5,6 +5,7 @@ namespace Kernel\Container\Services;
 
 
 use Kernel\Request\Request as Request;
+use Kernel\Request\RequestInterface;
 use Kernel\Router\Route as Route;
 
 interface RouterInterface
@@ -14,7 +15,7 @@ interface RouterInterface
      * @param Request $request
      * @return RouteInterface
      */
-    public function getRoute(Request $request) : RouteInterface;
+    public function getRoute(RequestInterface $request) : RouteInterface;
 
     ## To bind route
     /**

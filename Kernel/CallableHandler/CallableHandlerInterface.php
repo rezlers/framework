@@ -4,10 +4,10 @@
 namespace Kernel\CallableHandler;
 
 
-use Kernel\Request\Request;
+use Kernel\Request\RequestInterface;
 use Kernel\Response\ResponseInterface;
 
 interface CallableHandlerInterface
 {
-    public function handle(Request $request) : ResponseInterface;
+    public function handle(RequestInterface $request) : ResponseInterface;
 }

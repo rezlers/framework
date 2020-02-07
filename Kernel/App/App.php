@@ -5,6 +5,7 @@ namespace Kernel\App;
 
 use Kernel\CallableHandler\CallableHandlerInterface;
 use Kernel\Container\Services\Implementations\Router as Router;
+use Kernel\Request\RequestInterface;
 use Kernel\Response\ResponseHandlerInterface;
 use Kernel\Container\Services\RouterInterface;
 use Kernel\MiddlewareHandler\MiddlewareHandler as MiddlewareHandler;
@@ -30,7 +31,7 @@ class App
      */
     private $callableHandler;
     /**
-     * @var Request
+     * @var RequestInterface
      */
     private $request;
     /**
@@ -42,7 +43,7 @@ class App
      */
     private $container;
 
-    public function __construct(Request $request)
+    public function __construct(RequestInterface $request)
     {
         $this->request = $request;
         $this->configureContainer();
@@ -62,16 +63,16 @@ class App
             $this->request->setCallable($route->createCallable());  // End of Router entity. Callable object(array, func or closure) is configured here. Framework's instance
 
             $result = $this->middlewareHandler->handle($this->request);  // Middleware entity. Result is mixed(Response, Request). Framework's instance middlewareHandler
-            if ($result instanceof Response)
+            if ($result instanceof ResponseInterface)
                 $this->responseHandler->handle($result);  // End of preMVC framework
 
-            elseif ($result instanceof Request) {
+            elseif ($result instanceof RequestInterface) {
                 $result = $this->callableHandler->handle($result);  // Controller entity. Response must be returned. Will be a service
                 $this->responseHandler->handle($result);  // Sending and now it responsible for getting shutdown
             }
-            $this->responseHandler->handle($this->container->getService('Response')->setStatusCode(500));  // If middleware entity returned neither Response or Request
+            $this->responseHandler->handle(App::Response()->setStatusCode(500));  // If middleware entity returned neither Response or Request
         } else {
-            $this->responseHandler->handle($this->container->getService('Response')->setStatusCode(404));  // If there are no suitable route
+            $this->responseHandler->handle(App::Response()->setStatusCode(404));  // If there are no suitable route
         }
     }
 

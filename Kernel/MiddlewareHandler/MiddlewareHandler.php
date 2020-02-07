@@ -6,6 +6,7 @@ namespace Kernel\MiddlewareHandler;
 use Kernel\Container\ServiceContainer;
 use Kernel\Request\Request as Request;
 use Kernel\MiddlewareHandler\MiddlewareInterface as MiddlewareInterface;
+use Kernel\Request\RequestInterface;
 use Kernel\Response\ResponseInterface;
 use Closure;
 
@@ -29,7 +30,7 @@ class MiddlewareHandler
         $this->configureMiddleware($configuration);
     }
 
-    public function handle(Request $request)
+    public function handle(RequestInterface $request)
     {
         $this->configureArrayToExecute($request);
 
@@ -40,7 +41,7 @@ class MiddlewareHandler
         return $container->getService('ResponseInterface');
     }
 
-    private function executeMiddleware(Request $request)
+    private function executeMiddleware(RequestInterface $request)
     {
         $functionToExecute = $this->configureFunctionToExecute(function (Closure $nextClosure, MiddlewareInterface $middleware) ## It will return function that returns execution of user-handle method
         {
@@ -70,10 +71,10 @@ class MiddlewareHandler
     }
 
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @return MiddlewareInterface[]
      */
-    private function configureArrayToExecute(Request $request)
+    private function configureArrayToExecute(RequestInterface $request)
     {
         self::$middlewareToExecute = array();
         foreach (self::$globalMiddleware as $value) {

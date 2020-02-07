@@ -3,18 +3,12 @@
 
 namespace Kernel\Request;
 
-use Kernel\Container\Services\Implementations\Route as Route;
-use Kernel\Container\Services\RouteInterface;
 
-class Request
+class Request implements RequestInterface
 {
     private $urlParams;
 
     private $reqParams;
-    /**
-     * @var RouteInterface
-     */
-    private $route;
 
     private $middleware;
 
@@ -26,46 +20,53 @@ class Request
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getParams()
+    public function getParams() : array
     {
         return array_merge($this->reqParams, $this->urlParams);
     }
 
-    public function getParam($param)
+    public function getParam(string $paramKey)
     {
         $params = $this->getParams();
-        return $params[$param];
+        return $params[$paramKey];
     }
 
-    public function addParam($key, $param)
+    public function addParam(string $key, $param) : RequestInterface
     {
         $this->reqParams[$key] = $param;
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getReqParams()
+    public function getReqParams() : array
     {
         return $this->reqParams;
     }
 
-    public function getPath()
+    /**
+     * @return string
+     */
+    public function getPath() : string
     {
         return $this->reqParams['path'];
     }
 
-    public function getHttpMethod()
+    /**
+     * @return string
+     */
+    public function getHttpMethod() : string
     {
         return $this->reqParams['http_method'];
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getUrlParams()
+    public function getUrlParams() : array
     {
         return $this->urlParams;
     }
@@ -95,9 +96,9 @@ class Request
     }
 
     /**
-     * @param mixed $middleware
+     * @param string $middlewareKey
      */
-    public function setMiddleware($middlewareKey): void
+    public function setMiddleware(string $middlewareKey): void
     {
         $this->middleware = $middlewareKey;
     }
