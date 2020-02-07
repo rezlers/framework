@@ -8,13 +8,13 @@ $router = $container->getService('Router');
 
 $router->get('/user1/{id}/film/{number}', function (Request $request) {
     $container = new ServiceContainer();
-    $response = $container->getService('ResponseInterface');
+    $response = $container->getService('Response');
 
     return $response;
 });
 $router->get('/user1/21/film/{number}', function (Request $request) {
     $container = new ServiceContainer();
-    $response = $container->getService('ResponseInterface');
+    $response = $container->getService('Response');
     $response->write('Closure has passed');
     return $response;
 })->middleware('userMW');

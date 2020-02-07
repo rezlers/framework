@@ -25,6 +25,8 @@ spl_autoload_register(function ($classname) {
     }
 });
 
+## These instances are required because they are not services, they important for framework execution
+
 require __DIR__ . '/../vendor/autoload.php';
 
 $request = new Request($_REQUEST, $_SERVER['REQUEST_METHOD']);
