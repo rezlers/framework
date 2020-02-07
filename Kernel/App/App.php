@@ -81,6 +81,8 @@ class App
 
     private function configureRouter()
     {
+        $pathToRoutes = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Routes/Routes.php';
+        require $pathToRoutes;
         $this->router = new Router();
     }
 

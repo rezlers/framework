@@ -27,10 +27,6 @@ spl_autoload_register(function ($classname) {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$router = new Router();
-
-require __DIR__ . "/../Routes/Routes.php";
-
 $request = new Request($_REQUEST, $_SERVER['REQUEST_METHOD']);
 
 require __DIR__ . '/../Kernel/ConfigurationFiles/Services.php';  ## $services array
