@@ -78,8 +78,8 @@ class MiddlewareHandler
         foreach (self::$globalMiddleware as $value) {
             self::$middlewareToExecute[] = new $value();
         }
-        if (self::$routeMiddleware[$request->getRoute()->getMiddleware()]) {
-            self::$middlewareToExecute[] = new self::$routeMiddleware[$request->getRoute()->getMiddleware()]();
+        if (self::$routeMiddleware[$request->getMiddleware()]) {
+            self::$middlewareToExecute[] = new self::$routeMiddleware[$request->getMiddleware()]();
         }
         return self::$middlewareToExecute;
     }

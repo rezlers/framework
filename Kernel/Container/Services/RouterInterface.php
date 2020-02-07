@@ -9,12 +9,14 @@ use Kernel\Router\Route as Route;
 
 interface RouterInterface
 {
+    ## To find route
     /**
      * @param Request $request
      * @return RouteInterface
      */
     public function getRoute(Request $request) : RouteInterface;
 
+    ## To bind route
     /**
      * @param $appUrl
      * @param $callable

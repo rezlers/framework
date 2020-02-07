@@ -41,7 +41,7 @@ class Route implements RouteInterface
     /**
      * @return mixed
      */
-    public function getMiddleware()
+    public function getMiddleware() : string
     {
         return $this->middleware;
     }

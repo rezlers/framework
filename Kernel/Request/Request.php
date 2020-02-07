@@ -16,6 +16,8 @@ class Request
      */
     private $route;
 
+    private $middleware;
+
     private $callable;
 
     public function __construct($request, $httpMethod)
@@ -69,18 +71,35 @@ class Request
     }
 
     /**
-     * @return RouteInterface
+     * @return string
      */
-    public function getRoute()
+    public function getMiddleware() : string
     {
-        return $this->route;
+        return $this->middleware;
     }
 
-    public function setRoute (RouteInterface $route)
+    /**
+     * @param mixed $callable
+     */
+    public function setCallable(callable $callable): void
     {
-        $this->setUrlParams($route);
-        $this->route = $route;
-        $this->callable = $route->createCallable();
+        $this->callable = $callable;
+    }
+
+    /**
+     * @param array $urlParams
+     */
+    public function setUrlParams(array $urlParams): void
+    {
+        $this->urlParams = $urlParams;
+    }
+
+    /**
+     * @param mixed $middleware
+     */
+    public function setMiddleware($middlewareKey): void
+    {
+        $this->middleware = $middlewareKey;
     }
 
     /**
@@ -96,14 +115,6 @@ class Request
             $this->reqParams['path'] = '/';
         } else {
             $this->reqParams['path'] = '/' . $this->reqParams['path'];
-        }
-    }
-
-    private function setUrlParams(RouteInterface $route)
-    {
-        $this->urlParams = $route->getParams($this->reqParams['path']);
-        if (! $this->urlParams) {
-            $this->urlParams = array();
         }
     }
 

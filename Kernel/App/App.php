@@ -50,21 +50,24 @@ class App
 
     public function handle()
     {
-        $route = $this->router->getRoute($this->request);
+        $route = $this->router->getRoute($this->request); // Begin Router entity. Router is service
 
         if ($route) {
-            $this->request->setRoute($route);
+            $this->request->setUrlParams($route->getParams($this->request->getPath()));
+            $this->request->setMiddleware($route->getMiddleware());
+            $this->request->setCallable($route->createCallable());  // End of Router entity. Callable object(array, func or closure) is configured here. Framework's instance
 
-            $result = $this->middlewareHandler->handle($this->request);
+            $result = $this->middlewareHandler->handle($this->request);  // Middleware entity. Result is mixed(Response, Request). Framework's instance middlewareHandler
             if ($result instanceof Response)
-                $this->responseHandler->handle($result);
+                $this->responseHandler->handle($result);  // End of preMVC framework
+
             elseif ($result instanceof Request) {
-                $result = $this->callableHandler->handle($result);
-                $this->responseHandler->handle($result);
+                $result = $this->callableHandler->handle($result);  // Controller entity. Response must be returned. Will be a service
+                $this->responseHandler->handle($result);  // Sending and getting shutdown
             }
-            $this->responseHandler->handle($this->container->getService('ResponseInterface')->setStatusCode(500));
+            $this->responseHandler->handle($this->container->getService('ResponseInterface')->setStatusCode(500));  // If middleware entity returned neither Response or Request
         } else {
-            $this->responseHandler->handle($this->container->getService('ResponseInterface')->setStatusCode(404));
+            $this->responseHandler->handle($this->container->getService('ResponseInterface')->setStatusCode(404));  // If there are no suitable route
         }
     }
 

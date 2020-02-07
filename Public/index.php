@@ -5,6 +5,23 @@ require '../Bootstrap/bootstrap.php';
 $app->handle();
 
 
+/*class A
+{
+    public function method($var)
+    {
+        echo $var;
+    }
+
+    public function executeCallable(callable $callable, array $args)
+    {
+        call_user_func_array($callable, $args);
+    }
+}
+
+$instance = new A();
+$callable = array($instance, 'method');
+$instance->executeCallable(1, array(1));
+*/ ## What is callable
 /*
 function test($var)
 {
