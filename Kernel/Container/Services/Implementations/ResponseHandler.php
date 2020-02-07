@@ -1,12 +1,14 @@
 <?php
 
 
-namespace Kernel\Response;
+namespace Kernel\Container\Services\Implementations;
+
+use Kernel\Container\Services\ResponseHandlerInterface;
 use Kernel\Container\Services\ResponseInterface;
 
-class ResponseHandler
+class ResponseHandler implements ResponseHandlerInterface
 {
-    public function handle(ResponseInterface $response)
+    public function handle(ResponseInterface $response) : void
     {
         $this->sendResponseCode($response);
         $this->sendHeaders($response);

@@ -1,14 +1,15 @@
 <?php
 
 
-namespace Kernel\CallableHandler;
+namespace Kernel\Container\Services\Implementations;
 
 use Kernel\Container\ServiceContainer;
+use Kernel\Container\Services\CallableHandlerInterface;
 use Kernel\Container\Services\Implementations\Response;
 use Kernel\Request\Request;
 use Kernel\Container\Services\ResponseInterface;
 
-class CallableHandler
+class CallableHandler implements CallableHandlerInterface
 {
     /**
      * @var ServiceContainer
@@ -20,7 +21,7 @@ class CallableHandler
         $this->configureContainer();
     }
 
-    public function handle(Request $request)
+    public function handle(Request $request) : ResponseInterface
     {
         $result = $this->executeCallable($request);
 

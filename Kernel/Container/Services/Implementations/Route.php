@@ -19,18 +19,28 @@ class Route implements RouteInterface
 
     private $middleware;
 
-    public function __construct($httpMethod, $url, $callable)
+    public function __construct($httpMethod = null, $url = null, $callableName = null)
     {
         $this->setUrl($url);
 
         $this->httpMethod = $httpMethod;  ## Constructing http method
 
-        $this->callable = $callable;  ## Constructing callable object
+        $this->callable = $callableName;  ## Constructing callable object
 
         $this->setParamsNum();  ## If there are no params then 0 will be returned
 
         $this->setPathLength();
 
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isValid()
+    {
+        if(!is_null($this->url) and !is_null($this->httpMethod) and !is_null($this->callable))
+            return true;
+        return false;
     }
 
     public function middleware($key) : void

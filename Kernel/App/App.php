@@ -3,18 +3,21 @@
 
 namespace Kernel\App;
 
+use Kernel\Container\Services\CallableHandlerInterface;
 use Kernel\Container\Services\Implementations\Router as Router;
+use Kernel\Container\Services\ResponseHandlerInterface;
+use Kernel\Container\Services\RouterInterface;
 use Kernel\MiddlewareHandler\MiddlewareHandler as MiddlewareHandler;
-use Kernel\CallableHandler\CallableHandler;
+use Kernel\Container\Services\Implementations\CallableHandler;
 use Kernel\Request\Request as Request;
 use Kernel\Container\Services\Implementations\Response as Response;
 use Kernel\Container\ServiceContainer as ServiceContainer;
-use Kernel\Response\ResponseHandler;
+use Kernel\Container\Services\Implementations\ResponseHandler;
 
 class App
 {
     /**
-     * @var Router
+     * @var RouterInterface
      */
     private $router;
     /**
@@ -22,7 +25,7 @@ class App
      */
     private $middlewareHandler;
     /**
-     * @var CallableHandler
+     * @var CallableHandlerInterface
      */
     private $callableHandler;
     /**
@@ -30,7 +33,7 @@ class App
      */
     private $request;
     /**
-     * @var ResponseHandler
+     * @var ResponseHandlerInterface
      */
     private $responseHandler;
     /**
@@ -52,7 +55,7 @@ class App
     {
         $route = $this->router->getRoute($this->request); // Begin Router entity. Router is service
 
-        if ($route) {
+        if ($route->isValid()) {
             $this->request->setUrlParams($route->getParams($this->request->getPath()));
             $this->request->setMiddleware($route->getMiddleware());
             $this->request->setCallable($route->createCallable());  // End of Router entity. Callable object(array, func or closure) is configured here. Framework's instance

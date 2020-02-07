@@ -21,4 +21,7 @@ interface RouteInterface
     ## To parse url from request object and get params from it
     public function getParams(string $url) : array;
 
+    ## To check that get method from Router instance returned valid route
+    public function isValid() : bool;
+
 }

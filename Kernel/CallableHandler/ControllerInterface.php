@@ -5,7 +5,7 @@ namespace Kernel\CallableHandler;
 
 use Kernel\Request\Request as Request;
 use Kernel\Container\Services\Implementations\Response as Response;
-use Kernel\Response\ResponseHandler;
+use Kernel\Container\Services\Implementations\ResponseHandler;
 
 interface ControllerInterface
 {

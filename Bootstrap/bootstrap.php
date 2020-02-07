@@ -8,7 +8,7 @@ use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyDatabase;
 use Kernel\Container\Services\Implementations\MyLogger;
 use Kernel\MiddlewareHandler\MiddlewareHandler;
-use Kernel\CallableHandler\CallableHandler;
+use Kernel\Container\Services\Implementations\CallableHandler;
 use Kernel\Container\Services\Implementations\PhpMailerWrapper;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

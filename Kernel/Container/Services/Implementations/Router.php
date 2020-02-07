@@ -3,6 +3,7 @@
 
 namespace Kernel\Container\Services\Implementations;
 
+use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\RouteInterface;
 use \Kernel\Request\Request as Request;
 use Kernel\Container\Services\Implementations\Route as Route;
@@ -33,7 +34,9 @@ class Router implements RouterInterface
             }
             return $candidates[$minKey];
         }
-        return null;
+        $container = new ServiceContainer();
+        $errorRoute = $container->getService('Route');
+        return $errorRoute;
     }
 
     /**
