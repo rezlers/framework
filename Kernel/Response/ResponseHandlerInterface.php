@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Kernel\Container\Services;
+namespace Kernel\Response;
 
 
 interface ResponseHandlerInterface

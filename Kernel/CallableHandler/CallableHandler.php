@@ -1,13 +1,14 @@
 <?php
 
 
-namespace Kernel\Container\Services\Implementations;
+namespace Kernel\CallableHandler;
 
+use Kernel\App\App;
 use Kernel\Container\ServiceContainer;
-use Kernel\Container\Services\CallableHandlerInterface;
-use Kernel\Container\Services\Implementations\Response;
+use Kernel\CallableHandler\CallableHandlerInterface;
+use Kernel\Response\Response;
 use Kernel\Request\Request;
-use Kernel\Container\Services\ResponseInterface;
+use Kernel\Response\ResponseInterface;
 
 class CallableHandler implements CallableHandlerInterface
 {
@@ -27,7 +28,7 @@ class CallableHandler implements CallableHandlerInterface
 
         if ($result instanceof ResponseInterface)
             return $result;
-        return $this->container->getService('ResponseInterface')->write("${result}");
+        return App::Response()->write("${result}");
     }
 
 

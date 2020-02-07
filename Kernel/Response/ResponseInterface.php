@@ -1,12 +1,11 @@
 <?php
 
 
-namespace Kernel\Container\Services;
+namespace Kernel\Response;
 
 
 interface ResponseInterface
 {
-
     public function getStatusCode() : int;
 
     public function setStatusCode(int $statusCode) : self;
@@ -16,5 +15,4 @@ interface ResponseInterface
     public function getBody() : string;
 
     public function write(string $str) : self;
-
 }

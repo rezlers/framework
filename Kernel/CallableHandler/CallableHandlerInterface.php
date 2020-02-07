@@ -1,10 +1,11 @@
 <?php
 
 
-namespace Kernel\Container\Services;
+namespace Kernel\CallableHandler;
 
 
 use Kernel\Request\Request;
+use Kernel\Response\ResponseInterface;
 
 interface CallableHandlerInterface
 {

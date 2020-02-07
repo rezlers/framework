@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Kernel\Container\Services\Implementations;
+namespace Kernel\Response;
 
-use Kernel\Container\Services\ResponseHandlerInterface;
-use Kernel\Container\Services\ResponseInterface;
+use Kernel\Response\ResponseHandlerInterface;
+use Kernel\Response\ResponseInterface;
 
 class ResponseHandler implements ResponseHandlerInterface
 {

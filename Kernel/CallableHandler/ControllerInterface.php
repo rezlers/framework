@@ -4,14 +4,13 @@
 namespace Kernel\CallableHandler;
 
 use Kernel\Request\Request as Request;
-use Kernel\Container\Services\Implementations\Response as Response;
-use Kernel\Container\Services\Implementations\ResponseHandler;
+use Kernel\Response\ResponseInterface;
 
 interface ControllerInterface
 {
     /**
      * @param Request $request
-     * @return Response
+     * @return ResponseInterface
      */
     public function handle(Request $request);
 }

@@ -6,6 +6,7 @@ namespace Kernel\MiddlewareHandler;
 use Kernel\Container\ServiceContainer;
 use Kernel\Request\Request as Request;
 use Kernel\MiddlewareHandler\MiddlewareInterface as MiddlewareInterface;
+use Kernel\Response\ResponseInterface;
 use Closure;
 
 class MiddlewareHandler

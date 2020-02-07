@@ -3,10 +3,10 @@
 
 return $services = [
     'Response' => [
-        'classname' => 'Response',
+        'classname' => 'ResponseContainer',
         'args' => [],
-        'type' => 'any',
-        'interface' => 'ResponseInterface'
+        'type' => 'singleton',
+        'interface' => 'ResponseContainerInterface'
     ],
     'Router' => [
         'classname' => 'Router',
@@ -20,38 +20,26 @@ return $services = [
         'type' => 'any',
         'interface' => 'RouteInterface'
     ],
-    'ResponseHandler' => [
-        'classname' => 'Route',
-        'args' => [],
-        'type' => 'any',
-        'interface' => 'ResponseHandlerInterface'
-    ],
-    'CallableHandler' => [
-        'classname' => 'Route',
-        'args' => [],
-        'type' => 'any',
-        'interface' => 'CallableHandlerInterface'
-    ],
-    'DatabaseInterface' => [
+    'Database' => [
         'classname' => 'MyDatabase',
         'args' => [],
         'type' => 'any',
         'configuration' => 'DataBaseConnection',
         'interface' => 'DatabaseInterface'
     ],
-    'LoggerInterface' => [
+    'Logger' => [
         'classname' => 'MyLogger',
         'args' => [],
         'type' => 'any',
         'configuration' => 'LoggerInterface',
         'interface' => 'LoggerInterface'
     ],
-    'MailerInterface' => [
+    'Mailer' => [
         'classname' => 'PhpMailerWrapper',
         'args' => [],
         'type' => 'singleton',
         'configuration' => 'MailerInterface',
-        'interface' => 'ResponseInterface'
+        'interface' => 'MailerInterface'
     ]
 ];
 

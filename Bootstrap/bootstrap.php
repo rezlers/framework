@@ -3,12 +3,12 @@
 use Kernel\Container\Services\Implementations\Router;
 use Kernel\App\App;
 use Kernel\Request\Request;
-use Kernel\Container\Services\ResponseInterface;
+use Kernel\Response\ResponseInterface;
 use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyDatabase;
 use Kernel\Container\Services\Implementations\MyLogger;
 use Kernel\MiddlewareHandler\MiddlewareHandler;
-use Kernel\Container\Services\Implementations\CallableHandler;
+use Kernel\CallableHandler\CallableHandler;
 use Kernel\Container\Services\Implementations\PhpMailerWrapper;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
