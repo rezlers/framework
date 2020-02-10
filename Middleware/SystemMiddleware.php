@@ -13,11 +13,12 @@ class SystemMiddleware implements MiddlewareInterface
 {
     public function handle(Request $request, Closure $next)
     {
-        echo 'SystemMiddleware';
+        $container = new ServiceContainer();
+        $container->getService('Logger')->info('SystemMiddleware has passed');
         $response = App::Response();
         if (! $response)
-            return $response; // Может еще null вместо response прийти
-        echo 'SystemMiddleware again';
+            return $response;
+        return 1;
         return $next($request);
     }
 }

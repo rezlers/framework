@@ -4,3 +4,10 @@
 2020-01-28 07:32:43: alert: alert message
 2020-02-06 08:31:26: info: User middleware has passed
 2020-02-06 08:31:36: info: User middleware has passed
+2020-02-10 14:17:52: alert: MiddlewareExceptionMiddlewareException: Middleware returned neither Response or Request
+2020-02-10 14:18:56: alert: MiddlewareExceptionMiddlewareException: Middleware returned neither Response or Request
+2020-02-10 14:42:32: alert: MiddlewareExceptionMiddlewareException: Middleware returned neither Response or Request
+2020-02-10 14:58:04: info: SystemMiddleware has passed
+2020-02-10 14:58:04: alert: MiddlewareExceptionMiddlewareException: Middleware returned neither Response or Request
+2020-02-10 15:10:47: info: SystemMiddleware has passed
+2020-02-10 15:10:47: alert: MiddlewareExceptionMiddlewareException: Middleware returned neither Response or Request

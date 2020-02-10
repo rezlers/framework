@@ -12,7 +12,8 @@ class UserMiddleware implements MiddlewareInterface
 {
     public function handle(Request $request, Closure $next)
     {
-        echo 'User middleware has passed';
+        $container = new ServiceContainer();
+        $container->getService('Logger')->info('User middleware has passed');
         return $next($request);
     }
 }

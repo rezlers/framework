@@ -5,7 +5,9 @@ namespace Kernel\App;
 
 use Kernel\CallableHandler\CallableHandlerInterface;
 use Kernel\Container\Services\Implementations\Router as Router;
+use Kernel\Exceptions\ExceptionHandler\ExceptionHandler;
 use Kernel\Exceptions\FrameworkExceptionInterface as FrameworkException;
+use Kernel\Exceptions\MiddlewareException;
 use Kernel\Request\RequestInterface;
 use Kernel\Response\ResponseHandlerInterface;
 use Kernel\Container\Services\RouterInterface;
@@ -17,6 +19,7 @@ use Kernel\Container\ServiceContainer as ServiceContainer;
 use Kernel\Response\ResponseHandler;
 use Kernel\Response\ResponseInterface;
 use Kernel\ShutdownHandler\ShutdownHandler;
+use Kernel\ShutdownHandler\ShutdownHandlerInterface;
 
 class App
 {
@@ -33,9 +36,17 @@ class App
      */
     private $callableHandler;
     /**
+     * @var ExceptionHandler
+     */
+    private $exceptionHandler;
+    /**
      * @var RequestInterface
      */
     private $request;
+    /**
+     * @var ShutdownHandlerInterface
+     */
+    private $shutdownHandler;
     /**
      * @var ResponseHandlerInterface
      */
@@ -53,6 +64,8 @@ class App
         $this->configureMiddleware();
         $this->configureController();
         $this->configureResponseHandler();
+        $this->configureExceptionHandler();
+        $this->configureShutdownHandler();
     }
 
     public function handle()
@@ -71,14 +84,16 @@ class App
 
                 elseif ($result instanceof RequestInterface) {
                     $result = $this->callableHandler->handle($result);  // Controller entity. Response must be returned. Will be a service
-                    $this->responseHandler->handle($result);  // Sending and now it responsible for getting shutdown
+                    $this->responseHandler->handle($result);  // Sending response
+                    $this->shutdownHandler->shutdown();
                 }
-                $this->responseHandler->handle(App::Response()->setStatusCode(500));  // If middleware entity returned neither Response or Request (change to throw exception)
             } catch (\Exception $exception) {
-
+                $response = $this->exceptionHandler->handle($exception);  // Identify exception and wrap it to response
+                $this->responseHandler->handle($response);
+                $this->shutdownHandler->shutdown();
             }
         } else {
-            $this->responseHandler->handle(App::Response()->setStatusCode(404));  // If there are no suitable route
+            $this->responseHandler->handle(App::Response()->setStatusCode(404));  // If there are no suitable route (There is no exception handling because Router is service)
         }
     }
 
@@ -114,6 +129,16 @@ class App
     private function configureResponseHandler()
     {
         $this->responseHandler = new ResponseHandler();
+    }
+
+    private function configureExceptionHandler()
+    {
+        $this->exceptionHandler = new ExceptionHandler();
+    }
+
+    private function configureShutdownHandler()
+    {
+        $this->shutdownHandler = new ShutdownHandler();
     }
 
     private function getNewResponse() : ResponseInterface

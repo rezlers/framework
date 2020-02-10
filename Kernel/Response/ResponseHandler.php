@@ -13,12 +13,6 @@ class ResponseHandler implements ResponseHandlerInterface
         $this->sendResponseCode($response);
         $this->sendHeaders($response);
         $this->sendBody($response);
-        $this->shutdownHandler($response);
-    }
-
-    private function shutdownHandler(ResponseInterface $response)
-    {
-        die();
     }
 
     private function sendResponseCode(ResponseInterface $response)

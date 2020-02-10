@@ -27,6 +27,11 @@ class MiddlewareHandler
         $this->configureMiddleware($configuration);
     }
 
+    /**
+     * @param RequestInterface $request
+     * @return mixed|null
+     * @throws MiddlewareException
+     */
     public function handle(RequestInterface $request)
     {
         $this->configureArrayToExecute($request);
@@ -34,10 +39,15 @@ class MiddlewareHandler
         if (!empty(self::$middlewareToExecute)) {
             return $this->executeMiddleware($request);
         }
-        $container = new ServiceContainer();
-        return $container->getService('ResponseInterface');
+
+        return $request;
     }
 
+    /**
+     * @param RequestInterface $request
+     * @return mixed
+     * @throws MiddlewareException
+     */
     private function executeMiddleware(RequestInterface $request)
     {
         $functionToExecute = $this->configureFunctionToExecute(function (Closure $nextClosure, MiddlewareInterface $middleware) ## It will return function that returns execution of user-handle method
@@ -50,7 +60,11 @@ class MiddlewareHandler
                 return $request;
             }
         );
-        return $functionToExecute($request);
+        $result = $functionToExecute($request);
+        if (!($result instanceof ResponseInterface) and !($result instanceof RequestInterface))
+            throw new MiddlewareException("Middleware returned neither Response or Request", 500);
+
+        return $result;
     }
 
     private function configureFunctionToExecute(Closure $nextWrapper, Closure $destinationWrapper)
