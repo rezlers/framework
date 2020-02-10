@@ -5,6 +5,7 @@ namespace Kernel\App;
 
 use Kernel\CallableHandler\CallableHandlerInterface;
 use Kernel\Container\Services\Implementations\Router as Router;
+use Kernel\Exceptions\FrameworkExceptionInterface as FrameworkException;
 use Kernel\Request\RequestInterface;
 use Kernel\Response\ResponseHandlerInterface;
 use Kernel\Container\Services\RouterInterface;
@@ -15,6 +16,7 @@ use Kernel\Response\Response as Response;
 use Kernel\Container\ServiceContainer as ServiceContainer;
 use Kernel\Response\ResponseHandler;
 use Kernel\Response\ResponseInterface;
+use Kernel\ShutdownHandler\ShutdownHandler;
 
 class App
 {
@@ -58,19 +60,23 @@ class App
         $route = $this->router->getRoute($this->request); // Begin Router entity. Router is service
 
         if ($route->isValid()) {
-            $this->request->setUrlParams($route->getParams($this->request->getPath()));
-            $this->request->setMiddleware($route->getMiddleware());
-            $this->request->setCallable($route->createCallable());  // End of Router entity. Callable object(array, func or closure) is configured here. Framework's instance
+            try {
+                $this->request->setUrlParams($route->getParams($this->request->getPath()));
+                $this->request->setMiddleware($route->getMiddleware());
+                $this->request->setCallable($route->createCallable());  // End of Router entity. Callable object(array, func or closure) is configured here. Framework's instance
 
-            $result = $this->middlewareHandler->handle($this->request);  // Middleware entity. Result is mixed(Response, Request). Framework's instance middlewareHandler
-            if ($result instanceof ResponseInterface)
-                $this->responseHandler->handle($result);  // End of preMVC framework
+                $result = $this->middlewareHandler->handle($this->request);  // Middleware entity. Result is mixed(Response, Request). Framework's instance middlewareHandler
+                if ($result instanceof ResponseInterface)
+                    $this->responseHandler->handle($result);  // End of preMVC framework
 
-            elseif ($result instanceof RequestInterface) {
-                $result = $this->callableHandler->handle($result);  // Controller entity. Response must be returned. Will be a service
-                $this->responseHandler->handle($result);  // Sending and now it responsible for getting shutdown
+                elseif ($result instanceof RequestInterface) {
+                    $result = $this->callableHandler->handle($result);  // Controller entity. Response must be returned. Will be a service
+                    $this->responseHandler->handle($result);  // Sending and now it responsible for getting shutdown
+                }
+                $this->responseHandler->handle(App::Response()->setStatusCode(500));  // If middleware entity returned neither Response or Request (change to throw exception)
+            } catch (\Exception $exception) {
+
             }
-            $this->responseHandler->handle(App::Response()->setStatusCode(500));  // If middleware entity returned neither Response or Request
         } else {
             $this->responseHandler->handle(App::Response()->setStatusCode(404));  // If there are no suitable route
         }
@@ -108,5 +114,10 @@ class App
     private function configureResponseHandler()
     {
         $this->responseHandler = new ResponseHandler();
+    }
+
+    private function getNewResponse() : ResponseInterface
+    {
+        return $this->container->getService('ResponseContainer')->getInstance();
     }
 }

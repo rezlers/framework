@@ -17,12 +17,6 @@ class MiddlewareException extends \Exception implements FrameworkExceptionInterf
     public function __construct($message = "", $code = 200, Throwable $previous = null)
     {
         parent::__construct("MiddlewareException: ${message}", $code, $previous);
-        $this->configureContainer();
-        $this->container->getService('Logger')->error("MiddlewareException: ${message}");
     }
 
-    private function configureContainer()
-    {
-        $this->container = new ServiceContainer();
-    }
 }

@@ -76,20 +76,20 @@ class MiddlewareHandler
     {
         self::$middlewareToExecute = array();
         foreach (self::$globalMiddleware as $value) {
-            $pathToGlobalMiddleware = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . $value;
+            $pathToGlobalMiddleware = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . $value . '.php';
             if (!file_exists($pathToGlobalMiddleware))
                 throw new MiddlewareException("Couldn't find globalMiddleware ${value} with path ${pathToGlobalMiddleware}");
 
             $globalMiddleware = 'App\Middleware\\' . $value;
-            self::$middlewareToExecute[] = $globalMiddleware();
+            self::$middlewareToExecute[] = new $globalMiddleware();
         }
         if (self::$routeMiddleware[$request->getMiddleware()]) {
-            $pathToRouteMiddleware =  '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . self::$routeMiddleware[$request->getMiddleware()];
+            $pathToRouteMiddleware =  '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . self::$routeMiddleware[$request->getMiddleware()] . '.php';
             if (!file_exists($pathToRouteMiddleware))
                 throw new MiddlewareException("Couldn't find routeMiddleware " . self::$routeMiddleware[$request->getMiddleware()] . " with path ${pathToRouteMiddleware}");
 
             $routeMiddleware = 'App\Middleware\\' . self::$routeMiddleware[$request->getMiddleware()];
-            self::$middlewareToExecute[] = $routeMiddleware();
+            self::$middlewareToExecute[] = new $routeMiddleware();
         }
         return self::$middlewareToExecute;
     }
