@@ -5,6 +5,7 @@ namespace Kernel\Container\Services\Implementations;
 
 use Kernel\CallableHandler\ControllerInterface;
 use Kernel\Container\Services\RouteInterface;
+use Kernel\Exceptions\RouteException;
 use Kernel\Request\Request;
 
 class Route implements RouteInterface
@@ -43,7 +44,7 @@ class Route implements RouteInterface
         return false;
     }
 
-    public function middleware($key) : void
+    public function middleware(string $key) : void
     {
         $this->middleware = $key;
     }
@@ -67,7 +68,8 @@ class Route implements RouteInterface
             $callable = array($instance, 'handle');
             return $callable;
         }
-        return null;
+        $url = $this->url;
+        throw new RouteException("Couldn't create callable in route ${url} because callable is not valid/exists");
     }
 
     public function isEqual($requestUrl)

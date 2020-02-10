@@ -4,6 +4,7 @@
 namespace Kernel\MiddlewareHandler;
 
 use Kernel\Container\ServiceContainer;
+use Kernel\Exceptions\MiddlewareException;
 use Kernel\Request\Request as Request;
 use Kernel\MiddlewareHandler\MiddlewareInterface as MiddlewareInterface;
 use Kernel\Request\RequestInterface;
@@ -12,13 +13,9 @@ use Closure;
 
 class MiddlewareHandler
 {
-    /**
-     * @var MiddlewareInterface[]
-     */
+
     protected static $globalMiddleware;
-    /**
-     * @var MiddlewareInterface[]
-     */
+
     protected static $routeMiddleware;
     /**
      * @var MiddlewareInterface[]
@@ -73,15 +70,26 @@ class MiddlewareHandler
     /**
      * @param RequestInterface $request
      * @return MiddlewareInterface[]
+     * @throws MiddlewareException
      */
     private function configureArrayToExecute(RequestInterface $request)
     {
         self::$middlewareToExecute = array();
         foreach (self::$globalMiddleware as $value) {
-            self::$middlewareToExecute[] = new $value();
+            $pathToGlobalMiddleware = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . $value;
+            if (!file_exists($pathToGlobalMiddleware))
+                throw new MiddlewareException("Couldn't find globalMiddleware ${value} with path ${pathToGlobalMiddleware}");
+
+            $globalMiddleware = 'App\Middleware\\' . $value;
+            self::$middlewareToExecute[] = $globalMiddleware();
         }
         if (self::$routeMiddleware[$request->getMiddleware()]) {
-            self::$middlewareToExecute[] = new self::$routeMiddleware[$request->getMiddleware()]();
+            $pathToRouteMiddleware =  '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . self::$routeMiddleware[$request->getMiddleware()];
+            if (!file_exists($pathToRouteMiddleware))
+                throw new MiddlewareException("Couldn't find routeMiddleware " . self::$routeMiddleware[$request->getMiddleware()] . " with path ${pathToRouteMiddleware}");
+
+            $routeMiddleware = 'App\Middleware\\' . self::$routeMiddleware[$request->getMiddleware()];
+            self::$middlewareToExecute[] = $routeMiddleware();
         }
         return self::$middlewareToExecute;
     }
