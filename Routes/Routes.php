@@ -19,6 +19,6 @@ $router->get('/user1/21/film/{number}', function (Request $request) {
     return $response;
 })->middleware('userMW');
 
-$router->get('/user1/22/film/{number}', 'MyController')->middleware('userMW');
+$router->get('/user1/22/film/{number}', 'MyController')->setMiddleware('userMW');
 
 

@@ -4,7 +4,9 @@
 namespace Kernel\Response;
 
 
+use Kernel\Request\RequestInterface;
+
 interface ResponseHandlerInterface
 {
-    public function handle(ResponseInterface $response) : void;
+    public function handle($response, RequestInterface $request) : void;
 }

@@ -79,21 +79,16 @@ class App
                 $this->request->setCallable($route->createCallable());  // End of Router entity. Callable object(array, func or closure) is configured here. Framework's instance
 
                 $result = $this->middlewareHandler->handle($this->request);  // Middleware entity. Result is mixed(Response, Request). Framework's instance middlewareHandler
-                if ($result instanceof ResponseInterface)
-                    $this->responseHandler->handle($result);  // End of preMVC framework
 
-                elseif ($result instanceof RequestInterface) {
-                    $result = $this->callableHandler->handle($result);  // Controller entity. Response must be returned. Will be a service
-                    $this->responseHandler->handle($result);  // Sending response
-                    $this->shutdownHandler->shutdown();
-                }
+                $this->responseHandler->handle($result, $this->request);  // Sending response
+                $this->shutdownHandler->shutdown();
             } catch (FrameworkException $exception) {
                 $response = $this->exceptionHandler->handle($exception);  // Identify exception and wrap it to response
-                $this->responseHandler->handle($response);
+                $this->responseHandler->handle($response, $this->request);
                 $this->shutdownHandler->shutdown();
             }
         } else {
-            $this->responseHandler->handle(App::Response()->setStatusCode(404));  // If there are no suitable route (There is no exception handling because Router is service)
+            $this->responseHandler->handle(App::Response()->setStatusCode(404), $this->request);  // If there are no suitable route (There is no exception handling because Router is service)
         }
     }
 

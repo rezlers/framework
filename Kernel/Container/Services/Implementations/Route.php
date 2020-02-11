@@ -55,7 +55,7 @@ class Route implements RouteInterface
      * @param string $key
      * @throws RouteException
      */
-    public function middleware(string $key) : void
+    public function setMiddleware(string $key) : void
     {
         $middleware = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../ConfigurationFiles/Middleware.php';
         $routeMiddlewares = $middleware['routeMiddleware'];

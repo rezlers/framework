@@ -4,6 +4,7 @@
 namespace Kernel\MiddlewareHandler;
 
 use Kernel\Container\ServiceContainer;
+use Kernel\Exceptions\CallableHandlerException;
 use Kernel\Exceptions\MiddlewareException;
 use Kernel\Request\Request as Request;
 use Kernel\MiddlewareHandler\MiddlewareInterface as MiddlewareInterface;
@@ -57,7 +58,12 @@ class MiddlewareHandler
             };
         },
             function (Request $request) {
-                return $request;
+                $callable = $request->getCallable();
+                $result = call_user_func_array($callable, array($request));
+                if ($result == false) {
+                    throw new CallableHandlerException("Callable ${callable} execution ended with false as call_user_func_array returned value");
+                }
+                return $result;
             }
         );
         $result = $functionToExecute($request);
