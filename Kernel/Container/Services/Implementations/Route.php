@@ -20,13 +20,20 @@ class Route implements RouteInterface
 
     private $middleware;
 
+    /**
+     * Route constructor.
+     * @param null $httpMethod
+     * @param null $url
+     * @param null $callableName
+     * @throws RouteException
+     */
     public function __construct($httpMethod = null, $url = null, $callableName = null)
     {
         $this->setUrl($url);
 
         $this->httpMethod = $httpMethod;  ## Constructing http method
 
-        $this->callable = $callableName;  ## Constructing callable object
+        $this->configureCallable($callableName);  ## Constructing callable object
 
         $this->setParamsNum();  ## If there are no params then 0 will be returned
 
@@ -44,8 +51,19 @@ class Route implements RouteInterface
         return false;
     }
 
+    /**
+     * @param string $key
+     * @throws RouteException
+     */
     public function middleware(string $key) : void
     {
+        $middleware = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../ConfigurationFiles/Middleware.php';
+        $routeMiddlewares = $middleware['routeMiddleware'];
+        $pathToMiddleware = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . $routeMiddlewares[$key] . '.php';
+        if (is_null($routeMiddlewares[$key]))
+            throw new RouteException("There is no middleware in middleware configuration with key ${key}", 500);
+        if (!file_exists($pathToMiddleware))
+            throw new RouteException("There is no middleware with name " . $routeMiddlewares[$key], 500);
         $this->middleware = $key;
     }
 
@@ -57,6 +75,10 @@ class Route implements RouteInterface
         return $this->middleware;
     }
 
+    /**
+     * @return callable
+     * @throws RouteException
+     */
     public function createCallable() : callable
     {
         if ($this->callable instanceof \Closure)
@@ -68,8 +90,7 @@ class Route implements RouteInterface
             $callable = array($instance, 'handle');
             return $callable;
         }
-        $url = $this->url;
-        throw new RouteException("Couldn't create callable in route ${url} because callable is not valid/exists");
+        throw new RouteException("Couldn't create callable in route " . $this->url , 500);
     }
 
     public function isEqual($requestUrl)
@@ -142,5 +163,28 @@ class Route implements RouteInterface
     private function setPathLength()
     {
         $this->pathLength = explode('/', trim($this->url, '/'));
+    }
+
+    /**
+     * @param $callable
+     * @throws RouteException
+     */
+    private function configureCallable($callable)
+    {
+        if (gettype($callable) == 'string') {
+            $controllers = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../ConfigurationFiles/Controllers.php';
+            if (!$controllers[$callable])
+                throw new RouteException("There is no controller with key ${callable}", 500);
+            $pathToController = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Controller/' . $controllers[$callable] . '.php';
+            if (!file_exists($pathToController))
+                throw new RouteException("There is no controller " . $controllers[$callable] . " with path ${pathToController}", 500);
+            $this->callable = $callable;
+        } elseif ($callable instanceof \Closure)
+            $this->callable = $callable;
+        else {
+            $errorType = gettype($callable);
+            throw new RouteException("Type ${errorType} of callable is not valid in route " . $this->url, 500);
+        }
+
     }
 }
