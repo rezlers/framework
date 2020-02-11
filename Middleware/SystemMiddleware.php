@@ -18,7 +18,6 @@ class SystemMiddleware implements MiddlewareInterface
         $response = App::Response();
         if (! $response)
             return $response;
-        return 1;
         return $next($request);
     }
 }

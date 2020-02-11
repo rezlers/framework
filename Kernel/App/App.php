@@ -87,7 +87,7 @@ class App
                     $this->responseHandler->handle($result);  // Sending response
                     $this->shutdownHandler->shutdown();
                 }
-            } catch (\Exception $exception) {
+            } catch (FrameworkException $exception) {
                 $response = $this->exceptionHandler->handle($exception);  // Identify exception and wrap it to response
                 $this->responseHandler->handle($response);
                 $this->shutdownHandler->shutdown();

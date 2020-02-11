@@ -36,6 +36,10 @@ class ExceptionHandler
             $this->logException($exception);
         } elseif ($exception instanceof Exceptions\ShutdownHandlerException) {
             $this->logException($exception);
+        } elseif ($exception instanceof Exceptions\DatabaseException) {
+            $this->logException($exception);
+        } elseif ($exception instanceof Exceptions\MigrationHandlerException) {
+            $this->logException($exception);
         } else {
             $this->logException($exception);
         }

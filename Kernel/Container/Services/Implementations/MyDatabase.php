@@ -4,6 +4,7 @@
 namespace Kernel\Container\Services\Implementations;
 
 use Kernel\Container\Services\DatabaseInterface;
+use Kernel\Exceptions\DatabaseException;
 use PDO;
 
 class MyDatabase implements DatabaseInterface
@@ -26,26 +27,64 @@ class MyDatabase implements DatabaseInterface
         }
     }
 
+    /**
+     * @return $this
+     * @throws DatabaseException
+     */
     public function connection() ## for multiply db connections. If there is only one connection, then it's senseless
     {
-        $host = self::$configuration['host'];
-        $username = self::$configuration['username'];
-        $database = self::$configuration['database'];
-        $password = self::$configuration['password'];
-        $driver = self::$configuration['driver'];
+        try {
+            $host = self::$configuration['host'];
+            $username = self::$configuration['username'];
+            $database = self::$configuration['database'];
+            $password = self::$configuration['password'];
+            $driver = self::$configuration['driver'];
 
-        $connectionString = $driver . ':host=' . $host . ';dbname=' . $database;
+            $connectionString = $driver . ':host=' . $host . ';dbname=' . $database;
 
-        $this->currentConnection = new PDO($connectionString, $username, $password);
-        return $this;
+            $this->currentConnection = new PDO($connectionString, $username, $password);
+            return $this;
+        } catch (\PDOException $exception) {
+            throw new DatabaseException($exception->getMessage());
+        }
     }
 
-    public function statement ($statement, $args = [])
+    /**
+     * @param $statement
+     * @param array $args
+     * @return bool|\PDOStatement
+     * @throws DatabaseException
+     */
+    public function statement (string $statement, $args = []) : \PDOStatement
     {
-        $preparedStatement = $this->currentConnection->prepare($statement);
-        return $preparedStatement->execute($args);
+        try {
+            $preparedStatement = $this->currentConnection->prepare($statement);
+            if ($preparedStatement == false)
+                throw new DatabaseException("Couldn't prepare statement ${statement}");
+                $result = $preparedStatement->execute($args);
+            if ($result == false)
+                throw new DatabaseException("Couldn't execute statement ${statement}");
+                return $preparedStatement;
+        } catch (\PDOException $exception) {
+            throw new DatabaseException($exception->getMessage());
+        }
     }
 
-
+    /**
+     * @param string $tableName
+     * @return array
+     * @throws DatabaseException
+     */
+    public function getTable(string $tableName) : array
+    {
+        if (!$this->currentConnection)
+            throw new DatabaseException("There is no active connection to database");
+        try {
+            $result = $this->statement('SELECT * FROM :table_name', array(':table_name' => $tableName))->fetchAll();
+            return $result;
+        } catch (DatabaseException $exception) {
+            throw new DatabaseException($exception->getMessage() . ". Couldn't get table");
+        }
+    }
 
 }
