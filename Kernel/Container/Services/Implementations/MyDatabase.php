@@ -49,6 +49,7 @@ class MyDatabase implements DatabaseInterface
         }
     }
 
+
     /**
      * @param $statement
      * @param array $args
@@ -57,17 +58,9 @@ class MyDatabase implements DatabaseInterface
      */
     public function statement (string $statement, $args = []) : \PDOStatement
     {
-        try {
-            $preparedStatement = $this->currentConnection->prepare($statement);
-            if ($preparedStatement == false)
-                throw new DatabaseException("Couldn't prepare statement ${statement}");
-                $result = $preparedStatement->execute($args);
-            if ($result == false)
-                throw new DatabaseException("Couldn't execute statement ${statement}");
-                return $preparedStatement;
-        } catch (\PDOException $exception) {
-            throw new DatabaseException($exception->getMessage());
-        }
+        $preparedStatement = $this->currentConnection->prepare($statement);
+        $preparedStatement->execute($args);
+        return $preparedStatement;
     }
 
     /**
@@ -75,16 +68,64 @@ class MyDatabase implements DatabaseInterface
      * @return array
      * @throws DatabaseException
      */
-    public function getTable(string $tableName) : array
+    public function getTable(string $tableName)
     {
         if (!$this->currentConnection)
             throw new DatabaseException("There is no active connection to database");
-        try {
-            $result = $this->statement('SELECT * FROM :table_name', array(':table_name' => $tableName))->fetchAll();
-            return $result;
-        } catch (DatabaseException $exception) {
-            throw new DatabaseException($exception->getMessage() . ". Couldn't get table");
-        }
+        $result = $this->statement('SELECT * FROM :table_name', array(':table_name' => $tableName));
+        if ($result == false)
+            return null;
+        return $result->fetchAll();
     }
+
+//    /**
+//     * @param string $tableName
+//     * @return array
+//     * @throws DatabaseException
+//     */
+//    public function createTable(string $tableName) : array
+//    {
+//        if (!$this->currentConnection)
+//            throw new DatabaseException("There is no active connection to database");
+//        $result = $this->statement('SELECT * FROM :table_name', array(':table_name' => $tableName))->fetchAll();
+//    }
+//
+//    /**
+//     * @param $statement
+//     * @param array $args
+//     * @return bool|\PDOStatement
+//     * @throws DatabaseException
+//     */
+//    public function statement (string $statement, $args = []) : \PDOStatement
+//    {
+//        try {
+//            $preparedStatement = $this->currentConnection->prepare($statement);
+//            if ($preparedStatement == false)
+//                throw new DatabaseException("Couldn't prepare statement ${statement}");
+//                $result = $preparedStatement->execute($args);
+//            if ($result == false)
+//                throw new DatabaseException("Couldn't execute statement ${statement}");
+//                return $preparedStatement;
+//        } catch (\PDOException $exception) {
+//            throw new DatabaseException($exception->getMessage());
+//        }
+//    }
+//
+//    /**
+//     * @param string $tableName
+//     * @return array
+//     * @throws DatabaseException
+//     */
+//    public function getTable(string $tableName) : array
+//    {
+//        if (!$this->currentConnection)
+//            throw new DatabaseException("There is no active connection to database");
+//        try {
+//            $result = $this->statement('SELECT * FROM :table_name', array(':table_name' => $tableName))->fetchAll();
+//            return $result;
+//        } catch (DatabaseException $exception) {
+//            throw new DatabaseException($exception->getMessage() . ". Couldn't get table");
+//        }
+//    }
 
 }

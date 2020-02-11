@@ -12,5 +12,5 @@ interface DatabaseInterface
 
     public function statement(string $statement) : \PDOStatement;
 
-    public function getTable(string $tableName) : array;
+    public function getTable(string $tableName);
 }
