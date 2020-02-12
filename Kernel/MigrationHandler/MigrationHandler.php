@@ -33,6 +33,7 @@ class MigrationHandler
             $this->migrate($migrationsToExecute);
         } catch (MigrationHandlerException $exception) {
             // Rollback
+            $this->container->getService('Logger')->error('Migrations has failed: ' . $exception->getMessage());
         }
     }
 
@@ -50,12 +51,13 @@ class MigrationHandler
         $localMigrations = $this->getLocalMigrations();
         if ($this->isSubArray($migrations, $localMigrations)) {
             $migrationsToExecute = array_diff($localMigrations, $migrations);
+            $migrationsToExecute = arsort($this->getSerialNumbers($migrationsToExecute));
             return $migrationsToExecute;
         }
         elseif ($this->isSubArray($localMigrations, $migrations)) {
             throw new MigrationHandlerException("All migrations was executed before");
         }
-        throw new MigrationHandlerException("There are not enough migrations");
+        throw new MigrationHandlerException("There are not enough migrations in Migrations folder");
     }
 
     /**
@@ -64,15 +66,15 @@ class MigrationHandler
      */
     private function migrate(array $migrationsToExecute)
     {
-        foreach ($migrationsToExecute as $value) {
+        foreach ($migrationsToExecute as $key => $value) {
             $sqlScriptString = file_get_contents('/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Migrations/' . $value);
             $result = $this->connection->statement($sqlScriptString);
             if ($result == false) {
-                throw new MigrationHandlerException("Migration ${value} has failed");
+                throw new MigrationHandlerException("Migration ${key} has failed");
             }
-            $this->container->getService('Logger')->error("Migration ${value} has succeed");
+            $this->container->getService('Logger')->error("Migration ${key} has succeed");
         }
-        $this->container->getService('Logger')->error("Migrations ${migrationsToExecute} has succeed");
+        $this->container->getService('Logger')->error("Migrations " . array_keys($migrationsToExecute) . " has succeed");
     }
 
     private function configureContainer()
@@ -88,7 +90,7 @@ class MigrationHandler
 
     private function getExecutedMigrations()
     {
-        $migrationTable = $this->connection->getTable('Migrations');
+        $migrationTable = $this->getTable('Migrations');
         if (is_null($migrationTable)) {
             $this->connection->statement("CREATE TABLE migrations (datetime TIMESTAMP, migration_name VARCHAR(255))");
         }
@@ -112,4 +114,34 @@ class MigrationHandler
         return false;
     }
 
+    private function getTable($tableName)
+    {
+        $result = $this->connection->statement('SELECT * FROM :table_name', array(':table_name' => $tableName));
+        if ($result == false)
+            return null;
+        return $result->fetchAll();
+    }
+
+    /**
+     * @param array $migrations
+     * @return array
+     * @throws MigrationHandlerException
+     */
+    private function getSerialNumbers(array $migrations)
+    {
+        $serialNumbers = [];
+        foreach ($migrations as $value) {
+            $serialNumberStr = array_slice($value, 0, 4);
+            foreach ($serialNumberStr as $key => $char) {
+                if ($char != '0') {
+                    $serialNumber = array_slice($serialNumberStr, $key);
+                    $serialNumbers[$value] = intval($serialNumber);
+                    break;
+                } elseif ($char < '0' and $char > '9') {
+                    throw new MigrationHandlerException('Migration filename ' . $value . ' is not valid');
+                }
+            }
+        }
+        return $serialNumbers;
+    }
 }

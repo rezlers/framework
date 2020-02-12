@@ -21,4 +21,6 @@ $router->get('/user1/21/film/{number}', function (Request $request) {
 
 $router->get('/user1/22/film/{number}', 'MyController')->setMiddleware('userMW');
 
+$router->get('/migrate', 'MyController')->setMiddleware('userMW');
+
 

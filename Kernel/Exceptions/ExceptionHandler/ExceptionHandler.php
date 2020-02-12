@@ -24,25 +24,9 @@ class ExceptionHandler
     public function handle(\Exception $exception) : ResponseInterface
     {
         $response = App::response();
-        if ($exception instanceof Exceptions\MiddlewareException) {
-            $this->logException($exception);
-        } elseif ($exception instanceof Exceptions\CallableHandlerException) {
-            $this->logException($exception);
-        } elseif ($exception instanceof Exceptions\ResponseHandlerException) {
-            $this->logException($exception);
-        } elseif ($exception instanceof Exceptions\RouteException) {
-            $this->logException($exception);
-        } elseif ($exception instanceof Exceptions\RouterException) {
-            $this->logException($exception);
-        } elseif ($exception instanceof Exceptions\ShutdownHandlerException) {
-            $this->logException($exception);
-        } elseif ($exception instanceof Exceptions\DatabaseException) {
-            $this->logException($exception);
-        } elseif ($exception instanceof Exceptions\MigrationHandlerException) {
-            $this->logException($exception);
-        } else {
-            $this->logException($exception);
-        }
+        $this->logException($exception);
+        if (method_exists($exception, 'render'))
+            $response = $exception->render();
         $response->setStatusCode($exception->getCode());
         return $response;
     }

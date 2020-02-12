@@ -56,28 +56,28 @@ class MyDatabase implements DatabaseInterface
      * @return bool|\PDOStatement
      * @throws DatabaseException
      */
-    public function statement (string $statement, $args = []) : \PDOStatement
+    public function statement (string $statement, $args = [])
     {
         $preparedStatement = $this->currentConnection->prepare($statement);
         $preparedStatement->execute($args);
         return $preparedStatement;
     }
 
-    /**
-     * @param string $tableName
-     * @return array
-     * @throws DatabaseException
-     */
-    public function getTable(string $tableName)
-    {
-        if (!$this->currentConnection)
-            throw new DatabaseException("There is no active connection to database");
-        $result = $this->statement('SELECT * FROM :table_name', array(':table_name' => $tableName));
-        if ($result == false)
-            return null;
-        return $result->fetchAll();
-    }
-
+//    /**
+//     * @param string $tableName
+//     * @return array
+//     * @throws DatabaseException
+//     */
+//    public function getTable(string $tableName)
+//    {
+//        if (!$this->currentConnection)
+//            throw new DatabaseException("There is no active connection to database");
+//        $result = $this->statement('SELECT * FROM :table_name', array(':table_name' => $tableName));
+//        if ($result == false)
+//            return null;
+//        return $result->fetchAll();
+//    }
+//
 //    /**
 //     * @param string $tableName
 //     * @return array

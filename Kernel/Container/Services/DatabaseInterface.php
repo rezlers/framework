@@ -10,7 +10,5 @@ interface DatabaseInterface
 
     public function connection();
 
-    public function statement(string $statement) : \PDOStatement;
-
-    public function getTable(string $tableName);
+    public function statement(string $statement);
 }
