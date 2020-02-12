@@ -47,8 +47,8 @@ class MigrationHandler
      */
     private function sync() : array
     {
-        $migrations = $this->getExecutedMigrations();
-        $localMigrations = $this->getLocalMigrations();
+        $migrations = $this->getExecutedMigrationsList();
+        $localMigrations = $this->getLocalMigrationsList();
         if ($this->isSubArray($migrations, $localMigrations)) {
             $migrationsToExecute = array_diff($localMigrations, $migrations);
             $migrationsToExecute = arsort($this->getSerialNumbers($migrationsToExecute));
@@ -67,14 +67,10 @@ class MigrationHandler
     private function migrate(array $migrationsToExecute)
     {
         foreach ($migrationsToExecute as $key => $value) {
-            $sqlScriptString = file_get_contents('/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Migrations/' . $value);
-            $result = $this->connection->statement($sqlScriptString);
-            if ($result == false) {
-                throw new MigrationHandlerException("Migration ${key} has failed");
-            }
-            $this->container->getService('Logger')->error("Migration ${key} has succeed");
+            $migration = $this->getMigration($value);
+            $this->executeMigration($migration);
         }
-        $this->container->getService('Logger')->error("Migrations " . array_keys($migrationsToExecute) . " has succeed");
+        $this->container->getService('Logger')->info("Migrations " . array_keys($migrationsToExecute) . " has succeed");
     }
 
     private function configureContainer()
@@ -82,13 +78,13 @@ class MigrationHandler
         $this->container = new ServiceContainer();
     }
 
-    private function getLocalMigrations()
+    private function getLocalMigrationsList()
     {
         $pathToMigrations = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Migrations/';
         return scandir($pathToMigrations);
     }
 
-    private function getExecutedMigrations()
+    private function getExecutedMigrationsList()
     {
         $migrationTable = $this->getTable('Migrations');
         if (is_null($migrationTable)) {
@@ -143,5 +139,30 @@ class MigrationHandler
             }
         }
         return $serialNumbers;
+    }
+
+    private function getMigration($filename)
+    {
+        $sqlScriptString = file_get_contents('/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Migrations/' . $filename);
+        $sqlScriptString = preg_replace('#\\n#', '', $sqlScriptString);
+        $sqlCommands = explode(';', $sqlScriptString);
+        $migration = array($filename => $sqlCommands);
+        return $migration;
+    }
+
+    /**
+     * @param array $migration
+     * @throws MigrationHandlerException
+     */
+    private function executeMigration(array $migration)
+    {
+        $this->container->getService('Logger')->info('Migration ' . array_keys($migration) . ' has started');
+        $sqlCommands = array_values($migration);
+        foreach ($sqlCommands as $value) {
+            $result = $this->connection->statement($value);
+            if ($result == false)
+                throw new MigrationHandlerException('Command ' . $value . ' has failed');
+        }
+        $this->container->getService('Logger')->info('Migration ' . array_keys($migration) . ' has succeed');
     }
 }
