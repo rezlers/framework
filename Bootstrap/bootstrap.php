@@ -29,7 +29,8 @@ spl_autoload_register(function ($classname) {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$request = new Request($_REQUEST, $_SERVER['REQUEST_METHOD']);
+if ($_REQUEST)
+    $request = new Request($_REQUEST, $_SERVER['REQUEST_METHOD']);
 
 
 require __DIR__ . '/../Kernel/ConfigurationFiles/Services.php';  ## $services array
@@ -38,7 +39,8 @@ $container = new ServiceContainer($services);
 
 require __DIR__ . '/../Kernel/Helpers/Helpers.php';
 
-$app = new app($request);
+if ($_REQUEST)
+    $app = new app($request);
 
 
 

@@ -10,6 +10,8 @@ class MyLogger implements LoggerInterface
 {
     protected static $configuration;
 
+    private $logFile;
+
     public function __construct($configuration)
     {
         $this->loggerConfigure($configuration);
@@ -57,19 +59,24 @@ class MyLogger implements LoggerInterface
 
     private function loggerConfigure($configuration)
     {
-        if (!self::$configuration)
+        if (!self::$configuration) {
             self::$configuration = $configuration;
+            $pathToLogFile = self::$configuration['pathToLogFile'];
+            $this->logFile = fopen($pathToLogFile . self::$configuration['name'], 'a');
+            chmod($pathToLogFile . self::$configuration['name'], 0777);
+        }
     }
 
     private function writeLogMessage($level, $message)
     {
-        $pathToLogFile = self::$configuration['pathToLogFile'];
-        $logFile = fopen($pathToLogFile . self::$configuration['name'], 'a');
-        chmod($pathToLogFile . self::$configuration['name'], 0777);
         $dateTime = date('Y-m-d H:i:s');
         $logMessage = $dateTime . ': ' . $level . ': ' . $message . PHP_EOL;
-        fwrite($logFile, $logMessage);
-        fclose($logFile);
+        fwrite($this->logFile, $logMessage);
+    }
+
+    public function __destruct()
+    {
+        fclose($this->logFile);
     }
 
 

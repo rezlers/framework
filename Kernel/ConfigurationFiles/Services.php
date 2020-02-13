@@ -30,7 +30,7 @@ return $services = [
     'Logger' => [
         'classname' => 'MyLogger',
         'args' => [],
-        'type' => 'any',
+        'type' => 'singleton',
         'configuration' => 'Logger',
         'interface' => 'LoggerInterface'
     ],

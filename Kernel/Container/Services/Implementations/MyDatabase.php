@@ -43,12 +43,12 @@ class MyDatabase implements DatabaseInterface
             $connectionString = $driver . ':host=' . $host . ';dbname=' . $database;
 
             $this->currentConnection = new PDO($connectionString, $username, $password);
+//            $this->currentConnection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             return $this;
         } catch (\PDOException $exception) {
             throw new DatabaseException($exception->getMessage());
         }
     }
-
 
     /**
      * @param $statement
@@ -56,26 +56,34 @@ class MyDatabase implements DatabaseInterface
      * @return bool|\PDOStatement
      * @throws DatabaseException
      */
-    public function statement (string $statement, $args = [])
+    public function statement (string $statement, $args = []) : \PDOStatement
     {
-        $preparedStatement = $this->currentConnection->prepare($statement);
-        $preparedStatement->execute($args);
-        return $preparedStatement;
+        try {
+            $preparedStatement = $this->currentConnection->prepare($statement);
+            if ($preparedStatement == false)
+                throw new DatabaseException("Couldn't prepare statement ${statement}");
+                $result = $preparedStatement->execute($args);
+            if ($result == false)
+                throw new DatabaseException("Couldn't execute statement ${statement}");
+                return $preparedStatement;
+        } catch (\PDOException $exception) {
+            throw new DatabaseException($exception->getMessage());
+        }
     }
 
+
 //    /**
-//     * @param string $tableName
-//     * @return array
+//     * @param $statement
+//     * @param array $args
+//     * @return bool|\PDOStatement
 //     * @throws DatabaseException
 //     */
-//    public function getTable(string $tableName)
+//    public function statement (string $statement, array $args = [])
 //    {
-//        if (!$this->currentConnection)
-//            throw new DatabaseException("There is no active connection to database");
-//        $result = $this->statement('SELECT * FROM :table_name', array(':table_name' => $tableName));
-//        if ($result == false)
-//            return null;
-//        return $result->fetchAll();
+//        $preparedStatement = $this->currentConnection->prepare($statement);
+//        if (!$preparedStatement->execute($args))
+//            throw new DatabaseException("Couldn't execute statement ${statement} with args ${args}");
+//        return $preparedStatement;
 //    }
 //
 //    /**
