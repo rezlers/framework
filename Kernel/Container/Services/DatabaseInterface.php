@@ -16,7 +16,6 @@ interface DatabaseInterface
      * @param string $statement
      * @param array $args
      * @return mixed
-     * @throws DatabaseException
      */
     public function statement(string $statement, array $args = []);
 }

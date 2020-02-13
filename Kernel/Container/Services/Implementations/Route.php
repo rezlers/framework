@@ -57,7 +57,7 @@ class Route implements RouteInterface
      */
     public function setMiddleware(string $key) : void
     {
-        $middleware = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../ConfigurationFiles/Middleware.php';
+        $middleware = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Middleware.php';
         $routeMiddlewares = $middleware['routeMiddleware'];
         $pathToMiddleware = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . $routeMiddlewares[$key] . '.php';
         if (is_null($routeMiddlewares[$key]))
@@ -172,16 +172,18 @@ class Route implements RouteInterface
     private function configureCallable($callable)
     {
         if (gettype($callable) == 'string') {
-            $controllers = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../ConfigurationFiles/Controllers.php';
+            $controllers = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Controllers.php';
             if (!$controllers[$callable])
                 throw new RouteException("There is no controller with key ${callable}", 500);
             $pathToController = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Controller/' . $controllers[$callable] . '.php';
             if (!file_exists($pathToController))
                 throw new RouteException("There is no controller " . $controllers[$callable] . " with path ${pathToController}", 500);
             $this->callable = $callable;
-        } elseif ($callable instanceof \Closure)
+        } elseif ($callable instanceof \Closure) {
             $this->callable = $callable;
-        else {
+        } elseif (is_null($callable)) {
+            $this->callable = $callable;
+        } else {
             $errorType = gettype($callable);
             throw new RouteException("Type ${errorType} of callable is not valid in route " . $this->url, 500);
         }

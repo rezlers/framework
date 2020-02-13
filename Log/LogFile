@@ -11,3 +11,38 @@
 2020-02-10 14:58:04: alert: MiddlewareExceptionMiddlewareException: Middleware returned neither Response or Request
 2020-02-10 15:10:47: info: SystemMiddleware has passed
 2020-02-10 15:10:47: alert: MiddlewareExceptionMiddlewareException: Middleware returned neither Response or Request
+2020-02-11 08:43:15: info: SystemMiddleware has passed
+2020-02-11 08:43:15: alert: MiddlewareException: Middleware returned neither Response or Request
+2020-02-11 08:43:37: info: SystemMiddleware has passed
+2020-02-11 08:43:38: alert: MiddlewareException: Middleware returned neither Response or Request
+2020-02-11 08:44:05: info: SystemMiddleware has passed
+2020-02-11 08:44:05: info: User middleware has passed
+2020-02-11 14:14:11: info: SystemMiddleware has passed
+2020-02-11 14:14:11: info: User middleware has passed
+2020-02-13 09:29:32: error: Migrations has failed: DatabaseException: Couldn't execute statement SELECT * FROM :table_name with args Array
+2020-02-13 09:40:36: error: Migrations has failed: DatabaseException: Couldn't execute statement SELECT * FROM ? because Array
+2020-02-13 09:41:49: error: Migrations has failed: DatabaseException: Couldn't execute statement SELECT * FROM ? because Array
+2020-02-13 09:45:46: error: Migrations has failed: DatabaseException: Couldn't execute statement SELECT * FROM ? because 42000 | 1064 | You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''migrations'' at line 1
+2020-02-13 09:58:19: error: Migrations has failed: DatabaseException: Couldn't execute statement SELECT * FROM ? because 42000 | 1064 | You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''migrations'' at line 1
+2020-02-13 09:58:38: error: Migrations has failed: DatabaseException: Couldn't execute statement SELECT * FROM ? because 42000 | 1064 | You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''migrations'' at line 1
+2020-02-13 10:40:40: error: Migrations has failed: DatabaseException: Couldn't execute statement SELECT * FROM :table_name because 42000 | 1064 | You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''migrations'' at line 1
+2020-02-13 10:48:54: error: Migrations has failed: DatabaseException: Couldn't execute statement SELECT * FROM :table_name because 42000 | 1064 | You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''migrations'' at line 1
+2020-02-13 12:11:34: info: Migration Array has started
+2020-02-13 12:16:13: info: Migration Array has started
+2020-02-13 12:17:52: info: Migration Array has started
+2020-02-13 12:19:47: info: Migration Array has started
+2020-02-13 12:21:32: info: Migration Array has started
+2020-02-13 12:23:41: info: Migration Array has started
+2020-02-13 12:24:04: info: Migration Array has started
+2020-02-13 12:29:38: info: Migration Array has started
+2020-02-13 12:29:58: info: Migration Array has succeed
+2020-02-13 12:30:30: info: Migration Array has started
+2020-02-13 14:04:07: info: Migration Array has started
+2020-02-13 14:04:07: info: Migration Array has succeed
+2020-02-13 14:04:20: info: Migration Array has started
+2020-02-13 14:04:20: info: Migration Array has succeed
+2020-02-13 14:04:25: info: Migrations Array has succeed
+2020-02-13 14:19:52: error: Migrations has failed: ResponseHandlerException: There are not enough migrations in Migrations folder
+2020-02-13 14:21:03: error: Migrations has failed: ResponseHandlerException: There are not enough migrations in Migrations folder
+2020-02-13 14:21:57: error: Migrations has failed: MigrationHandlerException: There are not enough migrations in Migrations folder
+2020-02-13 14:24:17: error: Migrations has failed: MigrationHandlerException: All migrations were executed before

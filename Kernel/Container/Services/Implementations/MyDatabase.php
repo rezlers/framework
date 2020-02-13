@@ -54,21 +54,13 @@ class MyDatabase implements DatabaseInterface
      * @param $statement
      * @param array $args
      * @return bool|\PDOStatement
-     * @throws DatabaseException
      */
-    public function statement (string $statement, $args = []) : \PDOStatement
+    public function statement (string $statement, array $args = [])
     {
-        try {
-            $preparedStatement = $this->currentConnection->prepare($statement);
-            if ($preparedStatement == false)
-                throw new DatabaseException("Couldn't prepare statement ${statement}");
-                $result = $preparedStatement->execute($args);
-            if ($result == false)
-                throw new DatabaseException("Couldn't execute statement ${statement}");
-                return $preparedStatement;
-        } catch (\PDOException $exception) {
-            throw new DatabaseException($exception->getMessage());
-        }
+        $preparedStatement = $this->currentConnection->prepare($statement);
+        if (!$preparedStatement->execute($args))
+            return false;
+        return $preparedStatement;
     }
 
 

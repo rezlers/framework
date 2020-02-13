@@ -1,7 +1,7 @@
 <?php
-$_SERVER['DOCUMENT_ROOT'] = '/var/www/framework/Public';
-//var_dump($_SERVER['DOCUMENT_ROOT']);
+$configuration = require '../Kernel/ConfigurationFiles/Migrations.php';
+$_SERVER['DOCUMENT_ROOT'] = $configuration['pathToMigrations'];
 use Kernel\MigrationHandler\MigrationHandler;
 require '../Bootstrap/bootstrap.php';
-$migrationHandler = new MigrationHandler();
+$migrationHandler = new MigrationHandler($configuration);
 $migrationHandler->handle();

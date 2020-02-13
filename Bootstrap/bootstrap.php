@@ -29,7 +29,7 @@ spl_autoload_register(function ($classname) {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-if ($_REQUEST)
+if (php_sapi_name() !== 'cli')
     $request = new Request($_REQUEST, $_SERVER['REQUEST_METHOD']);
 
 
@@ -39,7 +39,7 @@ $container = new ServiceContainer($services);
 
 require __DIR__ . '/../Kernel/Helpers/Helpers.php';
 
-if ($_REQUEST)
+if (php_sapi_name() !== 'cli')
     $app = new app($request);
 
 

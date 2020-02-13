@@ -17,7 +17,7 @@ $router->get('/user1/21/film/{number}', function (Request $request) {
     $response = App::Response();
     $response->write('Closure has passed');
     return $response;
-})->middleware('userMW');
+})->setMiddleware('userMW');
 
 $router->get('/user1/22/film/{number}', 'MyController')->setMiddleware('userMW');
 

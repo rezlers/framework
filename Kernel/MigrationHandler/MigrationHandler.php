@@ -25,9 +25,9 @@ class MigrationHandler
      */
     private $numerationLength;
 
-    public function __construct()
+    public function __construct($configuration)
     {
-        $this->numerationLength = 4;
+        $this->configureNumerationLength($configuration);
         $this->configureContainer();
     }
 
@@ -41,9 +41,6 @@ class MigrationHandler
             // Rollback
             var_dump($exception->getMessage());
             $this->container->getService('Logger')->error('Migrations has failed: ' . $exception->getMessage());
-        } catch (DatabaseException $exception) {
-            var_dump($exception->getMessage());
-            $this->container->getService('Logger')->error('Migrations has failed: ' . $exception->getMessage());
         }
     }
 
@@ -54,7 +51,6 @@ class MigrationHandler
 
     /**
      * @throws MigrationHandlerException
-     * @throws DatabaseException
      */
     private function sync(): array
     {
@@ -66,15 +62,14 @@ class MigrationHandler
             arsort($migrationsToExecute);
             return array_reverse($migrationsToExecute);
         } elseif ($this->isSubArray($localMigrationsList, $ExecutedMigrationsList)) {
-            throw new MigrationHandlerException("All migrations was executed before");
+            throw new MigrationHandlerException("There are not enough migrations in Migrations folder");
         }
-        throw new MigrationHandlerException("There are not enough migrations in Migrations folder");
+        throw new MigrationHandlerException("All migrations were executed before. If you want to execute them again then you should delete data from migrations table in database");
     }
 
     /**
      * @param array $migrationsToExecute
      * @throws MigrationHandlerException
-     * @throws DatabaseException
      */
     private function migrate(array $migrationsToExecute)
     {
@@ -82,7 +77,7 @@ class MigrationHandler
             $migration = $this->getMigration($key);
             $this->executeMigration($migration);
         }
-        $this->container->getService('Logger')->info("Migrations " . array_keys($migrationsToExecute) . " has succeed");
+        $this->container->getService('Logger')->info("Migrations " . implode(', ',array_keys($migrationsToExecute)) . " has succeed");
     }
 
     private function configureContainer()
@@ -111,7 +106,6 @@ class MigrationHandler
     /**
      * @return array
      * @throws MigrationHandlerException
-     * @throws DatabaseException
      */
     private function getExecutedMigrationsList()
     {
@@ -140,11 +134,12 @@ class MigrationHandler
      * @param $tableName
      * @return mixed
      * @throws MigrationHandlerException
-     * @throws DatabaseException
      */
     private function getTable($tableName)
     {
         $result = $this->connection->statement('SELECT * FROM migrations');
+        if ($result == false)
+            throw new MigrationHandlerException("Couldn't select migrations table");
         if ($result->columnCount() == 0) {
             $result = $this->connection->statement("CREATE TABLE migrations (datetime TIMESTAMP, migration_name VARCHAR(255))");
             if ($result == false)
@@ -196,21 +191,23 @@ class MigrationHandler
     /**
      * @param array $migration
      * @throws MigrationHandlerException
-     * @throws DatabaseException
      */
     private function executeMigration(array $migration)
     {
-        $this->container->getService('Logger')->info('Migration ' . array_keys($migration) . ' has started');
+        $this->container->getService('Logger')->info('Migration ' . implode(', ', array_keys($migration)) . ' has started');
         $sqlCommands = array_values($migration);
         $sqlCommands = $sqlCommands[0];
-        try {
-            foreach ($sqlCommands as $value) {
-                $this->connection->statement($value);
-            }
-        } catch (DatabaseException $exception) {
-            throw new MigrationHandlerException('Command ' . $value . ' has failed because ' . $exception->getMessage());
+        foreach ($sqlCommands as $value) {
+            $result = $this->connection->statement($value);
+            if ($result == false)
+                throw new MigrationHandlerException("Something has gone wrong with statement " . $value);
         }
         $this->connection->statement('INSERT INTO migrations VALUES (NOW(), ?)', [array_keys($migration)[0]]);
-        $this->container->getService('Logger')->info('Migration ' . array_keys($migration) . ' has succeed');
+        $this->container->getService('Logger')->info('Migration ' . implode(', ', array_keys($migration)) . ' has succeed');
+    }
+
+    private function configureNumerationLength($configuration)
+    {
+        $this->numerationLength = $configuration['NumerationLength'];
     }
 }

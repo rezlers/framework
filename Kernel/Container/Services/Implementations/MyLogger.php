@@ -76,7 +76,8 @@ class MyLogger implements LoggerInterface
 
     public function __destruct()
     {
-        fclose($this->logFile);
+        if ($this->logFile)
+            fclose($this->logFile);
     }
 
 
