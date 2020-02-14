@@ -138,9 +138,9 @@ class MigrationHandler
     private function getTable($tableName)
     {
         $result = $this->connection->statement('SELECT * FROM migrations');
-        if ($result == false)
-            throw new MigrationHandlerException("Couldn't select migrations table");
-        if ($result->columnCount() == 0) {
+//        if ($result === false)
+//            throw new MigrationHandlerException("Couldn't select migrations table");
+        if ($result === false) {
             $result = $this->connection->statement("CREATE TABLE migrations (datetime TIMESTAMP, migration_name VARCHAR(255))");
             if ($result == false)
                 throw new MigrationHandlerException("Couldn't create migrations table");
