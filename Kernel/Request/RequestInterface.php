@@ -46,9 +46,9 @@ interface RequestInterface
     public function getUrlParams() : array;
 
     /**
-     * @return string
+     * @return array
      */
-    public function getMiddleware() : string;
+    public function getMiddleware() : array;
 
     /**
      * @param callable $callable
@@ -61,9 +61,9 @@ interface RequestInterface
     public function setUrlParams(array $urlParams): void;
 
     /**
-     * @param string $middlewareKey
+     * @param array $middlewareList
      */
-    public function setMiddleware(string $middlewareKey): void;
+    public function setMiddleware(array $middlewareList): void;
 
     /**
      * @return callable

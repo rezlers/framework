@@ -12,5 +12,5 @@ interface ControllerInterface
      * @param Request $request
      * @return ResponseInterface
      */
-    public function handle(Request $request);
+    public function handle(Request $request) : ResponseInterface;
 }

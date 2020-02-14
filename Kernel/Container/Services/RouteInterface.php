@@ -13,10 +13,14 @@ interface RouteInterface
     public function createCallable() : callable;
 
     ## To bind middleware to route
-    public function setMiddleware(string $middlewareKey) : void;
+    public function setMiddleware(array $middlewareKeys) : void;
 
     ## To get middleware that bind to route instance
-    public function getMiddleware() : string;
+
+    /**
+     * @return string[]
+     */
+    public function getMiddleware() : array;
 
     ## To parse url from request object and get params from it
     public function getParams(string $url) : array;

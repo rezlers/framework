@@ -12,6 +12,8 @@ interface ResponseInterface
 
     public function getHeaders() : array;
 
+    public function setHeader(string $header) : self;
+
     public function getBody() : string;
 
     public function write(string $str) : self;

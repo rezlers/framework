@@ -18,7 +18,10 @@ class Route implements RouteInterface
 
     public $reg_exp = '/{.*}/';
 
-    private $middleware;
+    /**
+     * @var array
+     */
+    private $middlewareList;
 
     /**
      * Route constructor.
@@ -32,6 +35,8 @@ class Route implements RouteInterface
         $this->setUrl($url);
 
         $this->httpMethod = $httpMethod;  ## Constructing http method
+
+        $this->middlewareList = [];
 
         $this->configureCallable($callableName);  ## Constructing callable object
 
@@ -52,27 +57,29 @@ class Route implements RouteInterface
     }
 
     /**
-     * @param string $key
+     * @param array $keys
      * @throws RouteException
      */
-    public function setMiddleware(string $key) : void
+    public function setMiddleware(array $keys) : void
     {
         $middleware = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Middleware.php';
-        $routeMiddlewares = $middleware['routeMiddleware'];
-        $pathToMiddleware = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . $routeMiddlewares[$key] . '.php';
-        if (is_null($routeMiddlewares[$key]))
-            throw new RouteException("There is no middleware in middleware configuration with key ${key}", 500);
-        if (!file_exists($pathToMiddleware))
-            throw new RouteException("There is no middleware with name " . $routeMiddlewares[$key], 500);
-        $this->middleware = $key;
+        $routeMiddlewareList = $middleware['routeMiddleware'];
+        foreach ($routeMiddlewareList as $key => $value) {
+            $pathToMiddleware = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . $routeMiddlewareList[$key] . '.php';
+            if (is_null($routeMiddlewareList[$key]))
+                throw new RouteException("There is no middleware in middleware configuration with key ${key}", 500);
+            if (!file_exists($pathToMiddleware))
+                throw new RouteException("There is no middleware with name " . $routeMiddlewareList[$key], 500);
+            $this->middlewareList[$key] = $value;
+        }
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
-    public function getMiddleware() : string
+    public function getMiddleware() : array
     {
-        return $this->middleware;
+        return $this->middlewareList;
     }
 
     /**

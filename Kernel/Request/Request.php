@@ -72,9 +72,9 @@ class Request implements RequestInterface
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getMiddleware() : string
+    public function getMiddleware() : array
     {
         return $this->middleware;
     }
@@ -96,11 +96,11 @@ class Request implements RequestInterface
     }
 
     /**
-     * @param string $middlewareKey
+     * @param string[] $middlewareList
      */
-    public function setMiddleware(string $middlewareKey): void
+    public function setMiddleware(array $middlewareList): void
     {
-        $this->middleware = $middlewareKey;
+        $this->middleware = $middlewareList;
     }
 
     /**

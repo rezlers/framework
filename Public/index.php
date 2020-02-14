@@ -1,7 +1,10 @@
 <?php
 
+use Kernel\App\App;
+
 require '../Bootstrap/bootstrap.php';
 
+/** @var App $app */
 $app->handle();
 
 

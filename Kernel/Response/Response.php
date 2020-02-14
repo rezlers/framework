@@ -78,11 +78,12 @@ class Response implements ResponseInterface
         $this->body = $str;
         return $this;
     }
+
     /**
      * @param string $header
-     * @return Response
+     * @return \Kernel\Response\ResponseInterface
      */
-    public function setHeader($header)
+    public function setHeader(string $header) : ResponseInterface
     {
         $this->headers = array();
         $this->headers[] = $header;

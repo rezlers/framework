@@ -7,6 +7,7 @@ use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\RouteInterface;
 use Kernel\Container\Services\Implementations\Route as Route;
 use Kernel\Container\Services\RouterInterface;
+use Kernel\Exceptions\RouteException;
 use Kernel\Request\RequestInterface;
 
 class Router implements RouterInterface
@@ -43,10 +44,24 @@ class Router implements RouterInterface
      * @param $appUrl
      * @param $callable
      * @return RouteInterface
+     * @throws RouteException
      */
     public function get($appUrl, $callable) : RouteInterface
     {
         $newInstance = new Route('GET', $appUrl, $callable);
+        self::$routes[] = $newInstance;
+        return $newInstance;
+    }
+
+    /**
+     * @param $appUrl
+     * @param $callable
+     * @return RouteInterface
+     * @throws RouteException
+     */
+    public function post($appUrl, $callable) : RouteInterface
+    {
+        $newInstance = new Route('POST', $appUrl, $callable);
         self::$routes[] = $newInstance;
         return $newInstance;
     }
