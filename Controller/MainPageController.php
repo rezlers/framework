@@ -13,9 +13,9 @@ class MainPageController implements ControllerInterface
 
     /**
      * @param Request $request
-     * @return ResponseInterface
+     * @return mixed
      */
-    public function handle(Request $request) : ResponseInterface
+    public function handle(Request $request)
     {
         // TODO: Implement handle() method.
     }

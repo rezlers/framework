@@ -8,6 +8,7 @@ use Kernel\CallableHandler\ControllerInterface;
 use Kernel\Request\Request;
 use Kernel\Helpers;
 use Kernel\Container\ServiceContainer;
+use Kernel\Response\ResponseInterface;
 
 class UserController implements ControllerInterface
 {

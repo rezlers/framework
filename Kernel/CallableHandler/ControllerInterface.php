@@ -10,7 +10,7 @@ interface ControllerInterface
 {
     /**
      * @param Request $request
-     * @return ResponseInterface
+     * @return mixed
      */
-    public function handle(Request $request) : ResponseInterface;
+    public function handle(Request $request);
 }
