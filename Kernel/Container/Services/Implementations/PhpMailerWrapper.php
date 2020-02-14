@@ -29,12 +29,9 @@ class PhpMailerWrapper implements MailerInterface
         $this->configureMailer($configuration);
     }
 
-    public function mail($email, $subject, $msg, $from = 'from@example.com', $replyTo = 'replyto@example.com', $name = 'First Last')
+    public function mail($email, $subject, $msg) : bool
     {
         ob_start();
-        self::$mailer->setFrom($from, $name);
-
-        self::$mailer->addReplyTo($replyTo, $name);
 
         self::$mailer->addAddress($email);
 
@@ -46,10 +43,13 @@ class PhpMailerWrapper implements MailerInterface
 
         if (!self::$mailer->send()) {
             $this->logger->error("PhpMailerWrapper Error: " . self::$mailer->ErrorInfo);
+            ob_end_clean();
+            return false;
         } else {
             $this->logger->info("Message sent!");
+            ob_end_clean();
+            return true;
         }
-        ob_end_clean();
     }
 
     private function configureMailer($configuration)
@@ -78,6 +78,13 @@ class PhpMailerWrapper implements MailerInterface
             self::$mailer->Username = self::$configuration['Username'];
 
             self::$mailer->Password = self::$configuration['Password'];
+
+            ## optionals
+
+            if (in_array('from',array_keys(self::$configuration)) and in_array('name',array_keys(self::$configuration))) {
+                self::$mailer->setFrom(self::$configuration['from'], self::$configuration['name']);
+            }
+
         }
 
         $container = new ServiceContainer();

@@ -8,5 +8,7 @@ return $configuration = [
     'SMTPSecure' => 'tls',
     'SMTPAuth' => true,
     'Username' => 'rezlers321@gmail.com',
-    'Password' => 'ab123ab456ab'
+    'Password' => 'ab123ab456ab',
+    'from' => 'rezlers123@gmail.com',
+    'name' => 'Rezler Sanya'
 ];

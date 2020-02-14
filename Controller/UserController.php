@@ -16,7 +16,7 @@ class UserController implements ControllerInterface
     {
         $response = App::Response();
         $request->addParam('key', 'value');
-        $response->write(Helpers\render('Login.php', $request));
+        $response->write(Helpers\render('RegistrationPage.php'));
         return $response;
     }
 }

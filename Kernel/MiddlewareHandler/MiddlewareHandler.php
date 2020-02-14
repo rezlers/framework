@@ -61,16 +61,13 @@ class MiddlewareHandler
                 $callable = $request->getCallable();
                 $result = call_user_func_array($callable, array($request));
                 if ($result == false) {
-                    throw new CallableHandlerException("Callable ${callable} execution ended with false as call_user_func_array returned value");
+                    $callableToString = $this->getCallableName($callable);
+                    throw new CallableHandlerException("Callable ${callableToString} execution ended with false as call_user_func_array returned value");
                 }
                 return $result;
             }
         );
-        $result = $functionToExecute($request);
-        if (!($result instanceof ResponseInterface) and !($result instanceof RequestInterface))
-            throw new MiddlewareException("Middleware returned neither Response or Request", 500);
-
-        return $result;
+        return $functionToExecute($request);
     }
 
     private function configureFunctionToExecute(Closure $nextWrapper, Closure $destinationWrapper)
@@ -122,6 +119,22 @@ class MiddlewareHandler
         if (!self::$routeMiddleware and !self::$routeMiddleware) {
             self::$routeMiddleware = $configuration['routeMiddleware'];
             self::$globalMiddleware = $configuration['globalMiddleware'];
+        }
+    }
+
+    private function getCallableName($callable) {
+        if (is_string($callable)) {
+            return trim($callable);
+        } else if (is_array($callable)) {
+            if (is_object($callable[0])) {
+                return sprintf("%s::%s", get_class($callable[0]), trim($callable[1]));
+            } else {
+                return sprintf("%s::%s", trim($callable[0]), trim($callable[1]));
+            }
+        } else if ($callable instanceof Closure) {
+            return 'closure';
+        } else {
+            return 'unknown';
         }
     }
 

@@ -2,9 +2,11 @@
 
 use Kernel\App\App;
 use Kernel\Container\Services\RouterInterface;
-use Kernel\Request\Request as Request;
+use Kernel\Request\RequestInterface as Request;
 use Kernel\Response\ResponseInterface;
 use Kernel\Container\ServiceContainer;
+use function Kernel\Helpers\render;
+
 # For custom web routes
 $container = new ServiceContainer();
 /**
@@ -25,10 +27,16 @@ $router->get('/user1/21/film/{number}', function (Request $request) {
 
 $router->get('/user1/22/film/{number}', 'MyController')->setMiddleware(['userMW']);
 
-$router->get('/main', 'MainPageController');
-$router->get('/', 'MainPageController');
+$router->get('/main', function (Request $request) {
+    return render('AuthPage.php');
+});
+$router->get('/', function (Request $request) {
+    return render('AuthPage.php');
+});
 
-$router->get('/login', 'LoginController');
+$router->get('/registration', function (Request $request) {
+    return render('RegistrationPage.php');
+});
 
 $router->get('/{userName}', 'AccountController');
 

@@ -17,6 +17,6 @@ class MainPageController implements ControllerInterface
      */
     public function handle(Request $request)
     {
-        // TODO: Implement handle() method.
+
     }
 }

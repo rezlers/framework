@@ -104,7 +104,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @return mixed
+     * @return callable
      */
     public function getCallable()
     {

@@ -54,6 +54,8 @@ class ResponseHandler implements ResponseHandlerInterface
             return $result;
         elseif(gettype($result) == 'object' and method_exists($result, '__toString'))
             return App::Response()->write("${result}");
+        elseif (gettype($result) == 'string')
+            return App::Response()->write($result);
 
         $callable = $request->getCallable();
         throw new CallableHandlerException("Callable ${callable} return's object ${result} that doesn't support __toString method", 500);

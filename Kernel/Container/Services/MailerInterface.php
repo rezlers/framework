@@ -8,5 +8,11 @@ interface MailerInterface
 {
     public function __construct($configuration);  ## for configuration
 
-    public function mail($email, $subject, $msg, $from, $replyTo, $name);
+    /**
+     * @param $email
+     * @param $subject
+     * @param $msg
+     * @return bool
+     */
+    public function mail($email, $subject, $msg) : bool;
 }

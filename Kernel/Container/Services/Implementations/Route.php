@@ -181,10 +181,10 @@ class Route implements RouteInterface
         if (gettype($callable) == 'string') {
             $controllers = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Controllers.php';
             if (!$controllers[$callable])
-                throw new RouteException("There is no controller with key ${callable}", 500);
+                throw new RouteException("There is no controller in configuration file with key ${callable}", 500);
             $pathToController = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Controller/' . $controllers[$callable] . '.php';
             if (!file_exists($pathToController))
-                throw new RouteException("There is no controller " . $controllers[$callable] . " with path ${pathToController}", 500);
+                throw new RouteException("There is no controller in controller folder " . $controllers[$callable] . " with path ${pathToController}", 500);
             $this->callable = $callable;
         } elseif ($callable instanceof \Closure) {
             $this->callable = $callable;

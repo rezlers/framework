@@ -3,12 +3,12 @@
 namespace Kernel\Helpers;
 
 use Kernel\App\App;
-use Kernel\Request\Request;
 use Kernel\Response\ResponseInterface;
 
-function render($template, Request $request)
+function render($template)
 {
-    $pathToFile = $_SERVER['DOCUMENT_ROOT'];
+    global $request;
+    $pathToFile = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/');
     $pathToFile .= '/../Templates/' . $template;
     if (is_file($pathToFile)) {
         ob_start();
@@ -18,7 +18,20 @@ function render($template, Request $request)
     return false;
 }
 
-function redirect($path) : ResponseInterface
+function redirect($path): ResponseInterface
 {
     return App::Response()->setHeader('Location: ' . $path);
+}
+
+function getResource($path)
+{
+    global $request;
+    $pathToFile = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/');
+    $pathToFile .= '/../Public/' . $path;
+    if (is_file($pathToFile)) {
+        ob_start();
+        include $pathToFile;
+        return ob_get_clean();
+    }
+    return false;
 }
