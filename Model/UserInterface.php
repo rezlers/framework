@@ -52,4 +52,21 @@ interface UserInterface
      * @param string $password
      */
     public function setPassword(string $password): void;
+
+    /**
+     * @return void
+     */
+    public function save() : void;
+
+    /**
+     * @return self[]
+     */
+    public static function all() : array;
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @return self[]
+     */
+    public static function getByData(string $key, $value) : array;
 }

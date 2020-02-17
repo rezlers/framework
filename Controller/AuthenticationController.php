@@ -9,6 +9,7 @@ use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyDatabase;
 use Kernel\Request\Request;
 use function Kernel\Helpers\render;
+use App\Model\UserInterface as User;
 
 class AuthenticationController implements ControllerInterface
 {
@@ -27,17 +28,10 @@ class AuthenticationController implements ControllerInterface
      */
     public function handle(Request $request)
     {
-        $user = $this->getUser($request);
-        if (is_null($user)) {
-
-        }
+        $user = User::getByData('login', $request->getParam('login'));
+        if (empty($user))
+            // send data back to client
         return $this->errorFinishPage('', '');
-    }
-
-    private function getUser(Request $request)
-    {
-        $result = $this->connection->statement();
-        
     }
 
     private function errorFinishPage($responseMessage, $logMessage = '')

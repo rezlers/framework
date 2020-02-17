@@ -14,14 +14,23 @@ $container = new ServiceContainer();
 $router = $container->getService('Router');
 
 $router->get('/main', function (Request $request) {
-    return render('AuthPage.php');
+    $responseHtml = render('AuthPage.php');
+    if (isset($_SESSION['userData']))
+        unset($_SESSION['userData']);
+    return $responseHtml;
 });
 $router->get('/', function (Request $request) {
-    return render('AuthPage.php');
+    $responseHtml = render('AuthPage.php');
+    if (isset($_SESSION['userData']))
+        unset($_SESSION['userData']);
+    return $responseHtml;
 });
 
 $router->get('/registration', function (Request $request) {
-    return render('RegistrationPage.php');
+    $responseHtml = render('RegistrationPage.php');
+    if (isset($_SESSION['userData']))
+        unset($_SESSION['userData']);
+    return $responseHtml;
 });
 
 $router->get('/registration/{registrationHash}', 'RegistrationController');

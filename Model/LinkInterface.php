@@ -4,7 +4,7 @@
 namespace App\Model;
 
 
-interface AppLinkInterface
+interface LinkInterface
 {
     /**
      * @return string
@@ -45,4 +45,14 @@ interface AppLinkInterface
      * @param mixed $privacyTag
      */
     public function setPrivacyTag($privacyTag): void;
+
+    /**
+     * @return void
+     */
+    public function save() : void;
+
+    /**
+     * @return self[]
+     */
+    public static function all() : array;
 }

@@ -4,9 +4,9 @@
 namespace App\Model\Implementations;
 
 
-use App\Model\AppLinkInterface;
+use App\Model\LinkInterface;
 
-class AppLink implements AppLinkInterface
+class Link implements LinkInterface
 {
     /**
      * @var string
@@ -85,5 +85,15 @@ class AppLink implements AppLinkInterface
     public function setPrivacyTag($privacyTag): void
     {
         $this->privacyTag = $privacyTag;
+    }
+
+    public function save(): void
+    {
+        // TODO: Implement save() method.
+    }
+
+    public static function all(): array
+    {
+        // TODO: Implement all() method.
     }
 }

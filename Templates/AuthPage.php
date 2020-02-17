@@ -1,4 +1,9 @@
 <?php
+use Kernel\Request\RequestInterface as Request;
+/** @var Request $request */
+global $request;
+$login = $request->getParam('login');
+$password = $request->getParam('password');
 ?>
 
 <!doctype html>
@@ -16,8 +21,10 @@
     <h2>Login in system</h2>
     <form method="get" action="/AuthenticationController">
         <ul>
-            <li>Login <input type="text" name="login" required></li>
-            <li>Password <input type="text" name="password" required></li>
+            <?php
+            echo "<li>Login <input type=\"text\" name=\"login\" value=\"${login}\" required></li>";
+            echo "<li>Password <input type=\"text\" name=\"password\" value=\"${password}\" required></li>"
+            ?>
         </ul>
         <input type="submit">
     </form>
@@ -25,3 +32,4 @@
 </div>
 </body>
 </html>
+

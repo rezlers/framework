@@ -1,5 +1,11 @@
 <?php
     use Kernel\Request\RequestInterface as Request;
+    global $request;
+    $params = $_SESSION['userData'];
+    $firstName = $params['firstName'];
+    $lastName = $params['lastName'];
+    $login = $params['login'];
+    $email = $params['email'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,11 +22,13 @@
 <div>
     <form method="post" action="/RegistrationController">
         <ul>
-            <li>First name <input type="text" name="firstName" required></li>
-            <li>Last name <input type="text" name="lastName" required></li>
-            <li>Email <input type="email" name="email" required></li>
-            <li>Login <input type="text" name="login" required></li>
-            <li>Password <input type="password" name="password" required></li>
+            <?php
+            echo "<li>First name <input type=\"text\" name=\"firstName\" value=\"${firstName}\" required></li>";
+            echo "<li>Last name <input type=\"text\" name=\"lastName\" value=\"${lastName}\" required></li>";
+            echo "<li>Email <input type=\"email\" name=\"email\" value=\"${email}\" required></li>";
+            echo "<li>Login <input type=\"text\" name=\"login\" value=\"${login}\" required></li>";
+            echo "<li>Password <input type=\"password\" name=\"password\" required></li>";
+            ?>
         </ul>
         <input type="submit" >
         Go back to <a href="main">main page</a>
@@ -29,3 +37,7 @@
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'?>
 </body>
 </html>
+<?php
+if (isset($_SESSION['userData']))
+    unset($_SESSION['userData'])
+?>

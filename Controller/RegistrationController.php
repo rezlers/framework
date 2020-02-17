@@ -4,6 +4,7 @@
 namespace App\controller;
 
 
+use Kernel\App\App;
 use Kernel\CallableHandler\ControllerInterface;
 use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyDatabase;
@@ -76,7 +77,7 @@ class RegistrationController implements ControllerInterface
             return $this->errorFinishPage('Something went wrong. Please check if your input email is valid', 'Something goes wrong with "mail" method with email ' . $request->getParam('email'));
         }
         $reqParams = $request->getParams();
-        $userDataToInsert = [$reqParams['firstName'], $reqParams['lastName'], $reqParams['login'], $reqParams['email'], $reqParams['password']];
+        $userDataToInsert = [$reqParams['firstName'], $reqParams['lastName'], $reqParams['login'], $reqParams['email'], md5($reqParams['password'])];
         $result = $this->connection->statement('INSERT INTO users (first_name, last_name, login, email, password) VALUES (?, ?, ?, ?, ?)', $userDataToInsert);
         if ($result === false) {
             return $this->errorFinishPage('Something went wrong. Please try again later',
@@ -92,7 +93,35 @@ class RegistrationController implements ControllerInterface
         return render('FinishPage.php');
     }
 
-    private function errorFinishPage (string $responseMessage, string $logMessage = '')
+    private function validateUserData(Request $request)
+    {
+        $result = $this->connection->statement('SELECT * FROM users WHERE login = ?', [$request->getParam('login')]);
+        if ($result === false){
+            return $this->errorFinishPage('', 'Error with executing SELECT * FROM users WHERE login = ?, params: ' . $request->getParam('login'));
+        }
+        $login = $result->fetchAll()[0];
+        if (!empty($login)) {
+            session_start();
+            $reqParams = $request->getParams();
+            $_SESSION['userData'] = [
+              'firstName' => $reqParams['firstName'],
+              'lastName' => $reqParams['lastName'],
+              'email' => $reqParams['email'],
+              'login' => $reqParams['login'],
+            ];
+            return redirect('/registration');
+        }
+        $result = $this->connection->statement('SELECT * FROM users WHERE email = ?', [$request->getParam('email')]);
+        if ($result === false){
+            return $this->errorFinishPage('', 'Error with executing SELECT * FROM users WHERE email = ?, params: ' . $request->getParam('email'));
+        }
+        $email = $result->fetchAll()[0];
+        if (!empty($email)) {
+            return redirect('/registration');
+        }
+    }
+
+    private function errorFinishPage (string $responseMessage = '', string $logMessage = '', int $responseStatusCode = 500)
     {
         /**
          * @var Request $request
@@ -100,6 +129,10 @@ class RegistrationController implements ControllerInterface
         global $request;
         global $container;
         $container->getService('Logger')->error($logMessage);
+        if ($responseStatusCode === 500) {
+            $response = App::Response();
+            return $response->setStatusCode($responseStatusCode);
+        }
         $request->addParam('ResponseMessage', $responseMessage);
         return render('FinishPage.php');
     }
