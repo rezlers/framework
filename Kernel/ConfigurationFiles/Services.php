@@ -38,7 +38,7 @@ return $services = [
         'classname' => 'PhpMailerWrapper',
         'args' => [],
         'type' => 'singleton',
-        'configuration' => 'MailerInterface',
+        'configuration' => 'Mailer',
         'interface' => 'MailerInterface'
     ]
 ];

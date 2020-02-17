@@ -24,4 +24,11 @@ interface RouterInterface
      * @return RouteInterface
      */
     public function get($appUrl, $callable) : RouteInterface;
+
+    /**
+     * @param $appUrl
+     * @param $callable
+     * @return RouteInterface
+     */
+    public function post($appUrl, $callable) : RouteInterface;
 }

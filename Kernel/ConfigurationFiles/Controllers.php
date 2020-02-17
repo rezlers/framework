@@ -3,5 +3,6 @@ return $controllers = [
     'MyController' => 'UserController',
     'MainPageController' => 'MainPageController',
     'LoginController' => 'LoginController',
-    'AccountController' => 'AccountController'
+    'AccountController' => 'AccountController',
+    'RegistrationController' => 'RegistrationController'
 ];

@@ -3,7 +3,6 @@
 use Kernel\App\App;
 use Kernel\Container\Services\RouterInterface;
 use Kernel\Request\RequestInterface as Request;
-use Kernel\Response\ResponseInterface;
 use Kernel\Container\ServiceContainer;
 use function Kernel\Helpers\render;
 
@@ -13,6 +12,28 @@ $container = new ServiceContainer();
  * @var RouterInterface $router
  */
 $router = $container->getService('Router');
+
+$router->get('/main', function (Request $request) {
+    return render('AuthPage.php');
+});
+$router->get('/', function (Request $request) {
+    return render('AuthPage.php');
+});
+
+$router->get('/registration', function (Request $request) {
+    return render('RegistrationPage.php');
+});
+
+$router->get('/registration/{registrationHash}', 'RegistrationController');
+
+$router->post('/RegistrationController', 'RegistrationController');
+
+$router->post('/AuthenticationController', 'AuthenticationController');
+
+
+
+
+
 
 $router->get('/user1/{id}/film/{number}', function (Request $request) {
     $response = App::Response();
@@ -26,17 +47,3 @@ $router->get('/user1/21/film/{number}', function (Request $request) {
 })->setMiddleware(['userMW']);
 
 $router->get('/user1/22/film/{number}', 'MyController')->setMiddleware(['userMW']);
-
-$router->get('/main', function (Request $request) {
-    return render('AuthPage.php');
-});
-$router->get('/', function (Request $request) {
-    return render('AuthPage.php');
-});
-
-$router->get('/registration', function (Request $request) {
-    return render('RegistrationPage.php');
-});
-
-$router->get('/{userName}', 'AccountController');
-

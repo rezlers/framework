@@ -16,8 +16,8 @@
     <h2>Login in system</h2>
     <form method="get" action="/AuthenticationController">
         <ul>
-            <li><input type="text" value="login" required></li>
-            <li><input type="text" value="password" required></li>
+            <li>Login <input type="text" name="login" required></li>
+            <li>Password <input type="text" name="password" required></li>
         </ul>
         <input type="submit">
     </form>

@@ -88,7 +88,7 @@ class PhpMailerWrapper implements MailerInterface
         }
 
         $container = new ServiceContainer();
-        $this->logger = $container->getService('MyLogger');
+        $this->logger = $container->getService('Logger');
     }
 
 }

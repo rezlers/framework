@@ -15,5 +15,7 @@ use Kernel\Request\RequestInterface as Request;
 </head>
 <body>
 <?php echo $request->getParam('ResponseMessage');?>
+<br>
+Go back to <a href="/main">main</a>
 </body>
 </html>

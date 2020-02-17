@@ -46,3 +46,154 @@
 2020-02-13 14:21:03: error: Migrations has failed: ResponseHandlerException: There are not enough migrations in Migrations folder
 2020-02-13 14:21:57: error: Migrations has failed: MigrationHandlerException: There are not enough migrations in Migrations folder
 2020-02-13 14:24:17: error: Migrations has failed: MigrationHandlerException: All migrations were executed before
+2020-02-13 14:32:59: info: Migration 0004Test.sql has started
+2020-02-13 14:33:07: error: Migrations has failed: MigrationHandlerException: Something has gone wrong with statement qweqweqweqwe
+2020-02-14 09:12:44: info: SystemMiddleware has passed
+2020-02-14 09:12:44: info: User middleware has passed
+2020-02-14 09:13:10: info: SystemMiddleware has passed
+2020-02-14 09:13:10: info: User middleware has passed
+2020-02-14 09:13:20: info: SystemMiddleware has passed
+2020-02-14 09:13:34: info: SystemMiddleware has passed
+2020-02-14 09:13:34: info: User middleware has passed
+2020-02-14 10:25:18: info: SystemMiddleware has passed
+2020-02-14 10:25:18: info: User middleware has passed
+2020-02-14 10:25:19: info: SystemMiddleware has passed
+2020-02-14 10:25:19: error: CallableHandlerException: Callable Array execution ended with false as call_user_func_array returned value
+2020-02-14 10:25:30: info: SystemMiddleware has passed
+2020-02-14 10:25:30: info: User middleware has passed
+2020-02-14 10:25:31: info: SystemMiddleware has passed
+2020-02-14 10:25:31: error: CallableHandlerException: Callable Array execution ended with false as call_user_func_array returned value
+2020-02-14 10:39:42: info: SystemMiddleware has passed
+2020-02-14 10:39:42: error: CallableHandlerException: Callable Array execution ended with false as call_user_func_array returned value
+2020-02-14 10:39:43: info: SystemMiddleware has passed
+2020-02-14 10:39:43: error: CallableHandlerException: Callable Array execution ended with false as call_user_func_array returned value
+2020-02-14 10:58:43: info: SystemMiddleware has passed
+2020-02-14 10:58:43: info: User middleware has passed
+2020-02-14 10:58:44: info: SystemMiddleware has passed
+2020-02-14 10:58:44: info: User middleware has passed
+2020-02-14 10:58:46: info: SystemMiddleware has passed
+2020-02-14 10:58:46: info: User middleware has passed
+2020-02-14 10:58:47: info: SystemMiddleware has passed
+2020-02-14 10:58:47: error: CallableHandlerException: Callable Array execution ended with false as call_user_func_array returned value
+2020-02-14 11:01:03: info: SystemMiddleware has passed
+2020-02-14 11:01:03: info: User middleware has passed
+2020-02-14 11:01:04: info: SystemMiddleware has passed
+2020-02-14 11:05:20: info: SystemMiddleware has passed
+2020-02-14 11:05:20: info: User middleware has passed
+2020-02-14 11:05:21: info: SystemMiddleware has passed
+2020-02-14 11:05:21: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:08:43: info: SystemMiddleware has passed
+2020-02-14 11:08:43: alert: MiddlewareException: Middleware returned neither Response or Request
+2020-02-14 11:09:20: info: SystemMiddleware has passed
+2020-02-14 11:10:24: info: SystemMiddleware has passed
+2020-02-14 11:12:13: info: SystemMiddleware has passed
+2020-02-14 11:12:14: info: SystemMiddleware has passed
+2020-02-14 11:12:14: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:17:12: info: SystemMiddleware has passed
+2020-02-14 11:17:12: info: SystemMiddleware has passed
+2020-02-14 11:17:12: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:20:44: info: SystemMiddleware has passed
+2020-02-14 11:20:44: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:21:04: info: SystemMiddleware has passed
+2020-02-14 11:21:04: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:21:05: info: SystemMiddleware has passed
+2020-02-14 11:21:05: info: SystemMiddleware has passed
+2020-02-14 11:21:05: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:21:07: info: SystemMiddleware has passed
+2020-02-14 11:21:07: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:21:07: info: SystemMiddleware has passed
+2020-02-14 11:21:07: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:21:10: info: SystemMiddleware has passed
+2020-02-14 11:21:10: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:36:41: info: SystemMiddleware has passed
+2020-02-14 11:36:41: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:36:41: info: SystemMiddleware has passed
+2020-02-14 11:36:41: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:36:43: info: SystemMiddleware has passed
+2020-02-14 11:36:43: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:36:44: info: SystemMiddleware has passed
+2020-02-14 11:36:45: info: SystemMiddleware has passed
+2020-02-14 11:36:45: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:36:46: info: SystemMiddleware has passed
+2020-02-14 11:36:46: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:36:46: info: SystemMiddleware has passed
+2020-02-14 11:36:46: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:36:50: info: SystemMiddleware has passed
+2020-02-14 11:36:50: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:37:34: info: SystemMiddleware has passed
+2020-02-14 11:37:35: info: SystemMiddleware has passed
+2020-02-14 11:37:35: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:37:35: info: SystemMiddleware has passed
+2020-02-14 11:37:35: error: CallableHandlerException: Callable closure execution ended with false as call_user_func_array returned value
+2020-02-14 11:37:36: info: SystemMiddleware has passed
+2020-02-14 11:37:36: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:39:35: info: SystemMiddleware has passed
+2020-02-14 11:39:35: info: SystemMiddleware has passed
+2020-02-14 11:39:35: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:02: info: SystemMiddleware has passed
+2020-02-14 11:41:02: info: SystemMiddleware has passed
+2020-02-14 11:41:02: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:03: info: SystemMiddleware has passed
+2020-02-14 11:41:03: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:03: info: SystemMiddleware has passed
+2020-02-14 11:41:03: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:13: info: SystemMiddleware has passed
+2020-02-14 11:41:13: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:14: info: SystemMiddleware has passed
+2020-02-14 11:41:14: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:15: info: SystemMiddleware has passed
+2020-02-14 11:41:15: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:16: info: SystemMiddleware has passed
+2020-02-14 11:41:16: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:16: info: SystemMiddleware has passed
+2020-02-14 11:41:16: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:17: info: SystemMiddleware has passed
+2020-02-14 11:41:17: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:18: info: SystemMiddleware has passed
+2020-02-14 11:41:18: info: SystemMiddleware has passed
+2020-02-14 11:41:18: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:19: info: SystemMiddleware has passed
+2020-02-14 11:41:19: info: SystemMiddleware has passed
+2020-02-14 11:41:19: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:30: info: SystemMiddleware has passed
+2020-02-14 11:41:31: info: SystemMiddleware has passed
+2020-02-14 11:41:31: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 11:41:32: info: SystemMiddleware has passed
+2020-02-14 11:41:32: info: SystemMiddleware has passed
+2020-02-14 11:41:32: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-14 15:09:01: error: Migrations has failed: MigrationHandlerException: Couldn't select migrations table
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         2020-02-17 08:11:25: info: Migration 0006Main_2.sql has started
+2020-02-17 08:12:20: error: Migrations has failed: MigrationHandlerException: Something has gone wrong with statement CREATE TABLE registration_links (                                    id SERIAL PRIMARY KEY,                                    `time` TIMESTAMP DEFAULT NOW(),                                    user_id BIGINT NOT NULL)
+2020-02-17 08:12:32: info: Migration 0006Main_2.sql has started
+2020-02-17 08:12:32: info: Migration 0006Main_2.sql has succeed
+2020-02-17 08:12:42: info: Migrations 0006Main_2.sql has succeed
+2020-02-17 09:38:29: info: SystemMiddleware has passed
+2020-02-17 09:38:33: info: SystemMiddleware has passed
+2020-02-17 09:38:43: info: SystemMiddleware has passed
+2020-02-17 09:40:24: info: SystemMiddleware has passed
+2020-02-17 09:40:26: info: SystemMiddleware has passed
+2020-02-17 09:41:46: info: SystemMiddleware has passed
+2020-02-17 09:43:19: info: SystemMiddleware has passed
+2020-02-17 09:44:30: info: SystemMiddleware has passed
+2020-02-17 09:46:18: info: SystemMiddleware has passed
+2020-02-17 09:58:31: info: SystemMiddleware has passed
+2020-02-17 09:59:41: info: SystemMiddleware has passed
+2020-02-17 10:02:53: info: SystemMiddleware has passed
+2020-02-17 10:03:54: info: Message sent!
+2020-02-17 10:06:25: error: Cant execute INSERT INTO users (first_name, last_name, login, email, password, confirmation) VALUES (?, ?, ?, ?, ?, ?). Params: 1|1|reza|rezlers123@gmail.com|1|
+2020-02-17 10:10:10: info: SystemMiddleware has passed
+2020-02-17 10:10:12: info: Message sent!
+2020-02-17 10:10:12: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-17 10:19:59: info: SystemMiddleware has passed
+2020-02-17 10:20:01: info: Message sent!
+2020-02-17 10:20:01: error: Cant execute INSERT INTO users (first_name, last_name, login, email, password, confirmation) VALUES (?, ?, ?, ?, ?, ?). Params: 1|1|reza|rezlers123@gmail.com|1
+2020-02-17 10:20:22: info: SystemMiddleware has passed
+2020-02-17 10:22:21: info: SystemMiddleware has passed
+2020-02-17 10:22:45: info: SystemMiddleware has passed
+2020-02-17 10:22:47: info: Message sent!
+2020-02-17 10:22:47: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-17 10:23:06: info: SystemMiddleware has passed
+2020-02-17 10:23:06: error: PhpMailerWrapper Error: You must provide at least one recipient email address.
+2020-02-17 10:23:06: error: Something goes wrong with mail method with email 
+2020-02-17 10:23:31: info: SystemMiddleware has passed
+2020-02-17 10:24:19: info: SystemMiddleware has passed

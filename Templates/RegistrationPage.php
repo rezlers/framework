@@ -16,11 +16,11 @@
 <div>
     <form method="post" action="/RegistrationController">
         <ul>
-            <li><input type="text" value="firstName" required></li>
-            <li><input type="text" value="lastName" required></li>
-            <li><input type="email" value="email" required></li>
-            <li><input type="text" value="login" required></li>
-            <li><input type="password" value="password" required></li>
+            <li>First name <input type="text" name="firstName" required></li>
+            <li>Last name <input type="text" name="lastName" required></li>
+            <li>Email <input type="email" name="email" required></li>
+            <li>Login <input type="text" name="login" required></li>
+            <li>Password <input type="password" name="password" required></li>
         </ul>
         <input type="submit" >
         Go back to <a href="main">main page</a>

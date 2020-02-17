@@ -30,6 +30,8 @@ class Request implements RequestInterface
     public function getParam(string $paramKey)
     {
         $params = $this->getParams();
+        if (!array_key_exists($paramKey, $params))
+            return null;
         return $params[$paramKey];
     }
 
