@@ -35,6 +35,9 @@ class RegistrationController implements ControllerInterface
         if (!is_null($request->getParam('registrationHash'))) {
             return $this->confirmLink($request);
         }
+        $result = $this->validateUserData($request);
+        if (!is_null($result))
+            return $result;
         return $this->sendRegistrationLetter($request);
     }
 
@@ -74,7 +77,7 @@ class RegistrationController implements ControllerInterface
         $registrationLetter = getResource('Letters/RegistrationLetter.php');
         $result = $mailer->mail($request->getParam('email'), 'Registration letter',$registrationLetter);
         if ($result === false) {
-            return $this->errorFinishPage('Something went wrong. Please check if your input email is valid', 'Something goes wrong with "mail" method with email ' . $request->getParam('email'));
+            return $this->errorFinishPage('Something went wrong. Please check if your input email is valid', 'Something goes wrong with "mail" method with email ' . $request->getParam('email'), 200);
         }
         $reqParams = $request->getParams();
         $userDataToInsert = [$reqParams['firstName'], $reqParams['lastName'], $reqParams['login'], $reqParams['email'], md5($reqParams['password'])];
@@ -86,7 +89,7 @@ class RegistrationController implements ControllerInterface
         $userId = $this->connection->statement('SELECT id FROM users WHERE (login = ?)', [$reqParams['login']])->fetchAll()[0][0];
         $result = $this->connection->statement('INSERT INTO registration_links (user_id, hash) VALUES (?, ?)', [$userId, $registrationHash]);
         if ($result === false) {
-            return $this->errorFinishPage('Something went wrong. Please check if your input data is valid', "Can't insert hash value ${registrationHash} into registration_links table. User email is " . $request->getParam('email'));
+            return $this->errorFinishPage('Something went wrong. Please try again later', "Can't insert hash value ${registrationHash} into registration_links table. User email is " . $request->getParam('email'));
         }
         $container->getService('Logger')->info('Send letter to ' . $request->getParam('email') . ', insert hash into registration_links table and insert user data into users table');
         $request->addParam('ResponseMessage', 'Congratulations! Letter was sent to tour email. Please check it to finish registration');

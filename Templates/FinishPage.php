@@ -16,6 +16,6 @@ use Kernel\Request\RequestInterface as Request;
 <body>
 <?php echo $request->getParam('ResponseMessage');?>
 <br>
-Go back to <a href="/main">main</a>
+Go back to <a href="/auth">main</a>
 </body>
 </html>

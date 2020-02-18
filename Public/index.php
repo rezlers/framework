@@ -9,7 +9,17 @@ $app->handle();
 
 
 
+/*Class A
+{
+    public function method() : void
+    {
+        echo 'method passed';
+    }
+}
 
+$instance = new A();
+$result = $instance->method();
+var_dump($result);*/ ## return's value of void method
 /*class A
 {
     public function method($var)

@@ -64,13 +64,13 @@ class Route implements RouteInterface
     {
         $middleware = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Middleware.php';
         $routeMiddlewareList = $middleware['routeMiddleware'];
-        foreach ($routeMiddlewareList as $key => $value) {
-            $pathToMiddleware = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . $routeMiddlewareList[$key] . '.php';
-            if (is_null($routeMiddlewareList[$key]))
-                throw new RouteException("There is no middleware in middleware configuration with key ${key}", 500);
+        foreach ($keys as $value) {
+            $pathToMiddleware = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Middleware/' . $routeMiddlewareList[$value] . '.php';
+            if (is_null($routeMiddlewareList[$value]))
+                throw new RouteException("There is no middleware in middleware configuration with key ${$value}", 500);
             if (!file_exists($pathToMiddleware))
-                throw new RouteException("There is no middleware with name " . $routeMiddlewareList[$key], 500);
-            $this->middlewareList[$key] = $value;
+                throw new RouteException("There is no middleware with name " . $routeMiddlewareList[$value], 500);
+            $this->middlewareList[$value] = $routeMiddlewareList[$value];
         }
     }
 

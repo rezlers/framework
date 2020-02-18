@@ -4,5 +4,6 @@ return $controllers = [
     'MainPageController' => 'MainPageController',
     'LoginController' => 'LoginController',
     'AccountController' => 'AccountController',
-    'RegistrationController' => 'RegistrationController'
+    'RegistrationController' => 'RegistrationController',
+    'AuthenticationController' => 'AuthenticationController'
 ];

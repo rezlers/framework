@@ -13,16 +13,21 @@ $container = new ServiceContainer();
  */
 $router = $container->getService('Router');
 
-$router->get('/main', function (Request $request) {
+$router->get('/auth', function (Request $request) {
     $responseHtml = render('AuthPage.php');
     if (isset($_SESSION['userData']))
         unset($_SESSION['userData']);
+    if (isset($_SESSION['errorMessage']))
+        unset($_SESSION['errorMessage']);
     return $responseHtml;
 });
+
 $router->get('/', function (Request $request) {
     $responseHtml = render('AuthPage.php');
     if (isset($_SESSION['userData']))
         unset($_SESSION['userData']);
+    if (isset($_SESSION['errorMessage']))
+        unset($_SESSION['errorMessage']);
     return $responseHtml;
 });
 
@@ -30,14 +35,18 @@ $router->get('/registration', function (Request $request) {
     $responseHtml = render('RegistrationPage.php');
     if (isset($_SESSION['userData']))
         unset($_SESSION['userData']);
+    if (isset($_SESSION['errorMessage']))
+        unset($_SESSION['errorMessage']);
     return $responseHtml;
 });
 
 $router->get('/registration/{registrationHash}', 'RegistrationController');
 
+$router->get('/main','MainPageController')->setMiddleware(['AuthenticationCheck']);
+
 $router->post('/RegistrationController', 'RegistrationController');
 
-$router->post('/AuthenticationController', 'AuthenticationController');
+$router->get('/AuthenticationController', 'AuthenticationController');
 
 
 

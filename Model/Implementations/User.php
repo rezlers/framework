@@ -185,7 +185,7 @@ class User implements UserInterface
         $connection = $container->getService('Database')->connection();
         $result = $connection->statement('SELECT * FROM users')->fetchAll();
         if ($result === false) {
-            throw new ModelException('User: Error when executing SELECT * FROM users');
+            throw new ModelException('User: Error while executing SELECT * FROM users');
         }
         return self::configureUsersArray($result);
     }
@@ -193,7 +193,7 @@ class User implements UserInterface
     /**
      * @param string $key
      * @param mixed $value
-     * @return array
+     * @return self[]
      * @throws ModelException
      */
     public static function getByData(string $key, $value): array

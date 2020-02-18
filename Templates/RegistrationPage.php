@@ -1,11 +1,13 @@
 <?php
     use Kernel\Request\RequestInterface as Request;
     global $request;
+    session_start();
     $params = $_SESSION['userData'];
     $firstName = $params['firstName'];
     $lastName = $params['lastName'];
     $login = $params['login'];
     $email = $params['email'];
+    $errorMessage = $_SESSION['errorMessage'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -31,8 +33,9 @@
             ?>
         </ul>
         <input type="submit" >
-        Go back to <a href="main">main page</a>
+        Go back to <a href="auth">main page</a>
     </form>
+    <p><?php echo $errorMessage;?></p>
 </div>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'?>
 </body>

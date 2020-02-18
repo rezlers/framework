@@ -2,8 +2,9 @@
 use Kernel\Request\RequestInterface as Request;
 /** @var Request $request */
 global $request;
-$login = $request->getParam('login');
-$password = $request->getParam('password');
+session_start();
+$login = $_SESSION['login'];
+$errorMessage = $_SESSION['errorMessage'];
 ?>
 
 <!doctype html>
@@ -23,9 +24,10 @@ $password = $request->getParam('password');
         <ul>
             <?php
             echo "<li>Login <input type=\"text\" name=\"login\" value=\"${login}\" required></li>";
-            echo "<li>Password <input type=\"text\" name=\"password\" value=\"${password}\" required></li>"
+            echo "<li>Password <input type=\"text\" name=\"password\" required></li>"
             ?>
         </ul>
+        <p><?php echo $errorMessage;?></p>
         <input type="submit">
     </form>
     <p>Not <a href="/registration">registered</a>?</p>

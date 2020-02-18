@@ -7,9 +7,11 @@ namespace App\controller;
 use Kernel\CallableHandler\ControllerInterface;
 use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyDatabase;
+use Kernel\Exceptions\ModelException;
 use Kernel\Request\Request;
+use function Kernel\Helpers\redirect;
 use function Kernel\Helpers\render;
-use App\Model\UserInterface as User;
+use App\Model\Implementations\User;
 
 class AuthenticationController implements ControllerInterface
 {
@@ -25,20 +27,29 @@ class AuthenticationController implements ControllerInterface
     /**
      * @param Request $request
      * @return mixed
+     * @throws ModelException
      */
     public function handle(Request $request)
     {
-        $user = User::getByData('login', $request->getParam('login'));
-        if (empty($user))
-            // send data back to client
-        return $this->errorFinishPage('', '');
-    }
-
-    private function errorFinishPage($responseMessage, $logMessage = '')
-    {
-        /*** @var Request $request */
-        global $request;
-        return render('FinishPage.php');
+        $result = User::getByData('login', $request->getParam('login'));
+        session_start();
+        if (empty($result)) {
+            $_SESSION['userData'] = [
+              'login' => $request->getParam('login')
+            ];
+            $_SESSION['errorMessage'] = 'There is no user with such login and password. Check if your input data is valid';
+            return redirect('/auth');
+        }
+        $user = $result[0];
+        if ($user->getPassword() != md5($request->getParam('password'))) {
+            $_SESSION['userData'] = [
+                'login' => $request->getParam('login')
+            ];
+            $_SESSION['errorMessage'] = 'There is no user with such login and password. Check if your input data is valid';
+            return redirect('/auth');
+        }
+        $_SESSION['authentication'] = true;
+        return redirect('/main');
     }
 
     private function configureInstance()
