@@ -1,6 +1,6 @@
 <?php
 return $controllers = [
-    'MyController' => 'UserController',
+    'UserLinksController' => 'UserLinksController',
     'MainPageController' => 'MainPageController',
     'LoginController' => 'LoginController',
     'AccountController' => 'AccountController',

@@ -7,6 +7,7 @@ namespace App\controller;
 use Kernel\CallableHandler\ControllerInterface;
 use Kernel\Request\Request;
 use Kernel\Response\ResponseInterface;
+use function Kernel\Helpers\render;
 
 class AccountController implements ControllerInterface
 {
@@ -17,6 +18,6 @@ class AccountController implements ControllerInterface
      */
     public function handle(Request $request)
     {
-        // TODO: Implement handle() method.
+        return render('AccountMain.php');
     }
 }

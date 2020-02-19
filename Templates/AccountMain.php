@@ -11,9 +11,16 @@
     <title>Account</title>
 </head>
 <body>
+<nav>
+    <a href="/main">Main</a>
+    <a href="/links">My links</a>
+    <a href="/account">Account</a>
+</nav>
 <h1>Account</h1>
 <a href="#">Edit profile</a>
 <a href="#">Create link</a>
-
+<nav>
+    <p>Cool sign</p>
+</nav>
 </body>
 </html>

@@ -9,14 +9,12 @@ use Kernel\Request\Request;
 use Kernel\Helpers;
 use Kernel\Container\ServiceContainer;
 use Kernel\Response\ResponseInterface;
+use function Kernel\Helpers\render;
 
-class UserController implements ControllerInterface
+class UserLinksController implements ControllerInterface
 {
     public function handle(Request $request)
     {
-        $response = App::Response();
-        $request->addParam('key', 'value');
-        $response->write(Helpers\render('RegistrationPage.php'));
-        return $response;
+        return render('UserLinks.php');
     }
 }

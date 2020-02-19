@@ -20,7 +20,7 @@ $router->get('/auth', function (Request $request) {
     if (isset($_SESSION['errorMessage']))
         unset($_SESSION['errorMessage']);
     return $responseHtml;
-});
+})->setMiddleware(['AuthenticationCheck']);
 
 $router->get('/', function (Request $request) {
     $responseHtml = render('AuthPage.php');
@@ -29,7 +29,7 @@ $router->get('/', function (Request $request) {
     if (isset($_SESSION['errorMessage']))
         unset($_SESSION['errorMessage']);
     return $responseHtml;
-});
+})->setMiddleware(['AuthenticationCheck']);
 
 $router->get('/registration', function (Request $request) {
     $responseHtml = render('RegistrationPage.php');
@@ -38,15 +38,19 @@ $router->get('/registration', function (Request $request) {
     if (isset($_SESSION['errorMessage']))
         unset($_SESSION['errorMessage']);
     return $responseHtml;
-});
+})->setMiddleware(['AuthenticationCheck']);
 
 $router->get('/registration/{registrationHash}', 'RegistrationController');
-
-$router->get('/main','MainPageController')->setMiddleware(['AuthenticationCheck']);
 
 $router->post('/RegistrationController', 'RegistrationController');
 
 $router->get('/AuthenticationController', 'AuthenticationController');
+
+$router->get('/main','MainPageController')->setMiddleware(['AuthenticationCheck']);
+
+$router->get('/account', 'AccountController')->setMiddleware(['AuthenticationCheck']);
+
+$router->get('/links', 'UserLinksController')->setMiddleware(['AuthenticationCheck']);
 
 
 
@@ -63,5 +67,3 @@ $router->get('/user1/21/film/{number}', function (Request $request) {
     $response->write('Closure has passed');
     return $response;
 })->setMiddleware(['userMW']);
-
-$router->get('/user1/22/film/{number}', 'MyController')->setMiddleware(['userMW']);

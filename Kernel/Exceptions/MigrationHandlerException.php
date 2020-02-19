@@ -14,7 +14,7 @@ class MigrationHandlerException extends \Exception implements FrameworkException
      */
     private $container;
 
-    public function __construct($message = "", $code = 200, Throwable $previous = null)
+    public function __construct($message = "", $code = 500, Throwable $previous = null)
     {
         parent::__construct("MigrationHandlerException: ${message}", $code, $previous);
     }
