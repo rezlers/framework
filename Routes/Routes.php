@@ -23,6 +23,12 @@ $router->get('/registration/do/{registrationHash}', 'RegistrationController');
 
 $router->post('/registration/do', 'RegistrationController');
 
+$router->get('/registration/{action}/{registrationHash}', 'RegistrationController');
+$router->post('/registration/{action}/{registrationHash}', 'RegistrationController');
+
+$router->get('/auth/{action}', 'AuthenticationController');
+$router->post('/auth/{action}', 'AuthenticationController');
+
 $router->get('/auth/do', 'AuthenticationController'); ## authentication and authorization are in one controller
 
 $router->get('/main','LinksController')->setMiddleware(['AuthenticationCheck']);
