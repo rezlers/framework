@@ -32,25 +32,33 @@ class MiddlewareHandler
      * @param RequestInterface $request
      * @return mixed|null
      * @throws MiddlewareException
+     * @throws CallableHandlerException
      */
     public function handle(RequestInterface $request)
     {
         $this->configureArrayToExecute($request);
 
-        if (!empty(self::$middlewareToExecute)) {
-            return $this->executeMiddleware($request);
-        }
+        return $this->executeMiddleware($request);
 
-        return $request;
     }
 
     /**
      * @param RequestInterface $request
      * @return mixed
-     * @throws MiddlewareException
+     * @throws CallableHandlerException
      */
     private function executeMiddleware(RequestInterface $request)
     {
+        if (empty(self::$middlewareToExecute)) {
+            $callable = $request->getCallable();
+            $result = call_user_func_array($callable, array($request));
+            if ($result == false) {
+                $callableToString = $this->getCallableName($callable);
+                throw new CallableHandlerException("Callable ${callableToString} execution ended with false as call_user_func_array returned value");
+            }
+            return $result;
+        }
+
         $functionToExecute = $this->configureFunctionToExecute(function (Closure $nextClosure, MiddlewareInterface $middleware) ## It will return function that returns execution of user-handle method
         {
             return function (Request $request) use ($nextClosure, $middleware) {

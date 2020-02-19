@@ -31,25 +31,34 @@ class AuthenticationController implements ControllerInterface
      */
     public function handle(Request $request)
     {
-        $result = User::getByData('login', $request->getParam('login'));
-        session_start();
-        if (empty($result)) {
-            $_SESSION['userData'] = [
-              'login' => $request->getParam('login')
-            ];
-            $_SESSION['errorMessage'] = 'There is no user with such login and password. Check if your input data is valid';
-            return redirect('/auth');
+        if ($request->getPath() == '/auth/do') {
+            $result = User::getByData('login', $request->getParam('login'));
+            session_start();
+            if (empty($result)) {
+                $_SESSION['userData'] = [
+                    'login' => $request->getParam('login')
+                ];
+                $_SESSION['errorMessage'] = 'There is no user with such login and password. Check if your input data is valid';
+                return redirect('/auth');
+            }
+            $user = $result[0];
+            if ($user->getPassword() != md5($request->getParam('password'))) {
+                $_SESSION['userData'] = [
+                    'login' => $request->getParam('login')
+                ];
+                $_SESSION['errorMessage'] = 'There is no user with such login and password. Check if your input data is valid';
+                return redirect('/auth');
+            }
+            $_SESSION['authentication'] = true;
+            $_SESSION['userId'] = $user->getId();
+            return redirect('/main');
         }
-        $user = $result[0];
-        if ($user->getPassword() != md5($request->getParam('password'))) {
-            $_SESSION['userData'] = [
-                'login' => $request->getParam('login')
-            ];
-            $_SESSION['errorMessage'] = 'There is no user with such login and password. Check if your input data is valid';
-            return redirect('/auth');
-        }
-        $_SESSION['authentication'] = true;
-        return redirect('/main');
+        $responseHtml = render('AuthPage.php');
+        if (isset($_SESSION['userData']))
+            unset($_SESSION['userData']);
+        if (isset($_SESSION['errorMessage']))
+            unset($_SESSION['errorMessage']);
+        return $responseHtml;
     }
 
     private function configureInstance()

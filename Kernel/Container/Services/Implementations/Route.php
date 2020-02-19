@@ -138,7 +138,6 @@ class Route implements RouteInterface
             foreach ($appUrlParts as $key => $value) {
                 if (preg_match($this->reg_exp, $value)) {
                     $params[trim($value, '{}')] = $requestUrlParts[$key];
-
                 }
             }
         }

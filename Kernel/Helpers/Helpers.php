@@ -23,6 +23,11 @@ function redirect($path): ResponseInterface
     return App::Response()->setHeader('Location: ' . $path);
 }
 
+function abort(int $responseStatusCode): ResponseInterface
+{
+    return App::Response()->setStatusCode($responseStatusCode);
+}
+
 function getResource($path)
 {
     global $request;

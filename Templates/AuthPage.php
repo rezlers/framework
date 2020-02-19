@@ -20,7 +20,7 @@ $errorMessage = $_SESSION['errorMessage'];
 <div>
     <h1>Welcome to App</h1>
     <h2>Login in system</h2>
-    <form method="get" action="/AuthenticationController">
+    <form method="get" action="/auth/do">
         <ul>
             <?php
             echo "<li>Login <input type=\"text\" name=\"login\" value=\"${login}\" required></li>";

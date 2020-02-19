@@ -69,4 +69,10 @@ interface UserInterface
      * @return self[]
      */
     public static function getByData(string $key, $value) : array;
+
+    /**
+     * @param int $value
+     * @return self
+     */
+    public static function getById(int $value) : self;
 }

@@ -4,12 +4,13 @@
 namespace App\controller;
 
 
+use Kernel\App\App;
 use Kernel\CallableHandler\ControllerInterface;
 use Kernel\Request\Request;
 use Kernel\Response\ResponseInterface;
 use function Kernel\Helpers\render;
 
-class AccountController implements ControllerInterface
+class LinksController implements ControllerInterface
 {
 
     /**
@@ -18,6 +19,10 @@ class AccountController implements ControllerInterface
      */
     public function handle(Request $request)
     {
-        return render('AccountMain.php');
+        if ($request->getPath() == '/main')
+            return render('MainPage.php');
+        elseif ($request->getPath() == '/links')
+            return render('UserLinks.php');
+        return App::Response()->setStatusCode(404);
     }
 }

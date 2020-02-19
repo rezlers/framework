@@ -4,6 +4,7 @@
 namespace Kernel\Response;
 
 
+use Kernel\Exceptions\ResponseHandlerException;
 use Kernel\Response\ResponseInterface;
 
 class Response implements ResponseInterface
@@ -39,9 +40,12 @@ class Response implements ResponseInterface
     /**
      * @param mixed $statusCode
      * @return Response
+     * @throws ResponseHandlerException
      */
     public function setStatusCode(int $statusCode) : ResponseInterface
     {
+        if ($statusCode > 600 or $statusCode < 100)
+            throw new ResponseHandlerException('Response status code ' . $statusCode . ' does not exists');
         $this->statusCode = $statusCode;
         return $this;
     }

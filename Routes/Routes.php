@@ -13,57 +13,21 @@ $container = new ServiceContainer();
  */
 $router = $container->getService('Router');
 
-$router->get('/auth', function (Request $request) {
-    $responseHtml = render('AuthPage.php');
-    if (isset($_SESSION['userData']))
-        unset($_SESSION['userData']);
-    if (isset($_SESSION['errorMessage']))
-        unset($_SESSION['errorMessage']);
-    return $responseHtml;
-})->setMiddleware(['AuthenticationCheck']);
+$router->get('/auth', 'AuthenticationController')->setMiddleware(['AuthenticationCheck']);
 
-$router->get('/', function (Request $request) {
-    $responseHtml = render('AuthPage.php');
-    if (isset($_SESSION['userData']))
-        unset($_SESSION['userData']);
-    if (isset($_SESSION['errorMessage']))
-        unset($_SESSION['errorMessage']);
-    return $responseHtml;
-})->setMiddleware(['AuthenticationCheck']);
+$router->get('/', 'AuthenticationController')->setMiddleware(['AuthenticationCheck']);
 
-$router->get('/registration', function (Request $request) {
-    $responseHtml = render('RegistrationPage.php');
-    if (isset($_SESSION['userData']))
-        unset($_SESSION['userData']);
-    if (isset($_SESSION['errorMessage']))
-        unset($_SESSION['errorMessage']);
-    return $responseHtml;
-})->setMiddleware(['AuthenticationCheck']);
+$router->get('/registration', 'RegistrationController')->setMiddleware(['AuthenticationCheck']);
 
-$router->get('/registration/{registrationHash}', 'RegistrationController');
+$router->get('/registration/do/{registrationHash}', 'RegistrationController');
 
-$router->post('/RegistrationController', 'RegistrationController');
+$router->post('/registration/do', 'RegistrationController');
 
-$router->get('/AuthenticationController', 'AuthenticationController');
+$router->get('/auth/do', 'AuthenticationController'); ## authentication and authorization are in one controller
 
-$router->get('/main','MainPageController')->setMiddleware(['AuthenticationCheck']);
+$router->get('/main','LinksController')->setMiddleware(['AuthenticationCheck']);
 
-$router->get('/account', 'AccountController')->setMiddleware(['AuthenticationCheck']);
+$router->get('/{login}', 'UserController')->setMiddleware(['AuthenticationCheck', 'CheckUrlLogin']);
+$router->get('/account', 'UserController')->setMiddleware(['AuthenticationCheck', 'CheckUrlLogin']); ## Will be redirected to /{login}
 
-$router->get('/links', 'UserLinksController')->setMiddleware(['AuthenticationCheck']);
-
-
-
-
-
-
-$router->get('/user1/{id}/film/{number}', function (Request $request) {
-    $response = App::Response();
-
-    return $response;
-});
-$router->get('/user1/21/film/{number}', function (Request $request) {
-    $response = App::Response();
-    $response->write('Closure has passed');
-    return $response;
-})->setMiddleware(['userMW']);
+$router->get('/links', 'LinksController')->setMiddleware(['AuthenticationCheck']);

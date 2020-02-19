@@ -22,7 +22,7 @@
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php'?>
 <h1>Registration</h1>
 <div>
-    <form method="post" action="/RegistrationController">
+    <form method="post" action="/registration/do">
         <ul>
             <?php
             echo "<li>First name <input type=\"text\" name=\"firstName\" value=\"${firstName}\" required></li>";
@@ -40,7 +40,3 @@
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'?>
 </body>
 </html>
-<?php
-if (isset($_SESSION['userData']))
-    unset($_SESSION['userData'])
-?>

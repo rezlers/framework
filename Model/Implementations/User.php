@@ -208,6 +208,24 @@ class User implements UserInterface
         return self::configureUsersArray($result);
     }
 
+    /**
+     * @param $value
+     * @return UserInterface
+     * @throws ModelException
+     */
+    public static function getById(int $value): UserInterface
+    {
+        $container = new ServiceContainer();
+        /** @var MyDatabase $connection */
+        $connection = $container->getService('Database')->connection();
+        $result = $connection->statement('SELECT * FROM users WHERE id = ?', [$value])->fetchAll();
+        if ($result === false) {
+            throw new ModelException('User: SELECT * FROM users WHERE id = ?, params: ' . $value);
+        }
+        $userData = $result[0];
+        return new User($userData['first_name'], $userData['last_name'], $userData['login'], $userData['email'], $userData['password']);
+    }
+
     private static function configureUsersArray($result)
     {
         $users = [];

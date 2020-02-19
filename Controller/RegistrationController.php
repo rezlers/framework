@@ -32,13 +32,22 @@ class RegistrationController implements ControllerInterface
      */
     public function handle(Request $request)
     {
+
         if (!is_null($request->getParam('registrationHash'))) {
             return $this->confirmLink($request);
         }
-        $result = $this->validateUserData($request);
-        if (!is_null($result))
-            return $result;
-        return $this->sendRegistrationLetter($request);
+        if ($request->getPath() == 'registration/do') {
+            $result = $this->validateUserData($request);
+            if (!is_null($result))
+                return $result;
+            return $this->sendRegistrationLetter($request);
+        }
+        $responseHtml = render('RegistrationPage.php');
+        if (isset($_SESSION['userData']))
+            unset($_SESSION['userData']);
+        if (isset($_SESSION['errorMessage']))
+            unset($_SESSION['errorMessage']);
+        return $responseHtml;
     }
 
     private function configureInstance()
@@ -47,7 +56,7 @@ class RegistrationController implements ControllerInterface
         $this->connection = $container->getService('Database')->connection();
     }
 
-    private function confirmLink (Request $request)
+    private function confirmLink(Request $request)
     {
         $hash = $request->getParam('registrationHash');
         $result = $this->connection->statement('SELECT hash, user_id FROM registration_links WHERE hash = ?', [$hash]);
@@ -67,15 +76,15 @@ class RegistrationController implements ControllerInterface
         return render('FinishPage.php');
     }
 
-    private function sendRegistrationLetter (Request $request)
+    private function sendRegistrationLetter(Request $request)
     {
         $container = new ServiceContainer();
         /** @var MailerInterface $mailer */
         $mailer = $container->getService('Mailer');
         $registrationHash = md5(date('Y-m-d H:i:s') . $request->getParam('login'));
-        $request->addParam('registrationHash',$registrationHash);
+        $request->addParam('registrationHash', $registrationHash);
         $registrationLetter = getResource('Letters/RegistrationLetter.php');
-        $result = $mailer->mail($request->getParam('email'), 'Registration letter',$registrationLetter);
+        $result = $mailer->mail($request->getParam('email'), 'Registration letter', $registrationLetter);
         if ($result === false) {
             return $this->errorFinishPage('Something went wrong. Please check if your input email is valid', 'Something goes wrong with "mail" method with email ' . $request->getParam('email'), 200);
         }
@@ -99,7 +108,7 @@ class RegistrationController implements ControllerInterface
     private function validateUserData(Request $request)
     {
         $result = $this->connection->statement('SELECT * FROM users WHERE login = ?', [$request->getParam('login')]);
-        if ($result === false){
+        if ($result === false) {
             return $this->errorFinishPage('', 'Error with executing SELECT * FROM users WHERE login = ?, params: ' . $request->getParam('login'));
         }
         $login = $result->fetchAll()[0];
@@ -107,15 +116,15 @@ class RegistrationController implements ControllerInterface
             session_start();
             $reqParams = $request->getParams();
             $_SESSION['userData'] = [
-              'firstName' => $reqParams['firstName'],
-              'lastName' => $reqParams['lastName'],
-              'email' => $reqParams['email'],
-              'login' => $reqParams['login'],
+                'firstName' => $reqParams['firstName'],
+                'lastName' => $reqParams['lastName'],
+                'email' => $reqParams['email'],
+                'login' => $reqParams['login'],
             ];
             return redirect('/registration');
         }
         $result = $this->connection->statement('SELECT * FROM users WHERE email = ?', [$request->getParam('email')]);
-        if ($result === false){
+        if ($result === false) {
             return $this->errorFinishPage('', 'Error with executing SELECT * FROM users WHERE email = ?, params: ' . $request->getParam('email'));
         }
         $email = $result->fetchAll()[0];
@@ -124,7 +133,7 @@ class RegistrationController implements ControllerInterface
         }
     }
 
-    private function errorFinishPage (string $responseMessage = '', string $logMessage = '', int $responseStatusCode = 500)
+    private function errorFinishPage(string $responseMessage = '', string $logMessage = '', int $responseStatusCode = 500)
     {
         /**
          * @var Request $request
