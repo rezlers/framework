@@ -1,6 +1,11 @@
 <?php
+
+use App\Model\LinkInterface;
+
 $pathToStyles = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Public/bootstrap/css/bootstrap.min.css';
 $pathToJS = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Public/bootstrap/js/bootstrap.min.js';
+/** @var LinkInterface[] $links */
+$links = $_SESSION['linkData'];
 ?>
 
 <!doctype html>
@@ -19,6 +24,15 @@ $pathToJS = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Public/bootstrap/j
     <a href="/account">Account</a>
 </nav>
 <h1>Main</h1>
+<?php
+foreach ($links as $link) {
+    echo "<p>Link<br>". $link->getLink() ."</p>";
+    echo "<p>Header<br>". $link->getHeader() ."</p>";
+    echo "<p>Description<br>". $link->getDescription() ."</p>";
+    echo "<p>Author<br>". $link->getUser()->getLogin() ."</p>";
+    echo '<br>';
+}
+?>
 <nav>
     <p>Cool sign</p>
 </nav>

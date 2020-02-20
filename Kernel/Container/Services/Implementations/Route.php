@@ -119,9 +119,12 @@ class Route implements RouteInterface
                 return true;
             } else {
                 if (count($appUrlParts) > count($requestUrlParts)) {
-                    $this->url = array_slice($appUrlParts, 0, count($requestUrlParts));
-                    if ($this->isEqual($requestUrl))
+                    $this->url = '/' . implode('/', array_slice($appUrlParts, 0, count($requestUrlParts)));
+                    if ($this->isEqual($requestUrl)) {
+                        $this->setParamsNum();
+                        $this->setPathLength();
                         return true;
+                    }
                     $this->url = implode('/',$appUrlParts);
                     return false;
                 }

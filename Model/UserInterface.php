@@ -29,6 +29,15 @@ interface UserInterface
     public function getPassword(): string;
 
     /**
+     * @return int
+     */
+    public function getId(): int;
+
+    /**
+     * @return bool
+     */
+    public function getConfirmation(): bool;
+    /**
      * @param string $email
      */
     public function setEmail(string $email): void;
@@ -53,6 +62,15 @@ interface UserInterface
      */
     public function setPassword(string $password): void;
 
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void;
+
+    /**
+     * @param bool $confirmation
+     */
+    public function setConfirmation(bool $confirmation): void;
     /**
      * @return void
      */

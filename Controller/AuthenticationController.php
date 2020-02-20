@@ -31,7 +31,7 @@ class AuthenticationController implements ControllerInterface
      */
     public function handle(Request $request)
     {
-        if ($request->getPath() == '/auth/do') {
+        if ($request->getParam('action') == 'do') {
             $result = User::getByData('login', $request->getParam('login'));
             session_start();
             if (empty($result)) {
@@ -47,6 +47,13 @@ class AuthenticationController implements ControllerInterface
                     'login' => $request->getParam('login')
                 ];
                 $_SESSION['errorMessage'] = 'There is no user with such login and password. Check if your input data is valid';
+                return redirect('/auth');
+            }
+            if ($user->getConfirmation() === false){
+                $_SESSION['userData'] = [
+                    'login' => $request->getParam('login'),
+                ];
+                $_SESSION['errorMessage'] = 'You did not confirm your email address';
                 return redirect('/auth');
             }
             $_SESSION['authentication'] = true;

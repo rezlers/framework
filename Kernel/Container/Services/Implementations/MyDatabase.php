@@ -58,8 +58,9 @@ class MyDatabase implements DatabaseInterface
     public function statement (string $statement, array $args = [])
     {
         $preparedStatement = $this->currentConnection->prepare($statement);
-        if (!$preparedStatement->execute($args))
+        if (!$preparedStatement->execute($args)) {
             return false;
+        }
         return $preparedStatement;
     }
 

@@ -7,8 +7,6 @@ require '../Bootstrap/bootstrap.php';
 /** @var App $app */
 $app->handle();
 
-
-
 /*Class A
 {
     public function method() : void

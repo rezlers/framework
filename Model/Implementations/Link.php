@@ -5,6 +5,7 @@ namespace App\Model\Implementations;
 
 
 use App\Model\LinkInterface;
+use App\Model\UserInterface;
 use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyDatabase;
 use Kernel\Exceptions\ModelException;
@@ -33,6 +34,11 @@ class Link implements LinkInterface
      * @var int
      */
     private $userId;
+
+    /**
+     * @var UserInterface
+     */
+    private $user;
 
     /**
      * Link constructor.
@@ -81,6 +87,14 @@ class Link implements LinkInterface
     }
 
     /**
+     * @return UserInterface
+     */
+    public function getUser(): UserInterface
+    {
+        return $this->user;
+    }
+
+    /**
      * @param string $description
      */
     public function setDescription(string $description): void
@@ -113,6 +127,14 @@ class Link implements LinkInterface
     }
 
     /**
+     * @throws ModelException
+     */
+    public function setUser(): void
+    {
+        $this->user = User::getById($this->userId);
+    }
+
+    /**
      * @return mixed
      */
     public function getPrivacyTag()
@@ -141,13 +163,14 @@ class Link implements LinkInterface
             /** @var MyDatabase $connection */
             $connection = $container->getService('Database')->connection();
             $linkDataToInsert = [$this->link, $this->header, $this->description, $this->privacyTag, $this->userId];
-            $result = $connection->statement('INSERT INTO links (link, header, description, privacyTag, user_id) VALUES (?,?,?,?,?)',
+            $result = $connection->statement('INSERT INTO links (link, header, description, tag, user_id) VALUES (?,?,?,?,?)',
                 $linkDataToInsert);
             if ($result === false) {
                 throw new ModelException('User: Error with executing INSERT INTO users (first_name, last_name, login, email, password, confirmation) VALUES (?,?,?,?,?,1), params: ' . implode('|', $linkDataToInsert));
             }
         }
-        throw new ModelException("Can't insert link into 'links' table because userId is not set");
+        else
+            throw new ModelException("Can't insert link into 'links' table because userId is not set");
     }
 
     /**
@@ -160,6 +183,23 @@ class Link implements LinkInterface
         /** @var MyDatabase $connection */
         $connection = $container->getService('Database')->connection();
         $result = $connection->statement('SELECT * FROM links')->fetchAll();
+        if ($result === false) {
+            throw new ModelException('User: Error while executing SELECT * FROM links');
+        }
+        return self::configureLinksArray($result);
+    }
+
+    /**
+     * @param UserInterface $user
+     * @return self[]
+     * @throws ModelException
+     */
+    public static function byUser(UserInterface $user): array
+    {
+        $container = new ServiceContainer();
+        /** @var MyDatabase $connection */
+        $connection = $container->getService('Database')->connection();
+        $result = $connection->statement('SELECT * FROM links WHERE user_id = ?', [$user->getId()])->fetchAll();
         if ($result === false) {
             throw new ModelException('User: Error while executing SELECT * FROM links');
         }

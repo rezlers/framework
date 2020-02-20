@@ -22,6 +22,11 @@ interface LinkInterface
     public function getLink(): string;
 
     /**
+     * @return UserInterface
+     */
+    public function getUser(): UserInterface;
+
+    /**
      * @param string $description
      */
     public function setDescription(string $description): void;
@@ -35,6 +40,8 @@ interface LinkInterface
      * @param string $link
      */
     public function setLink(string $link): void;
+
+    public function setUser(): void;
 
     /**
      * @return mixed

@@ -12,11 +12,11 @@ use Kernel\Request\RequestInterface;
 
 class Router implements RouterInterface
 {
-    protected static $routes = array();
+    protected static $routes = [];
 
     public function getRoute(RequestInterface $request) : RouteInterface
     {
-        $candidates = array();
+        $candidates = [];
         foreach (self::$routes as $key => $value) {
             if ($value->isEqual($request->getPath())) {
                 if ($value->httpMethod == $request->getHttpMethod()) {

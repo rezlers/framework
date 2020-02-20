@@ -197,3 +197,135 @@
 2020-02-17 10:23:06: error: Something goes wrong with mail method with email 
 2020-02-17 10:23:31: info: SystemMiddleware has passed
 2020-02-17 10:24:19: info: SystemMiddleware has passed
+2020-02-17 10:25:57: info: SystemMiddleware has passed
+2020-02-17 10:32:07: info: SystemMiddleware has passed
+2020-02-17 10:39:07: info: SystemMiddleware has passed
+2020-02-17 10:40:04: error: Cant execute UPDATE users SET confirmation = true WHERE user_id = ? with params: 1
+2020-02-17 10:42:08: info: SystemMiddleware has passed
+2020-02-17 10:42:08: error: Cant execute UPDATE users SET confirmation = true WHERE user_id = ? with params: 1
+2020-02-17 10:42:57: info: SystemMiddleware has passed
+2020-02-17 10:45:46: info: SystemMiddleware has passed
+2020-02-17 11:11:32: info: SystemMiddleware has passed
+2020-02-17 11:11:37: info: SystemMiddleware has passed
+2020-02-17 11:12:06: info: SystemMiddleware has passed
+2020-02-17 11:12:39: info: Message sent!
+2020-02-17 11:13:43: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-17 11:13:52: error: CallableHandlerException: Callable App\controller\RegistrationController::handle execution ended with false as call_user_func_array returned value
+2020-02-17 11:14:26: info: SystemMiddleware has passed
+2020-02-17 11:14:28: info: Message sent!
+2020-02-17 11:14:28: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-17 11:15:51: info: SystemMiddleware has passed
+2020-02-17 11:15:53: info: Message sent!
+2020-02-17 11:15:53: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-17 11:16:14: info: SystemMiddleware has passed
+2020-02-17 11:16:57: info: SystemMiddleware has passed
+2020-02-18 09:26:44: info: SystemMiddleware has passed
+2020-02-18 09:27:33: info: SystemMiddleware has passed
+2020-02-18 09:27:48: info: SystemMiddleware has passed
+2020-02-18 09:28:14: info: SystemMiddleware has passed
+2020-02-18 09:28:17: info: Message sent!
+2020-02-18 09:28:17: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-18 09:28:26: info: SystemMiddleware has passed
+2020-02-18 09:28:51: info: SystemMiddleware has passed
+2020-02-18 09:29:00: info: SystemMiddleware has passed
+2020-02-18 09:31:08: info: SystemMiddleware has passed
+2020-02-18 09:36:26: info: SystemMiddleware has passed
+2020-02-18 09:39:14: info: SystemMiddleware has passed
+2020-02-18 09:39:33: info: User middleware has passed
+2020-02-18 09:39:39: info: SystemMiddleware has passed
+2020-02-18 09:40:38: info: SystemMiddleware has passed
+2020-02-18 09:51:01: info: SystemMiddleware has passed
+2020-02-18 09:51:16: info: SystemMiddleware has passed
+2020-02-18 09:52:07: info: SystemMiddleware has passed
+2020-02-18 09:52:08: info: SystemMiddleware has passed
+2020-02-18 09:53:28: info: SystemMiddleware has passed
+2020-02-18 09:55:08: info: SystemMiddleware has passed
+2020-02-18 09:56:08: info: SystemMiddleware has passed
+2020-02-18 09:57:47: info: SystemMiddleware has passed
+2020-02-18 10:02:02: info: SystemMiddleware has passed
+2020-02-18 10:03:51: info: SystemMiddleware has passed
+2020-02-18 10:03:58: info: SystemMiddleware has passed
+2020-02-18 10:04:07: info: SystemMiddleware has passed
+2020-02-18 10:08:04: info: SystemMiddleware has passed
+2020-02-18 10:08:05: info: SystemMiddleware has passed
+2020-02-18 10:08:26: info: SystemMiddleware has passed
+2020-02-18 10:09:02: info: SystemMiddleware has passed
+2020-02-18 10:09:03: info: SystemMiddleware has passed
+2020-02-18 10:09:05: info: SystemMiddleware has passed
+2020-02-18 10:10:21: info: SystemMiddleware has passed
+2020-02-18 10:10:21: info: SystemMiddleware has passed
+2020-02-18 10:10:21: info: SystemMiddleware has passed
+2020-02-18 10:10:21: info: SystemMiddleware has passed
+2020-02-18 10:10:33: info: SystemMiddleware has passed
+2020-02-18 10:11:08: info: SystemMiddleware has passed
+2020-02-18 10:11:10: info: Message sent!
+2020-02-18 10:11:10: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-18 10:11:12: info: SystemMiddleware has passed
+2020-02-18 10:11:40: info: SystemMiddleware has passed
+2020-02-18 10:12:57: info: SystemMiddleware has passed
+2020-02-18 11:12:16: info: SystemMiddleware has passed
+2020-02-18 11:12:17: info: SystemMiddleware has passed
+2020-02-18 11:12:29: info: SystemMiddleware has passed
+2020-02-18 11:12:30: info: SystemMiddleware has passed
+2020-02-18 11:21:07: info: SystemMiddleware has passed
+2020-02-18 11:21:20: info: SystemMiddleware has passed
+2020-02-18 11:22:16: info: SystemMiddleware has passed
+2020-02-18 11:25:25: info: SystemMiddleware has passed
+2020-02-18 11:25:57: info: SystemMiddleware has passed
+2020-02-18 11:26:07: info: SystemMiddleware has passed
+2020-02-18 11:26:22: info: SystemMiddleware has passed
+2020-02-18 11:46:02: info: SystemMiddleware has passed
+2020-02-18 11:46:54: info: SystemMiddleware has passed
+2020-02-18 11:48:06: info: SystemMiddleware has passed
+2020-02-18 11:49:14: info: SystemMiddleware has passed
+2020-02-18 11:55:24: info: SystemMiddleware has passed
+2020-02-18 11:55:24: info: SystemMiddleware has passed
+2020-02-18 11:58:05: info: SystemMiddleware has passed
+2020-02-18 11:58:37: info: SystemMiddleware has passed
+2020-02-18 12:00:09: info: SystemMiddleware has passed
+2020-02-18 12:09:58: info: SystemMiddleware has passed
+2020-02-18 12:11:05: info: SystemMiddleware has passed
+2020-02-19 11:16:51: info: SystemMiddleware has passed
+2020-02-19 11:22:25: info: SystemMiddleware has passed
+2020-02-19 11:22:36: info: SystemMiddleware has passed
+2020-02-19 11:22:37: info: SystemMiddleware has passed
+2020-02-19 11:22:38: info: SystemMiddleware has passed
+2020-02-19 11:22:38: info: SystemMiddleware has passed
+2020-02-19 11:22:39: info: SystemMiddleware has passed
+2020-02-19 11:22:39: info: SystemMiddleware has passed
+2020-02-19 11:22:40: info: SystemMiddleware has passed
+2020-02-19 11:22:41: info: SystemMiddleware has passed
+2020-02-19 11:22:53: info: SystemMiddleware has passed
+2020-02-19 11:24:56: info: SystemMiddleware has passed
+2020-02-19 11:25:32: info: SystemMiddleware has passed
+2020-02-19 11:26:17: info: SystemMiddleware has passed
+2020-02-19 11:26:29: info: SystemMiddleware has passed
+2020-02-19 11:26:31: info: Message sent!
+2020-02-19 11:26:31: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-19 11:26:45: info: SystemMiddleware has passed
+2020-02-19 11:27:09: info: SystemMiddleware has passed
+2020-02-19 11:27:14: info: SystemMiddleware has passed
+2020-02-19 11:27:30: info: SystemMiddleware has passed
+2020-02-19 11:27:41: info: SystemMiddleware has passed
+2020-02-19 11:27:56: info: SystemMiddleware has passed
+2020-02-19 11:27:56: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-19 11:28:15: info: SystemMiddleware has passed
+2020-02-19 11:28:50: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-19 11:29:10: info: SystemMiddleware has passed
+2020-02-19 11:30:32: error: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-19 11:30:49: info: SystemMiddleware has passed
+2020-02-19 11:32:51: info: SystemMiddleware has passed
+2020-02-19 11:33:51: alert: CallableHandlerException: Callable App\controller\AccountController::handle execution ended with false as call_user_func_array returned value
+2020-02-19 11:33:55: info: SystemMiddleware has passed
+2020-02-20 10:01:09: info: Message sent!
+2020-02-20 10:01:09: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-20 12:56:41: error: Request passed middleware AuthenticationCheck but does not have "user_id" value
+2020-02-20 13:14:06: alert: CallableHandlerException: Callable App\controller\UserController::handle execution ended with false as call_user_func_array returned value
+2020-02-20 13:16:24: info: Edited email  of user 1 was not unique
+2020-02-20 13:16:30: alert: CallableHandlerException: Callable App\controller\UserController::handle execution ended with false as call_user_func_array returned value
+2020-02-20 13:37:34: info: Message sent!
+2020-02-20 13:37:34: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-20 13:38:42: alert: CallableHandlerException: Callable App\controller\UserController::handle execution ended with false as call_user_func_array returned value
+2020-02-20 13:39:45: info: Message sent!
+2020-02-20 13:39:45: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-20 14:03:27: alert: CallableHandlerException: Callable App\controller\UserController::handle execution ended with false as call_user_func_array returned value

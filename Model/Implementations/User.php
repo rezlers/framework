@@ -33,6 +33,10 @@ class User implements UserInterface
      */
     private $firstName;
     /**
+     * @var bool
+     */
+    private $confirmation;
+    /**
      * @var string
      */
     private $lastName;
@@ -53,6 +57,7 @@ class User implements UserInterface
         $this->lastName = $lastName;
         $this->firstName = $firstName;
         $this->id = null;
+        $this->confirmation = false;
         $this->configureThings();
     }
 
@@ -96,12 +101,18 @@ class User implements UserInterface
         return $this->id;
     }
 
+
     /**
      * @return string
      */
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    public function getConfirmation(): bool
+    {
+        return $this->confirmation;
     }
 
     /**
@@ -150,6 +161,11 @@ class User implements UserInterface
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    public function setConfirmation(bool $confirmation): void
+    {
+        $this->confirmation = $confirmation;
     }
 
     /**
@@ -223,7 +239,10 @@ class User implements UserInterface
             throw new ModelException('User: SELECT * FROM users WHERE id = ?, params: ' . $value);
         }
         $userData = $result[0];
-        return new User($userData['first_name'], $userData['last_name'], $userData['login'], $userData['email'], $userData['password']);
+        $user = new User($userData['first_name'], $userData['last_name'], $userData['login'], $userData['email'], $userData['password']);
+        $user->setId($value);
+        $user->setConfirmation($userData['confirmation']);
+        return $user;
     }
 
     private static function configureUsersArray($result)
@@ -232,6 +251,7 @@ class User implements UserInterface
         foreach ($result as $userData) {
             $user = new User($userData['first_name'], $userData['last_name'], $userData['login'], $userData['email'], $userData['password']);
             $user->setId($userData['id']);
+            $user->setConfirmation($userData['confirmation']);
             $users[] = $user;
         }
         return $users;

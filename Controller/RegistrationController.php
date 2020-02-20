@@ -36,7 +36,7 @@ class RegistrationController implements ControllerInterface
         if (!is_null($request->getParam('registrationHash'))) {
             return $this->confirmLink($request);
         }
-        if ($request->getPath() == 'registration/do') {
+        if ($request->getParam('action') == 'do') {
             $result = $this->validateUserData($request);
             if (!is_null($result))
                 return $result;

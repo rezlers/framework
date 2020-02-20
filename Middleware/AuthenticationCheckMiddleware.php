@@ -21,6 +21,9 @@ class AuthenticationCheckMiddleware implements MiddlewareInterface
         }
         if (in_array($request->getPath(), ['/', '/auth', '/registration']))
             return $next($request);
+        elseif ($request->getParam('action') == 'do')
+            return $next($request);
+
         $_SESSION['errorMessage'] = "You didn't authenticate";
         return redirect('/auth');
     }

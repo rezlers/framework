@@ -23,6 +23,11 @@ class CheckUrlLoginMiddleware implements MiddlewareInterface
                 $user = User::getById($_SESSION['userId']);
                 if ($request->getPath() == '/account')
                     return redirect('/' . $user->getLogin());
+                elseif ($request->getPath() == '/account/' . $request->getParam('action')) {
+                    if ($request->getHttpMethod() == 'POST')
+                        return $next($request);
+                    return redirect('/' . $user->getLogin() . '/' . $request->getParam('action'));
+                }
                 elseif ($user->getLogin() != $request->getUrlParams()['login'])
                     return abort(404);
             }

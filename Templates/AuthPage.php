@@ -24,7 +24,7 @@ $errorMessage = $_SESSION['errorMessage'];
         <ul>
             <?php
             echo "<li>Login <input type=\"text\" name=\"login\" value=\"${login}\" required></li>";
-            echo "<li>Password <input type=\"text\" name=\"password\" required></li>"
+            echo "<li>Password <input type=\"text\" name=\"password\" required></li>";
             ?>
         </ul>
         <p><?php echo $errorMessage;?></p>
