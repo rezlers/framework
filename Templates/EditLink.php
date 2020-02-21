@@ -1,11 +1,11 @@
 <?php
 session_start();
 global $request;
-$params = $_SESSION['linkData'];
-$link = $params['link'];
-$header = $params['header'];
-$description = $params['description'];
-$tag = $params['tag'];
+$linkInstance = $_SESSION['linkData'];
+$link = $linkInstance->getLink();
+$header = $linkInstance->getHeader();
+$tag = $linkInstance->getPrivacyTag();
+$description = $linkInstance->getDescription();
 $errorMessage = $_SESSION['errorMessage'];
 ?>
 

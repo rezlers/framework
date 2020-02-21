@@ -39,6 +39,7 @@ class LinksController implements ControllerInterface
                     }
                 } elseif ($request->getParam('action') == 'edit') {
                     if ($request->getHttpMethod() == 'GET') {
+                        $_SESSION['linkData'] = Link::byId($request->getUrlParams()['id']);
                         return render('EditLink.php');
                     } elseif ($request->getHttpMethod() == 'POST') {
                         $link = Link::byId($request->getUrlParams()['id']);
