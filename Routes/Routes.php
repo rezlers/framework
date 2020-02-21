@@ -22,11 +22,13 @@ $router->get('/', 'AuthenticationController')->setMiddleware(['AuthenticationChe
 
 $router->get('/main','LinksController')->setMiddleware(['AuthenticationCheck']);
 
-$router->get('/{login}/{action}', 'UserController')->setMiddleware(['AuthenticationCheck', 'CheckUrlLogin']);
-$router->post('/{login}/{action}', 'UserController')->setMiddleware(['AuthenticationCheck', 'CheckUrlLogin']);
+$router->get('/{login}/{action}', 'UserController')->setMiddleware(['UrlValidation', 'AuthenticationCheck', 'CheckUrlLogin']);
+$router->post('/{login}/{action}', 'UserController')->setMiddleware(['UrlValidation', 'AuthenticationCheck', 'CheckUrlLogin']);
 $router->get('/account/{action}', 'UserController')->setMiddleware(['AuthenticationCheck', 'CheckUrlLogin']); ## Will be redirected to /{login}
+$router->post('/account/{action}', 'UserController')->setMiddleware(['AuthenticationCheck', 'CheckUrlLogin']); ## Will be redirected to /{login}
 
-$router->get('/links', 'LinksController')->setMiddleware(['AuthenticationCheck']);
+$router->get('/links/{action}/{id}', 'LinksController')->setMiddleware(['AuthenticationCheck']);
+$router->post('/links/{action}/{id}', 'LinksController')->setMiddleware(['AuthenticationCheck']);
 
 
 

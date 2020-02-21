@@ -18,23 +18,18 @@ $links = $_SESSION['linkData'];
     <title>Document</title>
 </head>
 <body>
-<nav>
-    <a href="/main">Main</a>
-    <a href="/links">My links</a>
-    <a href="/account">Account</a>
-</nav>
+<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php';?>
 <h1>Main</h1>
 <?php
 foreach ($links as $link) {
-    echo "<p>Link<br>". $link->getLink() ."</p>";
-    echo "<p>Header<br>". $link->getHeader() ."</p>";
-    echo "<p>Description<br>". $link->getDescription() ."</p>";
-    echo "<p>Author<br>". $link->getUser()->getLogin() ."</p>";
+    echo '<div>';
+    echo "<p><b>Header</b><br>". $link->getHeader() ."</p>";
+    echo "<p><b>Link</b><br><a href='/links/description/". $link->getId() ."'>". $link->getLink() ."</a></p>";
+    echo "<p><b>Author</b><br>". $link->getUser()->getLogin() ."</p>";
     echo '<br>';
+    echo '</div>';
 }
 ?>
-<nav>
-    <p>Cool sign</p>
-</nav>
+<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php';?>
 </body>
 </html>

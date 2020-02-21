@@ -32,6 +32,7 @@ $errorMessage = $_SESSION['errorMessage'];
     </form>
     <p>Not <a href="/registration">registered</a>?</p>
 </div>
+<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'?>
 </body>
 </html>
 

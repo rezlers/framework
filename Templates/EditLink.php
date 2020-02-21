@@ -1,7 +1,6 @@
 <?php
-use Kernel\Request\RequestInterface as Request;
-global $request;
 session_start();
+global $request;
 $params = $_SESSION['linkData'];
 $link = $params['link'];
 $header = $params['header'];
@@ -20,14 +19,10 @@ $errorMessage = $_SESSION['errorMessage'];
     <title>Document</title>
 </head>
 <body>
-<nav>
-    <a href="/main">Main</a>
-    <a href="/links">My links</a>
-    <a href="/account">Account</a>
-</nav>
-<h1>Account</h1>
-<h2>Create link</h2>
-<form method="post" action="/account/create">
+<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php';?>
+<h1>Links</h1>
+<h2>Edit link</h2>
+<form method="post" action="/links/edit/<?php echo $request->getUrlParams()['id'];?>">
     <ul>
         <?php
         echo "<li>Link <br><input type=\"text\" name=\"link\" value=\"${link}\" required></li>";
@@ -38,8 +33,6 @@ $errorMessage = $_SESSION['errorMessage'];
     </ul>
     <input type="submit" >
 </form>
-<nav>
-    <p>Cool sign</p>
-</nav>
+<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php';?>
 </body>
 </html>

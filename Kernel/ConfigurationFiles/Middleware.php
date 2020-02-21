@@ -7,6 +7,7 @@ return $middlewareConfiguration = [
     'routeMiddleware' => [
         'userMW' => 'UserMiddleware',
         'AuthenticationCheck' => 'AuthenticationCheckMiddleware',
-        'CheckUrlLogin' => 'CheckUrlLoginMiddleware'
+        'CheckUrlLogin' => 'CheckUrlLoginMiddleware',
+        'UrlValidation' => 'UrlValidationMiddleware'
     ]
 ];

@@ -4,6 +4,8 @@
 namespace App\Model;
 
 
+use Kernel\Exceptions\ModelException;
+
 interface LinkInterface
 {
     /**
@@ -26,6 +28,10 @@ interface LinkInterface
      */
     public function getUser(): UserInterface;
 
+    /**
+     * @return int
+     */
+    public function getId(): int;
     /**
      * @param string $description
      */
@@ -54,7 +60,13 @@ interface LinkInterface
     public function setPrivacyTag($privacyTag): void;
 
     /**
+     * @param int $id
+     */
+    public function setId(int $id): void;
+
+    /**
      * @return void
+     * @throws ModelException
      */
     public function save() : void;
 

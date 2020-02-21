@@ -329,3 +329,9 @@
 2020-02-20 13:39:45: info: Message sent!
 2020-02-20 13:39:45: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
 2020-02-20 14:03:27: alert: CallableHandlerException: Callable App\controller\UserController::handle execution ended with false as call_user_func_array returned value
+2020-02-21 12:23:13: info: Message sent!
+2020-02-21 12:23:13: info: Send letter to rezlers123@gmail.com, insert hash into registration_links table and insert user data into users table
+2020-02-21 12:25:46: info: Message sent!
+2020-02-21 12:25:46: info: Send letter to rezlers@mail.ru, insert hash into registration_links table and insert user data into users table
+2020-02-21 12:30:11: error: ModelException: Not valid link's tag private
+2020-02-21 12:31:07: error: ModelException: User: Error with executing INSERT INTO users (first_name, last_name, login, email, password, confirmation) VALUES (?,?,?,?,?,1), params: https://www.w3schools.com/html/html_formatting.asp|qweqweqw|aasdasd|private|2

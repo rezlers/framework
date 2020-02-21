@@ -3,6 +3,7 @@
 
 namespace Kernel\Container\Services\Implementations;
 
+use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\DatabaseInterface;
 use Kernel\Exceptions\DatabaseException;
 use PDO;
@@ -59,11 +60,18 @@ class MyDatabase implements DatabaseInterface
     {
         $preparedStatement = $this->currentConnection->prepare($statement);
         if (!$preparedStatement->execute($args)) {
+            $container = new ServiceContainer();
+            $container->getService('Logger')->error(implode('|',$preparedStatement->errorInfo()));
             return false;
         }
         return $preparedStatement;
     }
 
+    public function __destruct()
+    {
+        if ($this->currentConnection)
+            $this->currentConnection = null;
+    }
 
 //    /**
 //     * @param $statement

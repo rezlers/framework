@@ -32,12 +32,6 @@ class UserController implements ControllerInterface
                     } elseif ($request->getHttpMethod() == 'POST') {
                         return $this->editProfile($user);
                     }
-                } elseif ($request->getParam('action') == 'create') {
-                    if ($request->getHttpMethod() == 'GET') {
-                        return render('AccountCreateLink.php');
-                    } elseif ($request->getHttpMethod() == 'POST') {
-                        return $this->createLink($user);
-                    }
                 }
                 $_SESSION['userData'] = [
                     'email' => $user->getEmail(),
@@ -90,21 +84,5 @@ class UserController implements ControllerInterface
             $user->setPassword(md5($params['password']));
         $user->save();
         return redirect('/' . $user->getLogin());
-    }
-
-    private function createLink(UserInterface $user)
-    {
-        global $request;
-        $params = $request->getParams();
-        try {
-            $link = new Link($params['link'], $params['header'], $params['description'], $params['tag']);
-            $link->setUserId($_SESSION['userId']);
-            $link->save();
-            return render('UserLinks.php');
-        } catch (ModelException $e) {
-            $container = new ServiceContainer();
-            $container->getService('Logger')->error($e->getMessage());
-            return abort(500);
-        }
     }
 }

@@ -2,5 +2,5 @@
 ?>
 
 <footer>
-
+    <p>Cool sign</p>
 </footer>

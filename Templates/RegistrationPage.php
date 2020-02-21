@@ -19,7 +19,6 @@
     <title>Document</title>
 </head>
 <body>
-<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php'?>
 <h1>Registration</h1>
 <div>
     <form method="post" action="/registration/do">

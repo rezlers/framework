@@ -20,14 +20,9 @@ $errorMessage = $_SESSION['errorMessage'];
     <title>Account</title>
 </head>
 <body>
-<nav>
-    <a href="/main">Main</a>
-    <a href="/links">My links</a>
-    <a href="/account">Account</a>
-</nav>
+<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php';?>
 <h1>Account</h1>
 <a href="/account/edit">Edit profile</a>
-<a href="/account/create">Create link</a>
 <ul>
     <?php
     echo "<li>First name: ${firstName}</li>";
@@ -36,8 +31,6 @@ $errorMessage = $_SESSION['errorMessage'];
     echo "<li>Login: ${login}</li>";
     ?>
 </ul>
-<nav>
-    <p>Cool sign</p>
-</nav>
+<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php';?>
 </body>
 </html>

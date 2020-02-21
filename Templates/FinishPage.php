@@ -17,5 +17,6 @@ use Kernel\Request\RequestInterface as Request;
 <?php echo $request->getParam('ResponseMessage');?>
 <br>
 Go back to <a href="/auth">main</a>
+<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'?>
 </body>
 </html>

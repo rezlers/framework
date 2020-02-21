@@ -2,10 +2,11 @@
 use Kernel\Request\RequestInterface as Request;
 global $request;
 session_start();
-$params = $_SESSION['userData'];
-$firstName = $params['firstName'];
-$lastName = $params['lastName'];
-$email = $params['email'];
+$params = $_SESSION['linkData'];
+$link = $params['link'];
+$header = $params['header'];
+$description = $params['description'];
+$tag = $params['tag'];
 $errorMessage = $_SESSION['errorMessage'];
 ?>
 
@@ -21,19 +22,20 @@ $errorMessage = $_SESSION['errorMessage'];
 <body>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php';?>
 <h1>Account</h1>
-<h2>Edit profile</h2>
-<form method="post" action="/account/edit">
+<h2>Create link</h2>
+<form method="post" action="/links/create">
     <ul>
         <?php
-        echo "<li>First name <input type=\"text\" name=\"firstName\" value=\"${firstName}\"></li>";
-        echo "<li>Last name <input type=\"text\" name=\"lastName\" value=\"${lastName}\"></li>";
-        echo "<li>Email <input type=\"email\" name=\"email\" value=\"${email}\"></li>";
-        echo "<li>Password <input type=\"password\" name=\"password\"></li>";
+        echo "<li>Link <br><input type=\"text\" name=\"link\" value=\"${link}\" required></li>";
+        echo "<li>Header <br><input type=\"text\" name=\"header\" value=\"${header}\" required></li>";
+        echo "<li>Type <br><input type=\"text\" name=\"tag\" value='${tag}' required></li>";
+        echo "<li>Description <br><textarea name=\"description\" required>${description}</textarea></li>";
         ?>
     </ul>
     <input type="submit" >
+    <?php echo '<p>' . $errorMessage . '</p>';?>
 </form>
-<?php echo "<p>${errorMessage}</p>"; ?>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php';?>
+
 </body>
 </html>
