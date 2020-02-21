@@ -40,6 +40,13 @@ return $services = [
         'type' => 'singleton',
         'configuration' => 'Mailer',
         'interface' => 'MailerInterface'
+    ],
+    'PagerInterface' => [
+        'classname' => 'MyPager',
+        'args' => [],
+        'type' => 'singleton',
+        'configuration' => 'Pager',
+        'interface' => 'PagerInterface'
     ]
 ];
 
