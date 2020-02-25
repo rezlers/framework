@@ -21,6 +21,7 @@ $links = $_SESSION['linkData'];
     <title>Document</title>
 </head>
 <body>
+<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/HeaderForNotLogged.php'?>
 <div>
     <h1>Welcome to App</h1>
     <h2>Login in system</h2>
@@ -32,7 +33,7 @@ $links = $_SESSION['linkData'];
             ?>
         </ul>
         <p><?php echo $errorMessage;?></p>
-        <input type="submit">
+        <input type="submit" value="Login">
     </form>
     <p>Not <a href="/registration">registered</a>?</p>
     <br>

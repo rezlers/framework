@@ -10,6 +10,7 @@ use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyDatabase;
 use Kernel\Container\Services\MailerInterface;
 use Kernel\Request\Request;
+use Kernel\Response\ResponseInterface;
 use function Kernel\Helpers\getResource;
 use function Kernel\Helpers\redirect;
 use function Kernel\Helpers\render;
@@ -105,8 +106,24 @@ class RegistrationController implements ControllerInterface
         return render('FinishPage.php');
     }
 
+    /**
+     * @param Request $request
+     * @return bool|false|ResponseInterface|string
+     */
     private function validateUserData(Request $request)
     {
+        if (filter_var($request->getParam('email'), FILTER_VALIDATE_EMAIL) === false) {
+            session_start();
+            $reqParams = $request->getParams();
+            $_SESSION['userData'] = [
+                'firstName' => $reqParams['firstName'],
+                'lastName' => $reqParams['lastName'],
+                'email' => $reqParams['email'],
+                'login' => $reqParams['login'],
+            ];
+            $_SESSION['errorMessage'] = 'Email is not valid';
+            return redirect('/registration');
+        }
         $result = $this->connection->statement('SELECT * FROM users WHERE login = ?', [$request->getParam('login')]);
         if ($result === false) {
             return $this->errorFinishPage('', 'Error with executing SELECT * FROM users WHERE login = ?, params: ' . $request->getParam('login'));
@@ -121,6 +138,7 @@ class RegistrationController implements ControllerInterface
                 'email' => $reqParams['email'],
                 'login' => $reqParams['login'],
             ];
+            $_SESSION['errorMessage'] = 'User with such login is already exists';
             return redirect('/registration');
         }
         $result = $this->connection->statement('SELECT * FROM users WHERE email = ?', [$request->getParam('email')]);

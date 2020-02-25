@@ -31,7 +31,7 @@ $errorMessage = $_SESSION['errorMessage'];
         echo "<li>Password <input type=\"password\" name=\"password\"></li>";
         ?>
     </ul>
-    <input type="submit" >
+    <input type="submit" value="Edit">
 </form>
 <?php echo "<p>${errorMessage}</p>"; ?>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php';?>

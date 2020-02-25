@@ -20,7 +20,7 @@ $router->get('/auth/{action}', 'AuthenticationController')->setMiddleware(['Auth
 $router->post('/auth/{action}', 'AuthenticationController')->setMiddleware(['AuthenticationCheck']);
 $router->get('/', 'AuthenticationController')->setMiddleware(['AuthenticationCheck']);
 
-$router->get('/main','LinksController')->setMiddleware(['AuthenticationCheck']);
+$router->get('/main','LinksController');
 
 $router->get('/{login}/{action}', 'UserController')->setMiddleware(['UrlValidation', 'AuthenticationCheck', 'CheckUrlLogin']);
 $router->post('/{login}/{action}', 'UserController')->setMiddleware(['UrlValidation', 'AuthenticationCheck', 'CheckUrlLogin']);

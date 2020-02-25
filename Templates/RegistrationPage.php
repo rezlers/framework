@@ -19,6 +19,7 @@
     <title>Document</title>
 </head>
 <body>
+<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/HeaderForNotLogged.php'?>
 <h1>Registration</h1>
 <div>
     <form method="post" action="/registration/do">
@@ -31,7 +32,7 @@
             echo "<li>Password <input type=\"password\" name=\"password\" required></li>";
             ?>
         </ul>
-        <input type="submit" >
+        <input type="submit" value="Create account" >
         Go back to <a href="auth">main page</a>
     </form>
     <p><?php echo $errorMessage;?></p>

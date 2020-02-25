@@ -7,6 +7,10 @@ $pathToJS = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Public/bootstrap/j
 /** @var LinkInterface[] $links */
 $links = $_SESSION['linkData'];
 $pages = implode(' ', $_SESSION['pagerData']);
+if ($_SESSION['authentication'])
+    $header = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php';
+else
+    $header = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/HeaderForNotLogged.php';
 ?>
 
 <!doctype html>
@@ -19,7 +23,7 @@ $pages = implode(' ', $_SESSION['pagerData']);
     <title>Document</title>
 </head>
 <body>
-<?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php';?>
+<?php include $header;?>
 <h1>Main</h1>
 <?php
 foreach ($links as $link) {

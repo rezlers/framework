@@ -31,7 +31,7 @@ $errorMessage = $_SESSION['errorMessage'];
         echo "<li>Description <br><textarea name=\"description\" required>${description}</textarea></li>";
         ?>
     </ul>
-    <input type="submit" >
+    <input type="submit" value="Edit">
 </form>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php';?>
 </body>

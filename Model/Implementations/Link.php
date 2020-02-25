@@ -301,10 +301,11 @@ class Link implements LinkInterface
         if ($userId != -1)
             $result = $connection->statement("SELECT * FROM links WHERE user_id = ? LIMIT ${limit} OFFSET ${offset}", [$userId]);
         else
-            $result = $connection->statement("SELECT * FROM links LIMIT ${limit} OFFSET ${offset}");
+            $result = $connection->statement("SELECT * FROM links WHERE tag = 'public' LIMIT ${limit} OFFSET ${offset}");
         if ($result === false) {
             throw new ModelException('Can not execute byPage static method of class Link, check logs');
         }
+        $result = $result->fetchAll();
         return self::configureLinksArray($result);
     }
 

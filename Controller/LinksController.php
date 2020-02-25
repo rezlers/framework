@@ -58,19 +58,26 @@ class LinksController implements ControllerInterface
                 }
                 if ($request->getPath() == '/main') {
                     if (!is_null($request->getParam('page')))
-                        $_SESSION['linkData'] = $this->getLinks($user, 'all', $request->getParam('page'));
+                        $_SESSION['linkData'] = $this->getLinks('all', $request->getParam('page'), $user);
                     else
-                        $_SESSION['linkData'] = $this->getLinks($user, 'all', 1);
+                        $_SESSION['linkData'] = $this->getLinks('all', 1, $user);
                     $_SESSION['pagerData'] = $this->getPages(Link::byTag('public'));
                     return render('MainPage.php');
                 } elseif ($request->getPath() == '/links') {
                     if (!is_null($request->getParam('page')))
-                        $_SESSION['linkData'] = $this->getLinks($user, 'personal', $request->getParam('page'));
+                        $_SESSION['linkData'] = $this->getLinks('personal', $request->getParam('page'), $user);
                     else
-                        $_SESSION['linkData'] = $this->getLinks($user, 'personal', 1);
+                        $_SESSION['linkData'] = $this->getLinks('personal', 1, $user);
                     $_SESSION['pagerData'] = $this->getPages(Link::byUser($user));
                     return render('UserLinks.php');
                 }
+            } elseif ($request->getPath() == '/main') {
+                if (!is_null($request->getParam('page')))
+                    $_SESSION['linkData'] = $this->getLinks('all', $request->getParam('page'));
+                else
+                    $_SESSION['linkData'] = $this->getLinks('all', 1);
+                $_SESSION['pagerData'] = $this->getPages(Link::byTag('public'));
+                return render('MainPage.php');
             }
         } catch (ModelException $exception) {
             $container = new ServiceContainer();
@@ -87,7 +94,7 @@ class LinksController implements ControllerInterface
      * @return Link[]|array
      * @throws ModelException
      */
-    private function getLinks(UserInterface $user, string $context, int $currentPage)
+    private function getLinks(string $context, int $currentPage, UserInterface $user = null)
     {
         if ($context == 'all') {
             $links = Link::byPage($currentPage);
