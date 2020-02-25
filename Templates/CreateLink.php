@@ -39,3 +39,7 @@ $errorMessage = $_SESSION['errorMessage'];
 
 </body>
 </html>
+<?php
+unset($_SESSION['linkData']);
+unset($_SESSION['errorMessage']);
+?>

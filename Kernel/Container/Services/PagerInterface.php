@@ -8,11 +8,11 @@ interface PagerInterface
 {
     /**
      * @param $currentPage
-     * @param $numberOfPages
+     * @param $numberOfBlocks
      * @param $sitePage
      * @return string[]
      */
-    public function getPages($currentPage, $numberOfPages, $sitePage): array;
+    public function getPages($currentPage, $numberOfBlocks, $sitePage): array;
 
     /**
      * @return array

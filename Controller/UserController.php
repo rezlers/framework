@@ -32,14 +32,16 @@ class UserController implements ControllerInterface
                     } elseif ($request->getHttpMethod() == 'POST') {
                         return $this->editProfile($user);
                     }
-                }
-                $_SESSION['userData'] = [
-                    'email' => $user->getEmail(),
-                    'firstName' => $user->getFirstName(),
-                    'lastName' => $user->getLastName(),
-                    'login' => $user->getLogin()
-                ];
-                return render('AccountMain.php');
+                } elseif (is_null($request->getParam('action'))) {
+                    $_SESSION['userData'] = [
+                        'email' => $user->getEmail(),
+                        'firstName' => $user->getFirstName(),
+                        'lastName' => $user->getLastName(),
+                        'login' => $user->getLogin()
+                    ];
+                    return render('AccountMain.php');
+                } else
+                    return abort(404);
             }
         } catch (ModelException $e) {
             $container = new ServiceContainer();

@@ -5,7 +5,7 @@
       <paths name="test_connection">
         <serverdata>
           <mappings>
-            <mapping deploy="/var/www/framework" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/var/www/framework" local="$PROJECT_DIR$" web="/var/www/framework/Public" />
           </mappings>
         </serverdata>
       </paths>

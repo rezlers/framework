@@ -33,3 +33,7 @@ foreach ($links as $link) {
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php';?>
 </body>
 </html>
+<?php
+unset($_SESSION['linkData']);
+unset($_SESSION['pagerData']);
+?>

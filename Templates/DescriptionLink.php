@@ -38,3 +38,6 @@ $description = $linkInstance->getDescription();
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'; ?>
 </body>
 </html>
+<?php
+unset($_SESSION['linkData']);
+?>

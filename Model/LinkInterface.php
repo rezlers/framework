@@ -74,4 +74,10 @@ interface LinkInterface
      * @return self[]
      */
     public static function all() : array;
+
+    /**
+     * @param $tag
+     * @return self[]
+     */
+    public static function byTag(string $tag): array;
 }

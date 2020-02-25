@@ -34,3 +34,7 @@ $errorMessage = $_SESSION['errorMessage'];
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php';?>
 </body>
 </html>
+<?php
+unset($_SESSION['userData']);
+unset($_SESSION['errorMessage']);
+?>

@@ -1,10 +1,14 @@
 <?php
+
+use App\Model\LinkInterface;
 use Kernel\Request\RequestInterface as Request;
 /** @var Request $request */
 global $request;
 session_start();
 $login = $_SESSION['login'];
 $errorMessage = $_SESSION['errorMessage'];
+/** @var LinkInterface[] $links */
+$links = $_SESSION['linkData'];
 ?>
 
 <!doctype html>
@@ -31,8 +35,23 @@ $errorMessage = $_SESSION['errorMessage'];
         <input type="submit">
     </form>
     <p>Not <a href="/registration">registered</a>?</p>
+    <br>
+    <?php
+        foreach ($links as $link) {
+            echo '<div>';
+            echo "<p><b>Header</b><br>". $link->getHeader() ."</p>";
+            echo "<p><b>Link</b><br><a href='/links/description/". $link->getId() ."'>". $link->getLink() ."</a></p>";
+            echo "<p><b>Author</b><br>". $link->getUser()->getLogin() ."</p>";
+            echo '<br>';
+            echo '</div>';
+        }
+    ?>
 </div>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'?>
 </body>
 </html>
-
+<?php
+unset($_SESSION['linkData']);
+unset($_SESSION['errorMessage']);
+unset($_SESSION['login']);
+?>

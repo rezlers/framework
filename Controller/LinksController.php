@@ -49,7 +49,10 @@ class LinksController implements ControllerInterface
                     }
                 } elseif ($request->getParam('action') == 'description') {
                     if ($request->getHttpMethod() == 'GET') {
-                        $_SESSION['linkData'] = Link::byId($request->getUrlParams()['id']);
+                        $link = Link::byId($request->getUrlParams()['id']);
+                        if (is_null(parse_url($link->getLink(), PHP_URL_SCHEME)))
+                            $link->setLink('http://' . $link->getLink());
+                        $_SESSION['linkData'] = $link;
                         return render('DescriptionLink.php');
                     }
                 }
@@ -58,14 +61,14 @@ class LinksController implements ControllerInterface
                         $_SESSION['linkData'] = $this->getLinks($user, 'all', $request->getParam('page'));
                     else
                         $_SESSION['linkData'] = $this->getLinks($user, 'all', 1);
-                    $_SESSION['pagerData'] = $this->getPages($_SESSION['linkData']);
+                    $_SESSION['pagerData'] = $this->getPages(Link::byTag('public'));
                     return render('MainPage.php');
                 } elseif ($request->getPath() == '/links') {
                     if (!is_null($request->getParam('page')))
                         $_SESSION['linkData'] = $this->getLinks($user, 'personal', $request->getParam('page'));
                     else
                         $_SESSION['linkData'] = $this->getLinks($user, 'personal', 1);
-                    $_SESSION['pagerData'] = $this->getPages($_SESSION['linkData']);
+                    $_SESSION['pagerData'] = $this->getPages(Link::byUser($user));
                     return render('UserLinks.php');
                 }
             }
@@ -132,6 +135,11 @@ class LinksController implements ControllerInterface
         global $request;
         $params = $request->getParams();
         try {
+            if (filter_var($params['link'], FILTER_VALIDATE_URL) === false) {
+                $_SESSION['linkData'] = $params;
+                $_SESSION['errorMessage'] = 'Link ' . $params['link'] . ' is not valid';
+                return redirect('/links/create');
+            }
             $checkLink = Link::byLink($params['link']);
             if (is_null($checkLink)) {
                 $link = new Link($params['link'], $params['header'], $params['description'], $params['tag'], $user->getId());
@@ -153,6 +161,11 @@ class LinksController implements ControllerInterface
         global $request;
         $params = $request->getReqParams();
         try {
+            if (filter_var($params['link'], FILTER_VALIDATE_URL) === false) {
+                $_SESSION['linkData'] = $params;
+                $_SESSION['errorMessage'] = 'Link ' . $params['link'] . ' is not valid';
+                return redirect('/links/create');
+            }
             if (isset($params['link']) and $params['link'] != '')
                 $link->setLink($params['link']);
             if (isset($params['header']) and $params['header'] != '')

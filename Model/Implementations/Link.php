@@ -234,6 +234,24 @@ class Link implements LinkInterface
     }
 
     /**
+     * @param $tag
+     * @return self[]
+     * @throws ModelException
+     */
+    public static function byTag(string $tag): array
+    {
+        $container = new ServiceContainer();
+        /** @var MyDatabase $connection */
+        $connection = $container->getService('Database')->connection();
+        $result = $connection->statement('SELECT * FROM links WHERE tag = ?', [$tag]);
+        if ($result === false) {
+            throw new ModelException('User: Error while executing SELECT * FROM links');
+        }
+        $result = $result->fetchAll();
+        return self::configureLinksArray($result);
+    }
+
+    /**
      * @param int $id
      * @return LinkInterface
      * @throws ModelException
@@ -270,7 +288,7 @@ class Link implements LinkInterface
     /**
      * @param int $page
      * @param int $userId
-     * @return array
+     * @return LinkInterface[]
      * @throws ModelException
      */
     public static function byPage(int $page, int $userId = -1): array
@@ -281,12 +299,13 @@ class Link implements LinkInterface
         $limit = Pager::getNumberOfBlocks();
         $offset = ($page - 1) * $limit;
         if ($userId != -1)
-            $result = $connection->statement('SELECT * FROM links WHERE user_id = ? LIMIT :limit OFFSET :offset', [$userId, ':limit' => $limit, ':offset' => $offset]);
-        $result = $connection->statement('SELECT * FROM links LIMIT :limit OFFSET :offset', [':limit' => $limit, ':offset' => $offset]);
+            $result = $connection->statement("SELECT * FROM links WHERE user_id = ? LIMIT ${limit} OFFSET ${offset}", [$userId]);
+        else
+            $result = $connection->statement("SELECT * FROM links LIMIT ${limit} OFFSET ${offset}");
         if ($result === false) {
             throw new ModelException('Can not execute byPage static method of class Link, check logs');
         }
-        return $result->fetchAll();
+        return self::configureLinksArray($result);
     }
 
     /**
