@@ -18,4 +18,6 @@ interface DatabaseInterface
      * @return mixed
      */
     public function statement(string $statement, array $args = []);
+
+    public function getCurrentConnection();
 }

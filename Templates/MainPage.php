@@ -6,6 +6,7 @@ $pathToStyles = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Public/bootstr
 $pathToJS = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Public/bootstrap/js/bootstrap.min.js';
 /** @var LinkInterface[] $links */
 $links = $_SESSION['linkData'];
+$pages = implode(' ', $_SESSION['pagerData']);
 ?>
 
 <!doctype html>
@@ -30,6 +31,7 @@ foreach ($links as $link) {
     echo '</div>';
 }
 ?>
+<?php echo $pages;?>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php';?>
 </body>
 </html>

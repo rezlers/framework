@@ -1,6 +1,7 @@
 <?php
 
-$configuration = [
-  'numberOfPages' => 3
+return $configuration = [
+    'numberOfPages' => 5,
+    'numberOfBlocksOnPage' => 5
 ];
 

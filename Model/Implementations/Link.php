@@ -8,7 +8,9 @@ use App\Model\LinkInterface;
 use App\Model\UserInterface;
 use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyDatabase;
+use Kernel\Container\Services\PagerInterface;
 use Kernel\Exceptions\ModelException;
+use Kernel\Container\Services\Implementations\MyPager as Pager;
 
 class Link implements LinkInterface
 {
@@ -263,6 +265,28 @@ class Link implements LinkInterface
             throw new ModelException('User: Error while executing SELECT * FROM links WHERE link = ?');
         }
         return self::linkInstance($result);
+    }
+
+    /**
+     * @param int $page
+     * @param int $userId
+     * @return array
+     * @throws ModelException
+     */
+    public static function byPage(int $page, int $userId = -1): array
+    {
+        $container = new ServiceContainer();
+        /** @var MyDatabase $connection */
+        $connection = $container->getService('Database')->connection();
+        $limit = Pager::getNumberOfBlocks();
+        $offset = ($page - 1) * $limit;
+        if ($userId != -1)
+            $result = $connection->statement('SELECT * FROM links WHERE user_id = ? LIMIT :limit OFFSET :offset', [$userId, ':limit' => $limit, ':offset' => $offset]);
+        $result = $connection->statement('SELECT * FROM links LIMIT :limit OFFSET :offset', [':limit' => $limit, ':offset' => $offset]);
+        if ($result === false) {
+            throw new ModelException('Can not execute byPage static method of class Link, check logs');
+        }
+        return $result->fetchAll();
     }
 
     /**

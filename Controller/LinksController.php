@@ -11,8 +11,10 @@ use App\Model\UserInterface;
 use Kernel\App\App;
 use Kernel\CallableHandler\ControllerInterface;
 use Kernel\Container\ServiceContainer;
+use Kernel\Container\Services\PagerInterface;
 use Kernel\Exceptions\ModelException;
 use Kernel\Request\Request;
+use Kernel\Request\RequestInterface;
 use Kernel\Response\ResponseInterface;
 use function Kernel\Helpers\abort;
 use function Kernel\Helpers\redirect;
@@ -52,10 +54,18 @@ class LinksController implements ControllerInterface
                     }
                 }
                 if ($request->getPath() == '/main') {
-                    $_SESSION['linkData'] = $this->getLinks($user, 'all');
+                    if (!is_null($request->getParam('page')))
+                        $_SESSION['linkData'] = $this->getLinks($user, 'all', $request->getParam('page'));
+                    else
+                        $_SESSION['linkData'] = $this->getLinks($user, 'all', 1);
+                    $_SESSION['pagerData'] = $this->getPages($_SESSION['linkData']);
                     return render('MainPage.php');
                 } elseif ($request->getPath() == '/links') {
-                    $_SESSION['linkData'] = $this->getLinks($user, 'personal');
+                    if (!is_null($request->getParam('page')))
+                        $_SESSION['linkData'] = $this->getLinks($user, 'personal', $request->getParam('page'));
+                    else
+                        $_SESSION['linkData'] = $this->getLinks($user, 'personal', 1);
+                    $_SESSION['pagerData'] = $this->getPages($_SESSION['linkData']);
                     return render('UserLinks.php');
                 }
             }
@@ -70,13 +80,14 @@ class LinksController implements ControllerInterface
     /**
      * @param UserInterface $user
      * @param string $context
+     * @param int $currentPage
      * @return Link[]|array
      * @throws ModelException
      */
-    private function getLinks(UserInterface $user, string $context)
+    private function getLinks(UserInterface $user, string $context, int $currentPage)
     {
         if ($context == 'all') {
-            $links = Link::all();
+            $links = Link::byPage($currentPage);
             $linksForUser = [];
             foreach ($links as $link) {
                 if ($link->getPrivacyTag() == 'public') {
@@ -88,7 +99,7 @@ class LinksController implements ControllerInterface
             }
             return $linksForUser;
         } else {
-            $links = Link::byUser($user);
+            $links = Link::byPage($currentPage, $user->getId());
             foreach ($links as $link) {
                 $link->setUser();
             }
@@ -96,6 +107,22 @@ class LinksController implements ControllerInterface
         }
     }
 
+    /**
+     * @param array $links
+     * @return array
+     */
+    private function getPages(array $links): array
+    {
+        /** @var RequestInterface $request */
+        global $request;
+        $container = new ServiceContainer();
+        /** @var PagerInterface $pager */
+        $pager = $container->getService('Pager');
+        if (!is_null($request->getParam('page'))) {
+            return $pager->getPages($request->getParam('page'), count($links), trim($request->getPath(), '/'));
+        }
+        return $pager->getPages(1, count($links), trim($request->getPath(), '/'));
+    }
     /**
      * @param UserInterface $user
      * @return bool|false|ResponseInterface|string

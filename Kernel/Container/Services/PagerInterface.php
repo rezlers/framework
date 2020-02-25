@@ -13,4 +13,9 @@ interface PagerInterface
      * @return string[]
      */
     public function getPages($currentPage, $numberOfPages, $sitePage): array;
+
+    /**
+     * @return array
+     */
+    public static function getNumberOfBlocks(): int;
 }

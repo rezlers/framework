@@ -2,6 +2,7 @@
 use App\Model\LinkInterface;
 /** @var LinkInterface[] $links */
 $links = $_SESSION['linkData'];
+$pages = implode(' ', $_SESSION['pagerData']);
 ?>
 
 <!doctype html>
@@ -28,6 +29,7 @@ foreach ($links as $link) {
     echo '</div>';
 }
 ?>
+<?php echo $pages;?>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php';?>
 </body>
 </html>

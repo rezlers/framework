@@ -234,10 +234,11 @@ class User implements UserInterface
         $container = new ServiceContainer();
         /** @var MyDatabase $connection */
         $connection = $container->getService('Database')->connection();
-        $result = $connection->statement('SELECT * FROM users WHERE id = ?', [$value])->fetchAll();
+        $result = $connection->statement('SELECT * FROM users WHERE id = ?', [$value]);
         if ($result === false) {
             throw new ModelException('User: SELECT * FROM users WHERE id = ?, params: ' . $value);
         }
+        $result = $result->fetchAll();
         $userData = $result[0];
         $user = new User($userData['first_name'], $userData['last_name'], $userData['login'], $userData['email'], $userData['password']);
         $user->setId($value);

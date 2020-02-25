@@ -84,10 +84,10 @@ class MyPager implements PagerInterface
             $resultingArray = [];
             foreach ($pages as $key => $value) {
                 if ($value == 0 and $key == 0) {
-                    $counter = $resultingArray[1] - 1;
+                    $counter = $pages[1] - 1;
                     $resultingArray[] = "<a href=\"$sitePage.php?page=${counter}\">...</a>";
-                } elseif ($value == 0 and $key == count($resultingArray) - 1) {
-                    $counter = $resultingArray[count($resultingArray) - 2] + 1;
+                } elseif ($value == 0 and $key == count($pages) - 1) {
+                    $counter = $pages[count($pages) - 2] + 1;
                     $resultingArray[] = "<a href=\"$sitePage.php?page=${counter}\">...</a>";
                 } else {
                     $resultingArray[] = "<a href=\"$sitePage.php?page=${value}\">${value}</a>";
@@ -97,8 +97,17 @@ class MyPager implements PagerInterface
         return $resultingArray;
     }
 
+    public static function getNumberOfBlocks(): int
+    {
+        if (!self::$configuration)
+            self::$configuration = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Pager.php';
+        return self::$configuration['numberOfBlocksOnPage'];
+    }
+
     private function configurePager($configuration)
     {
-        $this->pagerSize = $configuration['pagerSize'];
+        if (!self::$configuration)
+            self::$configuration = $configuration;
+        $this->pagerSize = self::$configuration['numberOfPages'];
     }
 }

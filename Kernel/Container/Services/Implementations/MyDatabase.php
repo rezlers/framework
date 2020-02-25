@@ -15,10 +15,15 @@ class MyDatabase implements DatabaseInterface
      * @var PDO
      */
     protected $currentConnection;
+    /**
+     * @var array
+     */
+    private $pdoTypes;
 
     public function __construct($configuration)
     {
         $this->setConnection($configuration);
+        $this->configureInstance();
     }
 
     private function setConnection($configuration)
@@ -26,6 +31,17 @@ class MyDatabase implements DatabaseInterface
         if (!self::$configuration){
             self::$configuration = $configuration;
         }
+    }
+
+    private function configureInstance()
+    {
+        $this->pdoTypes = [
+            'integer' => PDO::PARAM_INT,
+            'string' => PDO::PARAM_STR,
+            'boolean' => PDO::PARAM_BOOL,
+            'NULL' => PDO::PARAM_NULL,
+            'double' => PDO::PARAM_STR
+        ];
     }
 
     /**
@@ -52,6 +68,14 @@ class MyDatabase implements DatabaseInterface
     }
 
     /**
+     * @return PDO
+     */
+    public function getCurrentConnection(): PDO
+    {
+        return $this->currentConnection;
+    }
+
+    /**
      * @param $statement
      * @param array $args
      * @return bool|\PDOStatement
@@ -59,9 +83,23 @@ class MyDatabase implements DatabaseInterface
     public function statement (string $statement, array $args = [])
     {
         $preparedStatement = $this->currentConnection->prepare($statement);
+        foreach ($args as $key => $value) {
+            if(!is_numeric($key)) {
+                $type = $this->pdoTypes[gettype($value)];
+                $result = $preparedStatement->bindValue($key, $value, $type);
+                if ($result === false) {
+                    $container = new ServiceContainer();
+                    $container->getService('Logger')->error(implode('|', $preparedStatement->errorInfo()));
+                    var_dump($preparedStatement->errorInfo());
+                    return false;
+                }
+                unset($args[$key]);
+            }
+        }
         if (!$preparedStatement->execute($args)) {
             $container = new ServiceContainer();
-            $container->getService('Logger')->error(implode('|',$preparedStatement->errorInfo()));
+            $container->getService('Logger')->error(implode('|', $preparedStatement->errorInfo()));
+            var_dump($preparedStatement->errorInfo());
             return false;
         }
         return $preparedStatement;

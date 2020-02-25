@@ -7,6 +7,13 @@ require '../Bootstrap/bootstrap.php';
 /** @var App $app */
 $app->handle();
 
+
+//$container = new \Kernel\Container\ServiceContainer();
+///** @var \Kernel\Container\Services\PagerInterface $result */
+//$pager = $container->getService('Pager');
+//
+//$result = $pager->getPages(intval($_GET['page']), 10, 'main');
+//echo implode(' ',$result);
 /*Class A
 {
     public function method() : void
