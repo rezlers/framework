@@ -66,6 +66,12 @@ interface RequestInterface
     public function setMiddleware(array $middlewareList): void;
 
     /**
+     * @param $key
+     * @param $param
+     */
+    public function setParam(string $key, $param): void;
+
+    /**
      * @return callable
      */
     public function getCallable();

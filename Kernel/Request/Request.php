@@ -120,6 +120,10 @@ class Request implements RequestInterface
             $this->reqParams['path'] = '/' . $this->reqParams['path'];
         }
     }
+    public function setParam(string $key, $param): void
+    {
+        $this->reqParams[$key] = $param;
+    }
 
     private function configureRequest($request, $httpMethod)
     {

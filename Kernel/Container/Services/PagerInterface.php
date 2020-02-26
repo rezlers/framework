@@ -10,12 +10,12 @@ interface PagerInterface
      * @param $currentPage
      * @param $numberOfBlocks
      * @param $sitePage
-     * @return string[]
+     * @return int[]
      */
     public function getPages($currentPage, $numberOfBlocks, $sitePage): array;
 
     /**
-     * @return array
+     * @return int
      */
     public static function getNumberOfBlocks(): int;
 }

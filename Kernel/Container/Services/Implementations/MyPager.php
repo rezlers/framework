@@ -69,7 +69,7 @@ class MyPager implements PagerInterface
      * @param $currentPage
      * @param $numberOfBlocks
      * @param $sitePage
-     * @return string[]
+     * @return int[]
      */
     public function getPages($currentPage, $numberOfBlocks, $sitePage): array
     {
@@ -81,7 +81,7 @@ class MyPager implements PagerInterface
             $pages = range(1, $numberOfPages);
             $resultingArray = [];
             foreach ($pages as $value) {
-                $resultingArray[] = "<a href=\"$sitePage?page=${value}\">${value}</a>";
+                $resultingArray[] = $value;
             }
         } else {
             $pages = $this->getNeighbor($currentPage, $this->pagerSize, $numberOfPages);
@@ -89,12 +89,12 @@ class MyPager implements PagerInterface
             foreach ($pages as $key => $value) {
                 if ($value == 0 and $key == 0) {
                     $counter = $pages[1] - 1;
-                    $resultingArray[] = "<a href=\"$sitePage?page=${counter}\">...</a>";
+                    $resultingArray['previous'] = $counter;
                 } elseif ($value == 0 and $key == count($pages) - 1) {
                     $counter = $pages[count($pages) - 2] + 1;
-                    $resultingArray[] = "<a href=\"$sitePage?page=${counter}\">...</a>";
+                    $resultingArray['next'] = $counter;
                 } else {
-                    $resultingArray[] = "<a href=\"$sitePage?page=${value}\">${value}</a>";
+                    $resultingArray[] = $value;
                 }
             }
         }
