@@ -34,7 +34,8 @@ foreach ($links as $link) {
     echo "<p class='text-muted'><b>Type</b><br>" . $link->getPrivacyTag() . "</p>";
     echo '<nav class="navbar"><ul class="nav navbar-nav">';
     echo "<li><a href='/links/edit/" . $link->getId() . "'>Edit</a></li>";
-    echo "<li><a href='#'>Delete</a></li>";
+    $id = $link->getId();
+    echo "<li><a href='#' class='forPass' data-action='/links/delete/${id}' data-toggle=\"modal\" data-target=\"#exampleModal\">Delete</a></li>";
     echo '</ul></nav>';
     echo '<br>';
     echo '</div>';
@@ -56,7 +57,35 @@ foreach ($links as $link) {
         </ul>
     </nav>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="lead"> Are you sure you want delete it? </p>
+            </div>
+            <div class="modal-footer">
+                <form id='deleteButton' method="post" action=""><button type="button" class="btn btn-danger">Delete</button></form>
+            </div>
+        </div>
+    </div>
+</div>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'; ?>
+<script>
+    $(document).on("click", ".forPass", function () {
+        let id = $(this).data('action');
+        $(".modal-footer #deleteButton").attr('action', id);
+        // As pointed out in comments,
+        // it is superfluous to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
+</script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
         integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
         crossorigin="anonymous"></script>
