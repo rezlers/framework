@@ -20,15 +20,19 @@ $request->setParam('isLinksButtonActive', true);
 </head>
 <body>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php'; ?>
-<h1 class="page-header">My links</h1>
-<nav class="navbar">
-    <ul class="nav navbar-nav">
-    <li><a class="lead" href="/links/create">Create link</a></li>
-    </ul>
-</nav>
+<div class="container">
+    <h1 class="page-header">My links</h1>
+</div>
+<div class="container">
+    <nav class="navbar">
+        <ul class="nav navbar-nav">
+            <li><a class="lead" href="/links/create">Create link</a></li>
+        </ul>
+    </nav>
+</div>
 <?php
 foreach ($links as $link) {
-    echo '<div class="container pull-left" style="padding: 10px;">';
+    echo '<div class="container" style="padding: 10px;">';
     echo "<h4 class='list-group-item-heading'><b>" . $link->getHeader() . "</b></h4>";
     echo "<p class='lead'><a href='/links/description/" . $link->getId() . "'>" . $link->getLink() . "</a></p>";
     echo "<p class='text-muted'><b>Type</b><br>" . $link->getPrivacyTag() . "</p>";
@@ -41,7 +45,7 @@ foreach ($links as $link) {
     echo '</div>';
 }
 ?>
-<div class="container pull-left">
+<div class="container">
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <?php
@@ -58,7 +62,8 @@ foreach ($links as $link) {
     </nav>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -71,7 +76,9 @@ foreach ($links as $link) {
                 <p class="lead"> Are you sure you want delete it? </p>
             </div>
             <div class="modal-footer">
-                <form id='deleteButton' method="post" action=""><button type="button" class="btn btn-danger">Delete</button></form>
+                <form id='deleteButton' method="post" action="">
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
     </div>

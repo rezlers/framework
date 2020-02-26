@@ -25,13 +25,17 @@ $request->setParam('isAccountButtonActive', true);
     </head>
     <body>
     <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php'; ?>
-    <h1 class="page-header">Account</h1>
-    <nav class="navbar">
-        <ul class="nav navbar-nav">
-            <li><a class="lead" href="/account/edit">Edit profile</a></li>
-        </ul>
-    </nav>
-    <div class="container pull-left">
+    <div class="container">
+        <h1 class="page-header">Account</h1>
+    </div>
+    <div class="container">
+        <nav class="navbar">
+            <ul class="nav navbar-nav">
+                <li><a class="lead" href="/account/edit">Edit profile</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
         <ul class="list-group">
             <?php
             echo "<li class='list-group-item'>First name: ${firstName}</li>";

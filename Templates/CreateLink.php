@@ -24,8 +24,10 @@ $errorMessage = $_SESSION['errorMessage'];
     </head>
     <body>
     <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php'; ?>
-    <h1 class="page-header">Create link</h1>
-    <div class="container pull-left">
+    <div class="container">
+        <h1 class="page-header">Create link</h1>
+    </div>
+    <div class="container">
         <form action="/links/create" method="post">
             <div class="form-group">
                 <label for="exampleInputPassword1">Link </label>

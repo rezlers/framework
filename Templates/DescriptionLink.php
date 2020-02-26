@@ -24,11 +24,13 @@ $description = $linkInstance->getDescription();
     </head>
     <body>
     <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php'; ?>
-    <h1 class="page-header">Links</h1>
-    <div class="container pull-left">
+    <div class="container">
+        <h1 class="page-header">Links</h1>
+    </div>
+    <div class="container">
         <h2>Link description</h2>
     </div>
-    <div class="container pull-left">
+    <div class="container">
         <ul class="list-group">
             <?php
             echo "<li class='list-group-item'><b>Link</b><br><a href='${link}'>${link}</a></li>";

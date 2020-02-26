@@ -23,11 +23,13 @@ $errorMessage = $_SESSION['errorMessage'];
     </head>
     <body>
     <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php'; ?>
-    <h1 class="page-header">Account</h1>
-    <div class="container pull-left">
+    <div class="container">
+        <h1 class="page-header">Account</h1>
+    </div>
+    <div class="container">
         <h2>Edit profile</h2>
     </div>
-    <div class="container pull-left">
+    <div class="container">
         <form action="/account/edit" method="post">
             <div class="form-group">
                 <label for="exampleInputPassword1">First name</label>
@@ -51,7 +53,7 @@ $errorMessage = $_SESSION['errorMessage'];
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
-    <div class="container pull-left">
+    <div class="container">
         <?php echo "<p class='lead'>${errorMessage}</p>"; ?>
     </div>
     <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'; ?>
