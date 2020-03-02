@@ -157,7 +157,7 @@ class RegistrationController implements ControllerInterface
          * @var Request $request
          */
         global $request;
-        global $container;
+        $container = new ServiceContainer();
         $container->getService('Logger')->error($logMessage);
         if ($responseStatusCode === 500) {
             $response = App::Response();

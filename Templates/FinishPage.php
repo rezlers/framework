@@ -16,7 +16,12 @@ use Kernel\Request\RequestInterface as Request;
 </head>
 <body>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/HeaderForNotLogged.php';?>
-<p class="lead"><?php echo $request->getParam('ResponseMessage');?></p>
+<div class="container">
+    <h1 class="page-header">Congratulations</h1>
+</div>
+<div class="container">
+    <p class="lead"><?php echo $request->getParam('ResponseMessage');?></p>
+</div>
 <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'?>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
         integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
