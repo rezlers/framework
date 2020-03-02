@@ -32,15 +32,15 @@ $errorMessage = $_SESSION['errorMessage'];
         <form action="/registration/do" method="post">
             <div class="form-group">
                 <label for="exampleInputPassword1">First name</label>
-                <input type="text" name="firstName" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <input type="text" name="firstName" class="form-control" id="exampleInputPassword1" placeholder="First name">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Last Name</label>
-                <input type="password" name="lastName" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <input type="text" name="lastName" class="form-control" id="exampleInputPassword1" placeholder="Last name">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Login</label>
-                <input type="password" name="login" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <input type="text" name="login" class="form-control" id="exampleInputPassword1" placeholder="Login">
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
@@ -56,7 +56,7 @@ $errorMessage = $_SESSION['errorMessage'];
     <div class="container">
         <p class="lead"><?php echo $errorMessage;?></p>
     </div>
-    <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'?>
+        <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'?>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
             integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
             crossorigin="anonymous"></script>
