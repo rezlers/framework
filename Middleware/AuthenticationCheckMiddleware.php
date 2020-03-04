@@ -14,11 +14,6 @@ class AuthenticationCheckMiddleware implements MiddlewareInterface
     public function handle(Request $request, \Closure $next)
     {
         session_start();
-        if ($request->getParam('action') == 'logout') {
-            $_SESSION['authentication'] = false;
-            unset($_SESSION['userId']);
-            return redirect('/auth');
-        }
         if ($_SESSION['authentication'] == true) {
             if (in_array($request->getPath(), ['/', '/auth', '/registration']))
                 return redirect('/main');

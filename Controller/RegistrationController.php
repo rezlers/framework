@@ -28,30 +28,6 @@ class RegistrationController implements ControllerInterface
         $this->configureInstance();
     }
 
-//    /**
-//     * @param Request $request
-//     * @return mixed
-//     */
-//    public function handle(Request $request)
-//    {
-//
-//        if (!is_null($request->getParam('registrationHash'))) {
-//            return $this->confirmLink($request);
-//        }
-//        if ($request->getParam('action') == 'do') {
-//            $result = $this->validateUserData($request);
-//            if (!is_null($result))
-//                return $result;
-//            return $this->sendRegistrationLetter($request);
-//        }
-//        $responseHtml = render('RegistrationPage.php');
-//        if (isset($_SESSION['userData']))
-//            unset($_SESSION['userData']);
-//        if (isset($_SESSION['errorMessage']))
-//            unset($_SESSION['errorMessage']);
-//        return $responseHtml;
-//    }
-
     public function registration(Request $request)
     {
         return render('RegistrationPage.php');
@@ -121,22 +97,21 @@ class RegistrationController implements ControllerInterface
     }
 
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @return bool|false|ResponseInterface|string
      */
     private function validateUserData(RequestInterface $request)
     {
         if (filter_var($request->getParam('email'), FILTER_VALIDATE_EMAIL) === false) {
-            session_start();
             $reqParams = $request->getParams();
-            $_SESSION['userData'] = [
+            $request->addParam('userData', [
                 'firstName' => $reqParams['firstName'],
                 'lastName' => $reqParams['lastName'],
                 'email' => $reqParams['email'],
                 'login' => $reqParams['login'],
-            ];
-            $_SESSION['errorMessage'] = 'Email is not valid';
-            return redirect('/registration');
+            ]);
+            $request->addParam('errorMessage', 'Email is not valid');
+            return render('RegistrationPage.php');
         }
         $result = $this->connection->statement('SELECT * FROM users WHERE login = ?', [$request->getParam('login')]);
         if ($result === false) {
@@ -144,16 +119,15 @@ class RegistrationController implements ControllerInterface
         }
         $login = $result->fetchAll()[0];
         if (!empty($login)) {
-            session_start();
             $reqParams = $request->getParams();
-            $_SESSION['userData'] = [
+            $request->addParam('userData', [
                 'firstName' => $reqParams['firstName'],
                 'lastName' => $reqParams['lastName'],
                 'email' => $reqParams['email'],
                 'login' => $reqParams['login'],
-            ];
-            $_SESSION['errorMessage'] = 'User with such login is already exists';
-            return redirect('/registration');
+            ]);
+            $request->addParam('errorMessage', 'User with such login is already exists');
+            return render('RegistrationPage.php'); // Do render instead of redirect!!
         }
         $result = $this->connection->statement('SELECT * FROM users WHERE email = ?', [$request->getParam('email')]);
         if ($result === false) {
@@ -161,7 +135,15 @@ class RegistrationController implements ControllerInterface
         }
         $email = $result->fetchAll()[0];
         if (!empty($email)) {
-            return redirect('/registration');
+            $reqParams = $request->getParams();
+            $request->addParam('userData', [
+                'firstName' => $reqParams['firstName'],
+                'lastName' => $reqParams['lastName'],
+                'email' => $reqParams['email'],
+                'login' => $reqParams['login'],
+            ]);
+            $request->addParam('errorMessage', 'User with such email is already exists');
+            return render('RegistrationPage.php');
         }
     }
 

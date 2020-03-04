@@ -20,7 +20,10 @@ function render($template)
 
 function redirect($path): ResponseInterface
 {
-    return App::Response()->setHeader('Location: ' . $path);
+    $response = App::Response();
+    $response->setHeader('Location: ' . $path);
+    $response->setStatusCode(200);
+    return $response;
 }
 
 function abort(int $responseStatusCode): ResponseInterface

@@ -1,7 +1,5 @@
 <?php
 
-$var = implode('@', ['abc']);
-
 use Kernel\App\App;
 
 require '../Bootstrap/bootstrap.php';

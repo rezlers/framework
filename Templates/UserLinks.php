@@ -3,8 +3,8 @@
 use App\Model\LinkInterface;
 
 /** @var LinkInterface[] $links */
-$links = $_SESSION['linkData'];
-$pages = $_SESSION['pagerData'];
+$links = $request->getParam('linkData');
+$pages = $request->getParam('pagerData');
 $request->setParam('isLinksButtonActive', true);
 ?>
 

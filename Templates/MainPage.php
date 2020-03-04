@@ -1,12 +1,16 @@
 <?php
 
 use App\Model\LinkInterface;
+use Kernel\Request\RequestInterface;
+
+/** @var RequestInterface $request */
+global $request;
 
 $pathToStyles = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Public/bootstrap/css/bootstrap.min.css';
 $pathToJS = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Public/bootstrap/js/bootstrap.min.js';
 /** @var LinkInterface[] $links */
-$links = $_SESSION['linkData'];
-$pages = $_SESSION['pagerData'];
+$links = $request->getParam('linkData');
+$pages = $request->getParam('pagerData');
 if ($_SESSION['authentication'])
     $header = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php';
 else
@@ -60,7 +64,3 @@ else
     <script><?php include_once '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/bootstrap/js/bootstrap.min.js'; ?></script>
     </body>
     </html>
-<?php
-unset($_SESSION['linkData']);
-unset($_SESSION['pagerData']);
-?>

@@ -7,6 +7,7 @@ use Kernel\CallableHandler\ControllerInterface;
 use Kernel\Container\Services\RouteInterface;
 use Kernel\Exceptions\RouteException;
 use Kernel\Request\Request;
+use Kernel\Request\RequestInterface;
 
 class Route implements RouteInterface
 {
@@ -15,6 +16,11 @@ class Route implements RouteInterface
     public $callable;
     public $paramsNum;  ## Maybe in request UPD It can't, because it's senseless
     public $pathLength;  ## Maybe in request UPD It can't, because it's senseless
+
+    /**
+     * @var Route
+     */
+    private $redirectedRoute;
 
     public $reg_exp = '/{.*}/';
 
@@ -167,6 +173,22 @@ class Route implements RouteInterface
             }
         }
         return $params;
+    }
+
+    /**
+     * @return RouteInterface|null
+     */
+    public function getRedirectedRoute()
+    {
+        return $this->redirectedRoute;
+    }
+
+    /**
+     * @param Route $redirectedRoute
+     */
+    public function setRedirectedRoute(Route $redirectedRoute): void
+    {
+        $this->redirectedRoute = $redirectedRoute;
     }
 
     private function setUrl($url)

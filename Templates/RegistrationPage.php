@@ -4,12 +4,12 @@ use Kernel\Request\RequestInterface as Request;
 
 global $request;
 session_start();
-$params = $_SESSION['userData'];
+$params = $request->getParam('userData');
 $firstName = $params['firstName'];
 $lastName = $params['lastName'];
 $login = $params['login'];
 $email = $params['email'];
-$errorMessage = $_SESSION['errorMessage'];
+$errorMessage = $request->getParam('errorMessage');
 ?>
     <!doctype html>
     <html lang="en">
@@ -29,22 +29,22 @@ $errorMessage = $_SESSION['errorMessage'];
         <h1 class="page-header">Registration</h1>
     </div>
     <div class="container">
-        <form action="/registration/do" method="post">
+        <form action="/registration" method="post">
             <div class="form-group">
                 <label for="exampleInputPassword1">First name</label>
-                <input type="text" name="firstName" class="form-control" id="exampleInputPassword1" placeholder="First name">
+                <input type="text" name="firstName" class="form-control" id="exampleInputPassword1" placeholder="First name" <?php echo "value='${firstName}'";?>>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Last Name</label>
-                <input type="text" name="lastName" class="form-control" id="exampleInputPassword1" placeholder="Last name">
+                <input type="text" name="lastName" class="form-control" id="exampleInputPassword1" placeholder="Last name" <?php echo "value='${lastName}'";?>>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Login</label>
-                <input type="text" name="login" class="form-control" id="exampleInputPassword1" placeholder="Login">
+                <input type="text" name="login" class="form-control" id="exampleInputPassword1" placeholder="Login" <?php echo "value='${login}'";?>>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email" <?php echo "value='${email}'";?>>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>

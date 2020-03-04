@@ -5,11 +5,15 @@ use App\Model\LinkInterface;
 session_start();
 global $request;
 /** @var LinkInterface $linkInstance */
-$linkInstance = $_SESSION['linkData'];
+$linkInstance = $request->getParam('linkData');
 $link = $linkInstance->getLink();
 $header = $linkInstance->getHeader();
 $tag = $linkInstance->getPrivacyTag();
 $description = $linkInstance->getDescription();
+if ($_SESSION['authentication'])
+    $htmlHeader = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php';
+else
+    $htmlHeader = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/HeaderForNotLogged.php';
 ?>
 
     <!doctype html>
@@ -23,7 +27,7 @@ $description = $linkInstance->getDescription();
         <title>Document</title>
     </head>
     <body>
-    <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Header.php'; ?>
+    <?php include $htmlHeader; ?>
     <div class="container">
         <h1 class="page-header">Links</h1>
     </div>

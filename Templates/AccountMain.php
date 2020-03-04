@@ -3,13 +3,11 @@
 use Kernel\Request\RequestInterface as Request;
 
 global $request;
-session_start();
-$params = $_SESSION['userData'];
+$params = $request->getParam('userData');
 $firstName = $params['firstName'];
 $lastName = $params['lastName'];
 $email = $params['email'];
 $login = $params['login'];
-$errorMessage = $_SESSION['errorMessage'];
 $request->setParam('isAccountButtonActive', true);
 ?>
 

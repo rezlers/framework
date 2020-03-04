@@ -2,7 +2,7 @@
 
 return $middlewareConfiguration = [
     'globalMiddleware' => [
-
+        'SessionStartMiddleware'
     ],
     'routeMiddleware' => [
         'userMW' => 'UserMiddleware',

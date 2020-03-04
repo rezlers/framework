@@ -1,12 +1,13 @@
 <?php
-session_start();
+use Kernel\Request\RequestInterface as Request;
+
 global $request;
-$linkInstance = $_SESSION['linkData'];
-$link = $linkInstance->getLink();
-$header = $linkInstance->getHeader();
-$tag = $linkInstance->getPrivacyTag();
-$description = $linkInstance->getDescription();
-$errorMessage = $_SESSION['errorMessage'];
+$params = $request->getParam('linkData');
+$link = $params['link'];
+$header = $params['header'];
+$description = $params['description'];
+$tag = $params['tag'];
+$errorMessage = $request->getParam('errorMessage');
 ?>
 
     <!doctype html>
@@ -29,21 +30,23 @@ $errorMessage = $_SESSION['errorMessage'];
             <div class="form-group">
                 <label for="exampleInputPassword1">Link </label>
                 <input type="text" name="link" class="form-control" id="exampleInputPassword1"
-                       placeholder="Link" required>
+                       placeholder="Link" <?php echo "value='${link}'";?> required>
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Header </label>
-                <input type="password" name="header" class="form-control" id="exampleInputPassword1"
-                       placeholder="Header" required>
+                <label for="exampleInputPassword1">Title </label>
+                <input type="text" name="header" class="form-control" id="exampleInputPassword1"
+                       placeholder="Title" <?php echo "value='${header}'";?> required>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Type</label>
-                <input type="text" name="tag" class="form-control" id="exampleInputEmail1" placeholder="Type" required>
+                <label for="tag">Type</label>
+                <select class="form-control" id="tag" name="tag">
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Description</label>
-                <input type="text" name="description" class="form-control" id="exampleInputPassword1"
-                       placeholder="Description" required>
+                <textarea class="md-textarea form-control" rows="3" id="exampleInputPassword1" name="description"><?php echo "${description}";?> </textarea>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
@@ -59,6 +62,5 @@ $errorMessage = $_SESSION['errorMessage'];
     </body>
     </html>
 <?php
-unset($_SESSION['linkData']);
-unset($_SESSION['errorMessage']);
+
 ?>

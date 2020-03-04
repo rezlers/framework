@@ -3,13 +3,12 @@
 use Kernel\Request\RequestInterface as Request;
 
 global $request;
-session_start();
-$params = $_SESSION['linkData'];
+$params = $request->getParam('linkData');
 $link = $params['link'];
 $header = $params['header'];
 $description = $params['description'];
 $tag = $params['tag'];
-$errorMessage = $_SESSION['errorMessage'];
+$errorMessage = $request->getParam('errorMessage');
 ?>
 
     <!doctype html>
@@ -32,26 +31,28 @@ $errorMessage = $_SESSION['errorMessage'];
             <div class="form-group">
                 <label for="exampleInputPassword1">Link </label>
                 <input type="text" name="link" class="form-control" id="exampleInputPassword1"
-                       placeholder="Link" required>
+                       placeholder="Link" <?php echo "value='${link}'";?> required>
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Header </label>
+                <label for="exampleInputPassword1">Title </label>
                 <input type="text" name="header" class="form-control" id="exampleInputPassword1"
-                       placeholder="Header" required>
+                       placeholder="Title" <?php echo "value='${header}'";?> required>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Type</label>
-                <input type="text" name="tag" class="form-control" id="exampleInputEmail1" placeholder="Type" required>
+                <label for="tag">Type</label>
+                <select class="form-control" id="tag" name="tag">
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Description</label>
-                <input type="text" name="description" class="form-control" id="exampleInputPassword1"
-                       placeholder="Description" required>
+                <textarea class="md-textarea form-control" rows="3" id="exampleInputPassword1" name="description"><?php echo "${description}";?> </textarea>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
-    <div class="container pull-left">
+    <div class="container">
         <?php echo '<p class="lead">' . $errorMessage . '</p>'; ?>
     </div>
     <?php include '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Templates/Blocks/Footer.php'; ?>

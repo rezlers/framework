@@ -3,12 +3,11 @@
 use Kernel\Request\RequestInterface as Request;
 
 global $request;
-session_start();
-$params = $_SESSION['userData'];
+$params = $request->getParam('userData');
 $firstName = $params['firstName'];
 $lastName = $params['lastName'];
 $email = $params['email'];
-$errorMessage = $_SESSION['errorMessage'];
+$errorMessage = $request->getParam('errorMessage');
 ?>
 
     <!doctype html>
@@ -34,21 +33,26 @@ $errorMessage = $_SESSION['errorMessage'];
             <div class="form-group">
                 <label for="exampleInputPassword1">First name</label>
                 <input type="text" name="firstName" class="form-control" id="exampleInputPassword1"
-                       placeholder="First name">
+                       placeholder="First name"  <?php echo "value='${firstName}'";?>>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Last Name</label>
                 <input type="text" name="lastName" class="form-control" id="exampleInputPassword1"
-                       placeholder="Last name">
+                       placeholder="Last name"  <?php echo "value='${lastName}'";?>>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email"  <?php echo "value='${email}'";?>>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
                 <input type="password" name="password" class="form-control" id="exampleInputPassword1"
                        placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Repeat password</label>
+                <input type="password" name="repeatedPassword" class="form-control" id="exampleInputPassword1"
+                       placeholder="Repeat password">
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>

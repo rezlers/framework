@@ -5,11 +5,8 @@ use Kernel\Request\RequestInterface as Request;
 
 /** @var Request $request */
 global $request;
-session_start();
-$login = $_SESSION['login'];
-$errorMessage = $_SESSION['errorMessage'];
-/** @var LinkInterface[] $links */
-$links = $_SESSION['linkData'];
+$login = $request->getParam('userData')['login'];
+$errorMessage = $request->getParam('errorMessage');
 $request->setParam('isAuthButtonActive', true);
 ?>
 
@@ -34,7 +31,7 @@ $request->setParam('isAuthButtonActive', true);
     <form action="/auth/do" method="get">
         <div class="form-group">
             <label for="exampleInputEmail1">Login</label>
-            <input type="text" name="login" class="form-control" id="exampleInputEmail1" placeholder="Login">
+            <input type="text" name="login" class="form-control" id="exampleInputEmail1" placeholder="Login" <?php echo "value='${login}'";?>>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
