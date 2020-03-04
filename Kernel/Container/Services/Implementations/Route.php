@@ -91,10 +91,25 @@ class Route implements RouteInterface
         if ($this->callable instanceof \Closure)
             return $this->callable;
         if (gettype($this->callable) == 'string') {
-            $controllers = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Controllers.php';
-            $instanceNamespace = 'App\Controller\\' . $controllers[$this->callable];
-            $instance = new $instanceNamespace();
-            $callable = array($instance, 'handle');
+            $callableParts = explode('@', $this->callable);
+            if (count($callableParts) == 1) {
+                $controllers = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Controllers.php';
+                $instanceNamespace = 'App\Controller\\' . $controllers[$this->callable];
+                $instance = new $instanceNamespace();
+                $callable = array($instance, 'handle');
+            } else {
+                $controllerName = $callableParts[0];
+                $methodName = $callableParts[1];
+                $controllers = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Controllers.php';
+                $instanceNamespace = 'App\Controller\\' . $controllers[$controllerName];
+                $instance = new $instanceNamespace();
+                if (method_exists($instance, $methodName))
+                    $callable = array($instance, $methodName);
+                else {
+                    $className = get_class($instance);
+                    throw new RouteException("Method ${methodName} doesn't exists in class ${className}", 500);
+                }
+            }
             return $callable;
         }
         throw new RouteException("Couldn't create callable in route " . $this->url , 500);
@@ -118,16 +133,16 @@ class Route implements RouteInterface
                 }
                 return true;
             } else {
-                if (count($appUrlParts) > count($requestUrlParts)) {
-                    $this->url = '/' . implode('/', array_slice($appUrlParts, 0, count($requestUrlParts)));
-                    if ($this->isEqual($requestUrl)) {
-                        $this->setParamsNum();
-                        $this->setPathLength();
-                        return true;
-                    }
-                    $this->url = implode('/',$appUrlParts);
-                    return false;
-                }
+//                if (count($appUrlParts) > count($requestUrlParts)) {
+//                    $this->url = '/' . implode('/', array_slice($appUrlParts, 0, count($requestUrlParts)));
+//                    if ($this->isEqual($requestUrl)) {
+//                        $this->setParamsNum();
+//                        $this->setPathLength();
+//                        return true;
+//                    }
+//                    $this->url = implode('/',$appUrlParts);
+//                    return false;
+//                }
                 return false;
             }
         } else {
@@ -188,13 +203,17 @@ class Route implements RouteInterface
     private function configureCallable($callable)
     {
         if (gettype($callable) == 'string') {
+            $controllerParts = explode('@', $callable);
+            if (count($controllerParts) == 2) {
+                $callable = $controllerParts[0];
+            }
             $controllers = require '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Kernel/ConfigurationFiles/Controllers.php';
             if (!$controllers[$callable])
                 throw new RouteException("There is no controller in configuration file with key ${callable}", 500);
             $pathToController = '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/../Controller/' . $controllers[$callable] . '.php';
             if (!file_exists($pathToController))
                 throw new RouteException("There is no controller in controller folder " . $controllers[$callable] . " with path ${pathToController}", 500);
-            $this->callable = $callable;
+            $this->callable = implode('@', $controllerParts);
         } elseif ($callable instanceof \Closure) {
             $this->callable = $callable;
         } elseif (is_null($callable)) {

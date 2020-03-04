@@ -8,9 +8,5 @@ use Kernel\Response\ResponseInterface;
 
 interface ControllerInterface
 {
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function handle(Request $request);
+
 }

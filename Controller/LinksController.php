@@ -23,68 +23,192 @@ use function Kernel\Helpers\render;
 class LinksController implements ControllerInterface
 {
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function handle(Request $request)
+//    /**
+//     * @param Request $request
+//     * @return mixed
+//     */
+//    public function handle(Request $request)
+//    {
+//        session_start();
+//        try {
+//            if (isset($_SESSION['userId'])) {
+//                $user = User::getById($_SESSION['userId']);
+//                if ($request->getParam('action') == 'create') {
+//                    if ($request->getHttpMethod() == 'GET') {
+//                        return render('CreateLink.php');
+//                    } elseif ($request->getHttpMethod() == 'POST') {
+//                        return $this->createLink($user);
+//                    }
+//                } elseif ($request->getParam('action') == 'edit') {
+//                    if ($request->getHttpMethod() == 'GET') {
+//                        $_SESSION['linkData'] = Link::byId($request->getUrlParams()['id']);
+//                        return render('EditLink.php');
+//                    } elseif ($request->getHttpMethod() == 'POST') {
+//                        $link = Link::byId($request->getUrlParams()['id']);
+//                        return $this->editLink($link);
+//                    }
+//                } elseif ($request->getParam('action') == 'description') {
+//                    if ($request->getHttpMethod() == 'GET') {
+//                        $link = Link::byId($request->getUrlParams()['id']);
+//                        if (is_null(parse_url($link->getLink(), PHP_URL_SCHEME)))
+//                            $link->setLink('http://' . $link->getLink());
+//                        $_SESSION['linkData'] = $link;
+//                        return render('DescriptionLink.php');
+//                    }
+//                }
+//                if ($request->getPath() == '/main') {
+//                    if (!is_null($request->getParam('page')))
+//                        $_SESSION['linkData'] = $this->getLinks('all', $request->getParam('page'), $user);
+//                    else
+//                        $_SESSION['linkData'] = $this->getLinks('all', 1, $user);
+//                    $_SESSION['pagerData'] = $this->getPages(Link::byTag('public'));
+//                    return render('MainPage.php');
+//                } elseif ($request->getPath() == '/links') {
+//                    if (!is_null($request->getParam('page')))
+//                        $_SESSION['linkData'] = $this->getLinks('personal', $request->getParam('page'), $user);
+//                    else
+//                        $_SESSION['linkData'] = $this->getLinks('personal', 1, $user);
+//                    $_SESSION['pagerData'] = $this->getPages(Link::byUser($user));
+//                    return render('UserLinks.php');
+//                }
+//            } elseif ($request->getPath() == '/main') {
+//                if (!is_null($request->getParam('page')))
+//                    $_SESSION['linkData'] = $this->getLinks('all', $request->getParam('page'));
+//                else
+//                    $_SESSION['linkData'] = $this->getLinks('all', 1);
+//                $_SESSION['pagerData'] = $this->getPages(Link::byTag('public'));
+//                return render('MainPage.php');
+//            }
+//        } catch (ModelException $exception) {
+//            $container = new ServiceContainer();
+//            $container->getService('Logger')->error($exception->getMessage());
+//            return abort(500);
+//        }
+//        return App::Response()->setStatusCode(404);
+//    }
+
+    public function getCreateLinkPage(RequestInterface $request)
     {
-        session_start();
+        return render('CreateLink.php');
+    }
+
+    public function getEditLinkPage(RequestInterface $request)
+    {
+        return render('EditLink.php');
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return bool|false|string
+     * @throws ModelException
+     */
+    public function getLinkDescriptionPage(RequestInterface $request)
+    {
+        $link = Link::byId($request->getUrlParams()['id']);
+        if (is_null(parse_url($link->getLink(), PHP_URL_SCHEME)))
+            $link->setLink('http://' . $link->getLink());
+        $_SESSION['linkData'] = $link;
+        return render('DescriptionLink.php');
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return bool|false|string
+     * @throws ModelException
+     */
+    public function getUserLinksPage(RequestInterface $request)
+    {
+        $user = User::getById($_SESSION['userId']);
+        if (!is_null($request->getParam('page')))
+            $_SESSION['linkData'] = $this->getLinks('personal', $request->getParam('page'), $user);
+        else
+            $_SESSION['linkData'] = $this->getLinks('personal', 1, $user);
+        $_SESSION['pagerData'] = $this->getPages(Link::byUser($user));
+        return render('UserLinks.php');
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return bool|false|string
+     * @throws ModelException
+     */
+    public function getMainPage(RequestInterface $request)
+    {
+        if (isset($_SESSION['userId'])) {
+            $user = User::getById($_SESSION['userId']);
+            if (!is_null($request->getParam('page')))
+                $_SESSION['linkData'] = $this->getLinks('all', $request->getParam('page'), $user);
+            else
+                $_SESSION['linkData'] = $this->getLinks('all', 1, $user);
+            $_SESSION['pagerData'] = $this->getPages(Link::byTag('public'));
+        } else {
+            if (!is_null($request->getParam('page')))
+                $_SESSION['linkData'] = $this->getLinks('all', $request->getParam('page'));
+            else
+                $_SESSION['linkData'] = $this->getLinks('all', 1);
+            $_SESSION['pagerData'] = $this->getPages(Link::byTag('public'));
+        }
+        return render('MainPage.php');
+    }
+
+    /**
+     * @param UserInterface $user
+     * @return bool|false|ResponseInterface|string
+     * @throws ModelException
+     */
+    public function createLink(UserInterface $user)
+    {
+        global $request;
+        $user = User::getById($_SESSION['userId']);
+        $params = $request->getParams();
         try {
-            if (isset($_SESSION['userId'])) {
-                $user = User::getById($_SESSION['userId']);
-                if ($request->getParam('action') == 'create') {
-                    if ($request->getHttpMethod() == 'GET') {
-                        return render('CreateLink.php');
-                    } elseif ($request->getHttpMethod() == 'POST') {
-                        return $this->createLink($user);
-                    }
-                } elseif ($request->getParam('action') == 'edit') {
-                    if ($request->getHttpMethod() == 'GET') {
-                        $_SESSION['linkData'] = Link::byId($request->getUrlParams()['id']);
-                        return render('EditLink.php');
-                    } elseif ($request->getHttpMethod() == 'POST') {
-                        $link = Link::byId($request->getUrlParams()['id']);
-                        return $this->editLink($link);
-                    }
-                } elseif ($request->getParam('action') == 'description') {
-                    if ($request->getHttpMethod() == 'GET') {
-                        $link = Link::byId($request->getUrlParams()['id']);
-                        if (is_null(parse_url($link->getLink(), PHP_URL_SCHEME)))
-                            $link->setLink('http://' . $link->getLink());
-                        $_SESSION['linkData'] = $link;
-                        return render('DescriptionLink.php');
-                    }
-                }
-                if ($request->getPath() == '/main') {
-                    if (!is_null($request->getParam('page')))
-                        $_SESSION['linkData'] = $this->getLinks('all', $request->getParam('page'), $user);
-                    else
-                        $_SESSION['linkData'] = $this->getLinks('all', 1, $user);
-                    $_SESSION['pagerData'] = $this->getPages(Link::byTag('public'));
-                    return render('MainPage.php');
-                } elseif ($request->getPath() == '/links') {
-                    if (!is_null($request->getParam('page')))
-                        $_SESSION['linkData'] = $this->getLinks('personal', $request->getParam('page'), $user);
-                    else
-                        $_SESSION['linkData'] = $this->getLinks('personal', 1, $user);
-                    $_SESSION['pagerData'] = $this->getPages(Link::byUser($user));
-                    return render('UserLinks.php');
-                }
-            } elseif ($request->getPath() == '/main') {
-                if (!is_null($request->getParam('page')))
-                    $_SESSION['linkData'] = $this->getLinks('all', $request->getParam('page'));
-                else
-                    $_SESSION['linkData'] = $this->getLinks('all', 1);
-                $_SESSION['pagerData'] = $this->getPages(Link::byTag('public'));
-                return render('MainPage.php');
+            if (filter_var($params['link'], FILTER_VALIDATE_URL) === false) {
+                $_SESSION['linkData'] = $params;
+                $_SESSION['errorMessage'] = 'Link ' . $params['link'] . ' is not valid';
+                return redirect('/links/create');
             }
-        } catch (ModelException $exception) {
+            $checkLink = Link::byLink($params['link']);
+            if (is_null($checkLink)) {
+                $link = new Link($params['link'], $params['header'], $params['description'], $params['tag'], $user->getId());
+                $link->save();
+                return redirect('/links');
+            }
+        } catch (ModelException $e) {
             $container = new ServiceContainer();
-            $container->getService('Logger')->error($exception->getMessage());
+            $container->getService('Logger')->error($e->getMessage());
             return abort(500);
         }
-        return App::Response()->setStatusCode(404);
+        $_SESSION['linkData'] = $params;
+        $_SESSION['errorMessage'] = 'Link ' . $params['link'] . ' is already exists';
+        return redirect('/links/create');
+    }
+
+    public function editLink(LinkInterface $link)
+    {
+        global $request;
+        $link = Link::byId($request->getUrlParams()['id']);
+        $params = $request->getReqParams();
+        try {
+            if (filter_var($params['link'], FILTER_VALIDATE_URL) === false) {
+                $_SESSION['linkData'] = $params;
+                $_SESSION['errorMessage'] = 'Link ' . $params['link'] . ' is not valid';
+                return redirect('/links/create');
+            }
+            if (isset($params['link']) and $params['link'] != '')
+                $link->setLink($params['link']);
+            if (isset($params['header']) and $params['header'] != '')
+                $link->setHeader($params['header']);
+            if (isset($params['description']) and $params['description'] != '')
+                $link->setDescription($params['description']);
+            if (isset($params['tag']) and $params['tag'] != '')
+                $link->setPrivacyTag($params['tag']);
+            $link->save();
+            return redirect('/links');
+        } catch (ModelException $e) {
+            $container = new ServiceContainer();
+            $container->getService('Logger')->error($e->getMessage());
+            return abort(500);
+        }
     }
 
     /**
@@ -132,61 +256,5 @@ class LinksController implements ControllerInterface
             return $pager->getPages($request->getParam('page'), count($links), trim($request->getPath(), '/'));
         }
         return $pager->getPages(1, count($links), trim($request->getPath(), '/'));
-    }
-    /**
-     * @param UserInterface $user
-     * @return bool|false|ResponseInterface|string
-     */
-    private function createLink(UserInterface $user)
-    {
-        global $request;
-        $params = $request->getParams();
-        try {
-            if (filter_var($params['link'], FILTER_VALIDATE_URL) === false) {
-                $_SESSION['linkData'] = $params;
-                $_SESSION['errorMessage'] = 'Link ' . $params['link'] . ' is not valid';
-                return redirect('/links/create');
-            }
-            $checkLink = Link::byLink($params['link']);
-            if (is_null($checkLink)) {
-                $link = new Link($params['link'], $params['header'], $params['description'], $params['tag'], $user->getId());
-                $link->save();
-                return redirect('/links');
-            }
-        } catch (ModelException $e) {
-            $container = new ServiceContainer();
-            $container->getService('Logger')->error($e->getMessage());
-            return abort(500);
-        }
-        $_SESSION['linkData'] = $params;
-        $_SESSION['errorMessage'] = 'Link ' . $params['link'] . ' is already exists';
-        return redirect('/links/create');
-    }
-
-    private function editLink(LinkInterface $link)
-    {
-        global $request;
-        $params = $request->getReqParams();
-        try {
-            if (filter_var($params['link'], FILTER_VALIDATE_URL) === false) {
-                $_SESSION['linkData'] = $params;
-                $_SESSION['errorMessage'] = 'Link ' . $params['link'] . ' is not valid';
-                return redirect('/links/create');
-            }
-            if (isset($params['link']) and $params['link'] != '')
-                $link->setLink($params['link']);
-            if (isset($params['header']) and $params['header'] != '')
-                $link->setHeader($params['header']);
-            if (isset($params['description']) and $params['description'] != '')
-                $link->setDescription($params['description']);
-            if (isset($params['tag']) and $params['tag'] != '')
-                $link->setPrivacyTag($params['tag']);
-            $link->save();
-            return redirect('/links');
-        } catch (ModelException $e) {
-            $container = new ServiceContainer();
-            $container->getService('Logger')->error($e->getMessage());
-            return abort(500);
-        }
     }
 }

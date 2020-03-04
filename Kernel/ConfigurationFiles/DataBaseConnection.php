@@ -3,5 +3,5 @@
 return $connection = ['host'  => 'localhost',
     'database'  => 'app',
     'username'  => 'vagrant',
-    'password'  => '12345678',
+    'password'  => '123456',
     'driver'  => 'mysql'];

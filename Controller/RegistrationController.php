@@ -10,6 +10,7 @@ use Kernel\Container\ServiceContainer;
 use Kernel\Container\Services\Implementations\MyDatabase;
 use Kernel\Container\Services\MailerInterface;
 use Kernel\Request\Request;
+use Kernel\Request\RequestInterface;
 use Kernel\Response\ResponseInterface;
 use function Kernel\Helpers\getResource;
 use function Kernel\Helpers\redirect;
@@ -27,37 +28,44 @@ class RegistrationController implements ControllerInterface
         $this->configureInstance();
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function handle(Request $request)
-    {
+//    /**
+//     * @param Request $request
+//     * @return mixed
+//     */
+//    public function handle(Request $request)
+//    {
+//
+//        if (!is_null($request->getParam('registrationHash'))) {
+//            return $this->confirmLink($request);
+//        }
+//        if ($request->getParam('action') == 'do') {
+//            $result = $this->validateUserData($request);
+//            if (!is_null($result))
+//                return $result;
+//            return $this->sendRegistrationLetter($request);
+//        }
+//        $responseHtml = render('RegistrationPage.php');
+//        if (isset($_SESSION['userData']))
+//            unset($_SESSION['userData']);
+//        if (isset($_SESSION['errorMessage']))
+//            unset($_SESSION['errorMessage']);
+//        return $responseHtml;
+//    }
 
-        if (!is_null($request->getParam('registrationHash'))) {
-            return $this->confirmLink($request);
-        }
-        if ($request->getParam('action') == 'do') {
-            $result = $this->validateUserData($request);
-            if (!is_null($result))
-                return $result;
-            return $this->sendRegistrationLetter($request);
-        }
-        $responseHtml = render('RegistrationPage.php');
-        if (isset($_SESSION['userData']))
-            unset($_SESSION['userData']);
-        if (isset($_SESSION['errorMessage']))
-            unset($_SESSION['errorMessage']);
-        return $responseHtml;
+    public function registration(Request $request)
+    {
+        return render('RegistrationPage.php');
     }
 
-    private function configureInstance()
+    public function register(RequestInterface $request)
     {
-        $container = new ServiceContainer();
-        $this->connection = $container->getService('Database')->connection();
+        $result = $this->validateUserData($request);
+        if (!is_null($result))
+            return $result;
+        return $this->sendRegistrationLetter($request);
     }
 
-    private function confirmLink(Request $request)
+    public function confirmLink(RequestInterface $request)
     {
         $hash = $request->getParam('registrationHash');
         $result = $this->connection->statement('SELECT hash, user_id FROM registration_links WHERE hash = ?', [$hash]);
@@ -77,7 +85,13 @@ class RegistrationController implements ControllerInterface
         return render('FinishPage.php');
     }
 
-    private function sendRegistrationLetter(Request $request)
+    private function configureInstance()
+    {
+        $container = new ServiceContainer();
+        $this->connection = $container->getService('Database')->connection();
+    }
+
+    private function sendRegistrationLetter(RequestInterface $request)
     {
         $container = new ServiceContainer();
         /** @var MailerInterface $mailer */
@@ -110,7 +124,7 @@ class RegistrationController implements ControllerInterface
      * @param Request $request
      * @return bool|false|ResponseInterface|string
      */
-    private function validateUserData(Request $request)
+    private function validateUserData(RequestInterface $request)
     {
         if (filter_var($request->getParam('email'), FILTER_VALIDATE_EMAIL) === false) {
             session_start();

@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="prod" showNewOnSourceInSync="false" showNewOnTargetInSync="false" showAutoUploadSettingsWarning="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Myconnection" showNewOnSourceInSync="false" showNewOnTargetInSync="false" showAutoUploadSettingsWarning="false">
     <serverData>
-      <paths name="prod">
+      <paths name="Myconnection">
         <serverdata>
           <mappings>
             <mapping deploy="/var/www/framework" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="test_connection">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/var/www/framework" local="$PROJECT_DIR$" web="/var/www/framework/Public" />
           </mappings>
         </serverdata>
       </paths>

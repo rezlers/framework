@@ -66,6 +66,7 @@ class MiddlewareHandler
             };
         },
             function (Request $request) {
+
                 $callable = $request->getCallable();
                 $result = call_user_func_array($callable, array($request));
                 if ($result == false) {

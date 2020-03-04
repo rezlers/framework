@@ -8,6 +8,7 @@ return $middlewareConfiguration = [
         'userMW' => 'UserMiddleware',
         'AuthenticationCheck' => 'AuthenticationCheckMiddleware',
         'CheckUrlLogin' => 'CheckUrlLoginMiddleware',
-        'UrlValidation' => 'UrlValidationMiddleware'
+        'UrlValidation' => 'UrlValidationMiddleware',
+        'redirectToAlias' => 'redirectToAliasMiddleware'
     ]
 ];
