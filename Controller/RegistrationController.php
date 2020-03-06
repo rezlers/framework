@@ -113,6 +113,17 @@ class RegistrationController implements ControllerInterface
             $request->addParam('errorMessage', 'Email is not valid');
             return render('RegistrationPage.php');
         }
+        if ($request->getParam('password') != $request->getParam('repeatedPassword')) {
+            $reqParams = $request->getParams();
+            $request->addParam('userData', [
+                'firstName' => $reqParams['firstName'],
+                'lastName' => $reqParams['lastName'],
+                'email' => $reqParams['email'],
+                'login' => $reqParams['login'],
+            ]);
+            $request->addParam('errorMessage', 'Repeated password does not match password');
+            return render('RegistrationPage.php');
+        }
         $result = $this->connection->statement('SELECT * FROM users WHERE login = ?', [$request->getParam('login')]);
         if ($result === false) {
             return $this->errorFinishPage('', 'Error with executing SELECT * FROM users WHERE login = ?, params: ' . $request->getParam('login'));
@@ -127,7 +138,7 @@ class RegistrationController implements ControllerInterface
                 'login' => $reqParams['login'],
             ]);
             $request->addParam('errorMessage', 'User with such login is already exists');
-            return render('RegistrationPage.php'); // Do render instead of redirect!!
+            return render('RegistrationPage.php');
         }
         $result = $this->connection->statement('SELECT * FROM users WHERE email = ?', [$request->getParam('email')]);
         if ($result === false) {

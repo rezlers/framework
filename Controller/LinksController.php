@@ -121,8 +121,6 @@ class LinksController implements ControllerInterface
     public function getLinkDescriptionPage(RequestInterface $request)
     {
         $link = Link::byId($request->getUrlParams()['id']);
-        if (is_null(parse_url($link->getLink(), PHP_URL_SCHEME)))
-            $link->setLink('http://' . $link->getLink());
         $request->addParam('linkData', $link);
         return render('DescriptionLink.php');
     }
@@ -177,7 +175,11 @@ class LinksController implements ControllerInterface
         $user = User::getById($_SESSION['userId']);
         $params = $request->getParams();
         try {
-            if (filter_var($params['link'], FILTER_VALIDATE_URL) === false) {
+            $url = $params['link'];
+            if (is_null(parse_url($params['link'], PHP_URL_SCHEME))) {
+                $url = 'http://' . $url;
+            }
+            if (filter_var($url, FILTER_VALIDATE_URL) === false) {
                 $request->addParam('linkData', $params);
                 $request->addParam('errorMessage', 'Link ' . $params['link'] . ' is not valid');
                 return render('CreateLink.php');

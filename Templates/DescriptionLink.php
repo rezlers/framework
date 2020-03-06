@@ -2,11 +2,13 @@
 
 use App\Model\LinkInterface;
 
-session_start();
 global $request;
 /** @var LinkInterface $linkInstance */
 $linkInstance = $request->getParam('linkData');
 $link = $linkInstance->getLink();
+$schemeInd = '';
+if (is_null(parse_url($link, PHP_URL_SCHEME)))
+    $schemeInd = 'http://';
 $header = $linkInstance->getHeader();
 $tag = $linkInstance->getPrivacyTag();
 $description = $linkInstance->getDescription();
@@ -37,7 +39,7 @@ else
     <div class="container">
         <ul class="list-group">
             <?php
-            echo "<li class='list-group-item'><b>Link</b><br><a href='${link}'>${link}</a></li>";
+            echo "<li class='list-group-item'><b>Link</b><br><a href='${schemeInd}${link}'>${link}</a></li>";
             echo "<li class='list-group-item'><b>Header</b><br> ${header}</li>";
             echo "<li class='list-group-item'><b>Type</b><br> ${tag}</li>";
             echo "<li class='list-group-item'><b>Description</b><br> ${description}</li>";

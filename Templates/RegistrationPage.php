@@ -29,7 +29,7 @@ $errorMessage = $request->getParam('errorMessage');
         <h1 class="page-header">Registration</h1>
     </div>
     <div class="container">
-        <form action="/registration" method="post">
+        <form action="/registration" method="post" id="registrationForm">
             <div class="form-group">
                 <label for="exampleInputPassword1">First name</label>
                 <input type="text" name="firstName" class="form-control" id="exampleInputPassword1" placeholder="First name" <?php echo "value='${firstName}'";?>>
@@ -50,6 +50,10 @@ $errorMessage = $request->getParam('errorMessage');
                 <label for="exampleInputPassword1">Password</label>
                 <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
             </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Repeat password</label>
+                <input type="password" name="repeatedPassword" class="form-control" id="exampleInputPassword1" placeholder="Repeat password">
+            </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
@@ -61,6 +65,9 @@ $errorMessage = $request->getParam('errorMessage');
             integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
             crossorigin="anonymous"></script>
     <script><?php include_once '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/bootstrap/js/bootstrap.min.js'; ?></script>
+    <script>
+        $('#registrationForm').validate();
+    </script>
     </body>
 
     </html>
