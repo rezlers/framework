@@ -10,9 +10,10 @@ interface AccessControlListInterface
 {
     /**
      * @param UserInterface $user
+     * @param ResourceInterface $resource
      * @return bool
      */
-    public static function isGranted(UserInterface $user): bool;
+    public static function isGranted(UserInterface $user, ResourceInterface $resource): bool;
 
     /**
      * @return string[]

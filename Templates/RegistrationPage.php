@@ -3,7 +3,6 @@
 use Kernel\Request\RequestInterface as Request;
 
 global $request;
-session_start();
 $params = $request->getParam('userData');
 $firstName = $params['firstName'];
 $lastName = $params['lastName'];
@@ -71,7 +70,3 @@ $errorMessage = $request->getParam('errorMessage');
     </body>
 
     </html>
-<?php
-unset($_SESSION['userData']);
-unset($_SESSION['errorMessage']);
-?>

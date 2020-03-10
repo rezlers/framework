@@ -50,13 +50,13 @@ foreach ($links as $link) {
         <ul class="pagination">
             <?php
             if (isset($pages['previous']))
-                echo "<li class='page-item'><a class='page-link' href='/links?page=${pages['previous']}'>Previous</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='/links?page=${pages['previous']}'><<</a></li>";
             foreach ($pages as $key => $page) {
                 if (is_numeric($key))
                     echo "<li class='page-item'><a class='page-link' href='/links?page=${page}'>${page}</a></li>";
             }
             if (isset($pages['next']))
-                echo "<li class='page-item'><a class='page-link' href='/links?page=${pages['next']}'>Next</a></li>";
+                echo "<li class='page-item'><a class='page-link' href='/links?page=${pages['next']}'>>></a></li>";
             ?>
         </ul>
     </nav>

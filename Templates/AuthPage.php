@@ -28,7 +28,7 @@ $request->setParam('isAuthButtonActive', true);
     <h1 class="page-header">Auth</h1>
 </div>
 <div class="container">
-    <form action="/auth/do" method="get">
+    <form action="/auth/do" method="get" id="authForm">
         <div class="form-group">
             <label for="exampleInputEmail1">Login</label>
             <input type="text" name="login" class="form-control" id="exampleInputEmail1" placeholder="Login" <?php echo "value='${login}'";?>>
@@ -51,6 +51,9 @@ $request->setParam('isAuthButtonActive', true);
         integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
         crossorigin="anonymous"></script>
 <script><?php include_once '/' . trim($_SERVER['DOCUMENT_ROOT'], '/') . '/bootstrap/js/bootstrap.min.js'; ?></script>
+<script>
+    document.forms['authForm']['']
+</script>
 </body>
 
 </html>
